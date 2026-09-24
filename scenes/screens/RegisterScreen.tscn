@@ -1,0 +1,81 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/RegisterScreen.cs" id="1_register"]
+
+[node name="RegisterScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_register")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.913725, 0.941176, 0.94902, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="RegisterPanel" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(460, 0)
+
+[node name="FormMargin" type="MarginContainer" parent="CenterContainer/RegisterPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 26
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 26
+
+[node name="Form" type="VBoxContainer" parent="CenterContainer/RegisterPanel/FormMargin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="CenterContainer/RegisterPanel/FormMargin/Form"]
+layout_mode = 2
+text = "注册账号"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+
+[node name="UsernameEdit" type="LineEdit" parent="CenterContainer/RegisterPanel/FormMargin/Form"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "账号，3～64 个字符"
+clear_button_enabled = true
+
+[node name="PasswordEdit" type="LineEdit" parent="CenterContainer/RegisterPanel/FormMargin/Form"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "密码，8～64 个字符"
+
+[node name="ConfirmPasswordEdit" type="LineEdit" parent="CenterContainer/RegisterPanel/FormMargin/Form"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "确认密码"
+
+[node name="NicknameEdit" type="LineEdit" parent="CenterContainer/RegisterPanel/FormMargin/Form"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "昵称，1～64 个字符"
+clear_button_enabled = true
+
+[node name="StatusLabel" type="Label" parent="CenterContainer/RegisterPanel/FormMargin/Form"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="RegisterButton" type="Button" parent="CenterContainer/RegisterPanel/FormMargin/Form"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "注册"
+
+[node name="BackButton" type="Button" parent="CenterContainer/RegisterPanel/FormMargin/Form"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "返回登录"

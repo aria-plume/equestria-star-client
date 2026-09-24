@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/CharacterCardView.cs" id="1_card"]
+
+[sub_resource type="Shader" id="Shader_grayscale"]
+code = "shader_type canvas_item;\nuniform bool grayscale = false;\nvoid fragment() {\n    vec4 color = texture(TEXTURE, UV);\n    float value = dot(color.rgb, vec3(0.299, 0.587, 0.114));\n    color.rgb = mix(color.rgb, vec3(value), float(grayscale));\n    COLOR = color;\n}\n"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_card"]
+resource_local_to_scene = true
+shader = SubResource("Shader_grayscale")
+shader_parameter/grayscale = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_card"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_focus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.168627, 0.32549, 0.435294, 0.8)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[node name="CharacterCardView" type="Button"]
+mouse_default_cursor_shape = 2
+focus_mode = 1
+theme_override_styles/normal = SubResource("StyleBoxEmpty_card")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_card")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_card")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_card")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
+script = ExtResource("1_card")
+
+[node name="CardImage" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+material = SubResource("ShaderMaterial_card")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="FallbackLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -62.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+text = "未知角色\n暂用卡背"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 14

@@ -1,0 +1,272 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/RoomScreen.cs" id="1_room"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_confirm"]
+bg_color = Color(0.980392, 0.988235, 0.992157, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.721569, 0.784314, 0.811765, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.0470588, 0.0862745, 0.105882, 0.2)
+shadow_size = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_secondary"]
+bg_color = Color(0.898039, 0.92549, 0.937255, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.643137, 0.713725, 0.741176, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 18.0
+content_margin_top = 9.0
+content_margin_right = 18.0
+content_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_secondary_hover"]
+bg_color = Color(0.835294, 0.878431, 0.898039, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.498039, 0.603922, 0.65098, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 18.0
+content_margin_top = 9.0
+content_margin_right = 18.0
+content_margin_bottom = 9.0
+
+[node name="RoomScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_room")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.92549, 0.94902, 0.956863, 1)
+
+[node name="RootMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
+
+[node name="Layout" type="VBoxContainer" parent="RootMargin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Header" type="HBoxContainer" parent="RootMargin/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="BackButton" type="Button" parent="RootMargin/Layout/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(46, 46)
+layout_mode = 2
+text = "←"
+tooltip_text = "离开房间"
+theme_override_font_sizes/font_size = 23
+
+[node name="TitleBox" type="VBoxContainer" parent="RootMargin/Layout/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="RoomNameLabel" type="Label" parent="RootMargin/Layout/Header/TitleBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "房间"
+text_overrun_behavior = 3
+theme_override_font_sizes/font_size = 27
+
+[node name="RoomMetaLabel" type="Label" parent="RootMargin/Layout/Header/TitleBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "房间 ID：-    人数：-/ -"
+theme_override_colors/font_color = Color(0.290196, 0.384314, 0.423529, 1)
+
+[node name="InfoBar" type="HBoxContainer" parent="RootMargin/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="OwnerLabel" type="Label" parent="RootMargin/Layout/InfoBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "房主：正在获取"
+
+[node name="RoomStatusLabel" type="Label" parent="RootMargin/Layout/InfoBar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "状态：正在同步"
+horizontal_alignment = 2
+theme_override_colors/font_color = Color(0.290196, 0.384314, 0.423529, 1)
+
+[node name="Divider" type="HSeparator" parent="RootMargin/Layout"]
+layout_mode = 2
+
+[node name="MemberHeader" type="HBoxContainer" parent="RootMargin/Layout"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="RootMargin/Layout/MemberHeader"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "房间成员"
+theme_override_font_sizes/font_size = 20
+
+[node name="Hint" type="Label" parent="RootMargin/Layout/MemberHeader"]
+layout_mode = 2
+text = "按座位顺序"
+theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
+theme_override_font_sizes/font_size = 14
+
+[node name="MemberScroll" type="ScrollContainer" parent="RootMargin/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="MemberList" type="VBoxContainer" parent="RootMargin/Layout/MemberScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="BottomBar" type="HBoxContainer" parent="RootMargin/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="SyncStatusLabel" type="Label" parent="RootMargin/Layout/BottomBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "正在同步房间信息..."
+vertical_alignment = 1
+autowrap_mode = 3
+theme_override_colors/font_color = Color(0.18, 0.38, 0.48, 1)
+
+[node name="ActionButton" type="Button" parent="RootMargin/Layout/BottomBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 44)
+layout_mode = 2
+disabled = true
+text = "准备"
+
+[node name="PollTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 2.0
+
+[node name="LeaveConfirm" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+z_index = 100
+
+[node name="Scrim" type="ColorRect" parent="LeaveConfirm"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.054902, 0.0901961, 0.109804, 0.32)
+
+[node name="Center" type="CenterContainer" parent="LeaveConfirm"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Panel" type="PanelContainer" parent="LeaveConfirm/Center"]
+custom_minimum_size = Vector2(500, 230)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_confirm")
+
+[node name="Margin" type="MarginContainer" parent="LeaveConfirm/Center/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 26
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 26
+
+[node name="Layout" type="VBoxContainer" parent="LeaveConfirm/Center/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" type="Label" parent="LeaveConfirm/Center/Panel/Margin/Layout"]
+layout_mode = 2
+text = "离开房间"
+theme_override_font_sizes/font_size = 22
+
+[node name="MessageLabel" type="Label" parent="LeaveConfirm/Center/Panel/Margin/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "确定退出该房间吗？"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="StatusLabel" type="Label" parent="LeaveConfirm/Center/Panel/Margin/Layout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+autowrap_mode = 3
+theme_override_colors/font_color = Color(0.72, 0.16, 0.11, 1)
+theme_override_font_sizes/font_size = 14
+
+[node name="ButtonRow" type="HBoxContainer" parent="LeaveConfirm/Center/Panel/Margin/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="NoButton" type="Button" parent="LeaveConfirm/Center/Panel/Margin/Layout/ButtonRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(92, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.168627, 0.32549, 0.435294, 1)
+theme_override_colors/font_hover_color = Color(0.117647, 0.239216, 0.329412, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_secondary")
+theme_override_styles/hover = SubResource("StyleBoxFlat_secondary_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_secondary_hover")
+text = "否"
+
+[node name="YesButton" type="Button" parent="LeaveConfirm/Center/Panel/Margin/Layout/ButtonRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(92, 42)
+layout_mode = 2
+text = "是"

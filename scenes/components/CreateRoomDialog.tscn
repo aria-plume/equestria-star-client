@@ -1,0 +1,234 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/CreateRoomDialog.cs" id="1_dialog"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dialog"]
+bg_color = Color(0.980392, 0.988235, 0.992157, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.721569, 0.784314, 0.811765, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.0470588, 0.0862745, 0.105882, 0.2)
+shadow_size = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_field"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.643137, 0.713725, 0.741176, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+content_margin_left = 12.0
+content_margin_top = 9.0
+content_margin_right = 12.0
+content_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_secondary"]
+bg_color = Color(0.898039, 0.92549, 0.937255, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.643137, 0.713725, 0.741176, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 18.0
+content_margin_top = 9.0
+content_margin_right = 18.0
+content_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_secondary_hover"]
+bg_color = Color(0.835294, 0.878431, 0.898039, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.498039, 0.603922, 0.65098, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 18.0
+content_margin_top = 9.0
+content_margin_right = 18.0
+content_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_close"]
+bg_color = Color(0, 0, 0, 0)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_close_hover"]
+bg_color = Color(0.870588, 0.901961, 0.913725, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="CreateRoomDialog" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+z_index = 100
+script = ExtResource("1_dialog")
+
+[node name="Scrim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.054902, 0.0901961, 0.109804, 0.32)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+custom_minimum_size = Vector2(480, 320)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dialog")
+
+[node name="Margin" type="MarginContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 26
+
+[node name="Form" type="VBoxContainer" parent="Center/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Header" type="HBoxContainer" parent="Center/Panel/Margin/Form"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleBox" type="VBoxContainer" parent="Center/Panel/Margin/Form/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+
+[node name="Title" type="Label" parent="Center/Panel/Margin/Form/Header/TitleBox"]
+layout_mode = 2
+text = "创建房间"
+theme_override_font_sizes/font_size = 23
+
+[node name="Subtitle" type="Label" parent="Center/Panel/Margin/Form/Header/TitleBox"]
+layout_mode = 2
+text = "设置名称与人数后即可进入房间"
+theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
+theme_override_font_sizes/font_size = 14
+
+[node name="CloseButton" type="Button" parent="Center/Panel/Margin/Form/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.290196, 0.384314, 0.423529, 1)
+theme_override_colors/font_hover_color = Color(0.101961, 0.152941, 0.180392, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_close")
+theme_override_styles/hover = SubResource("StyleBoxFlat_close_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_close_hover")
+text = "×"
+tooltip_text = "关闭"
+
+[node name="Fields" type="VBoxContainer" parent="Center/Panel/Margin/Form"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="RoomNameLabel" type="Label" parent="Center/Panel/Margin/Form/Fields"]
+layout_mode = 2
+text = "房间名称"
+theme_override_font_sizes/font_size = 15
+
+[node name="RoomNameEdit" type="LineEdit" parent="Center/Panel/Margin/Form/Fields"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+placeholder_text = "请输入房间名称"
+clear_button_enabled = true
+theme_override_styles/normal = SubResource("StyleBoxFlat_field")
+
+[node name="PlayerRow" type="HBoxContainer" parent="Center/Panel/Margin/Form/Fields"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="MaxPlayersLabel" type="Label" parent="Center/Panel/Margin/Form/Fields/PlayerRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "最大人数"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 15
+
+[node name="MaxPlayersSpin" type="SpinBox" parent="Center/Panel/Margin/Form/Fields/PlayerRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(132, 44)
+layout_mode = 2
+min_value = 2.0
+max_value = 6.0
+value = 4.0
+allow_greater = false
+allow_lesser = false
+
+[node name="Spacer" type="Control" parent="Center/Panel/Margin/Form"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StatusLabel" type="Label" parent="Center/Panel/Margin/Form"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 14
+
+[node name="ButtonRow" type="HBoxContainer" parent="Center/Panel/Margin/Form"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="CancelButton" type="Button" parent="Center/Panel/Margin/Form/ButtonRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(94, 42)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.168627, 0.32549, 0.435294, 1)
+theme_override_colors/font_hover_color = Color(0.117647, 0.239216, 0.329412, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_secondary")
+theme_override_styles/hover = SubResource("StyleBoxFlat_secondary_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_secondary_hover")
+text = "取消"
+
+[node name="CreateButton" type="Button" parent="Center/Panel/Margin/Form/ButtonRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(112, 42)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "创建房间"

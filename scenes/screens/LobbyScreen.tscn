@@ -1,0 +1,117 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/LobbyScreen.cs" id="1_lobby"]
+[ext_resource type="PackedScene" path="res://scenes/components/CreateRoomDialog.tscn" id="2_dialog"]
+
+[node name="LobbyScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_lobby")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.92549, 0.94902, 0.956863, 1)
+
+[node name="RootMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
+
+[node name="RootLayout" type="VBoxContainer" parent="RootMargin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Header" type="HBoxContainer" parent="RootMargin/RootLayout"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleBox" type="VBoxContainer" parent="RootMargin/RootLayout/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+
+[node name="Title" type="Label" parent="RootMargin/RootLayout/Header/TitleBox"]
+layout_mode = 2
+text = "游戏大厅"
+theme_override_font_sizes/font_size = 28
+
+[node name="PlayerLabel" type="Label" parent="RootMargin/RootLayout/Header/TitleBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "当前玩家："
+theme_override_colors/font_color = Color(0.290196, 0.384314, 0.423529, 1)
+
+[node name="LogoutButton" type="Button" parent="RootMargin/RootLayout/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(96, 40)
+text = "退出登录"
+
+[node name="Toolbar" type="HBoxContainer" parent="RootMargin/RootLayout"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SearchEdit" type="LineEdit" parent="RootMargin/RootLayout/Toolbar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "按房间名称搜索"
+clear_button_enabled = true
+
+[node name="RefreshButton" type="Button" parent="RootMargin/RootLayout/Toolbar"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(96, 40)
+text = "刷新"
+
+[node name="CreateRoomButton" type="Button" parent="RootMargin/RootLayout/Toolbar"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(120, 40)
+text = "创建房间"
+
+[node name="BannerLabel" type="Label" parent="RootMargin/RootLayout"]
+unique_name_in_owner = true
+layout_mode = 2
+visible = false
+autowrap_mode = 3
+theme_override_colors/font_color = Color(0.552941, 0.356863, 0.039216, 1)
+
+[node name="RoomScroll" type="ScrollContainer" parent="RootMargin/RootLayout"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="RoomList" type="VBoxContainer" parent="RootMargin/RootLayout/RoomScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="StateLabel" type="Label" parent="RootMargin/RootLayout/RoomScroll/RoomList"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "正在获取房间列表..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+custom_minimum_size = Vector2(0, 180)
+theme_override_colors/font_color = Color(0.290196, 0.384314, 0.423529, 1)
+
+[node name="RefreshTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 10.0
+
+[node name="CreateRoomDialog" parent="." instance=ExtResource("2_dialog")]
+unique_name_in_owner = true

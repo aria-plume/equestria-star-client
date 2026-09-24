@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/GameTestScreen.cs" id="1_game"]
+
+[node name="GameTestScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_game")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.92549, 0.94902, 0.956863, 1)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Content" type="VBoxContainer" parent="Center"]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Center/Content"]
+layout_mode = 2
+text = "已成功进入游戏测试场景"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 29
+
+[node name="RoomIdLabel" type="Label" parent="Center/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "房间 ID："
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 19
+
+[node name="GameIdLabel" type="Label" parent="Center/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "gameId："
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 19

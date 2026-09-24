@@ -1,0 +1,41 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="小马国之星"
+run/main_scene="res://scenes/app/App.tscn"
+config/features=PackedStringArray("4.6", "C#", "Mobile")
+config/icon="res://assets/icons/app_icon.svg"
+
+[autoload]
+
+ApiConfig="*res://scripts/api/ApiConfig.cs"
+Session="*res://scripts/state/Session.cs"
+ApiClient="*res://scripts/api/ApiClient.cs"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/window_width_override=1920
+window/size/window_height_override=1080
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/size/min_width=960
+window/size/min_height=540
+
+[dotnet]
+
+project/assembly_name="EquestriaStar"
+
+[rendering]
+
+renderer/rendering_method="mobile"

@@ -1,0 +1,94 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/LoginScreen.cs" id="1_login"]
+
+[node name="LoginScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_login")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.913725, 0.941176, 0.94902, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="LoginPanel" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(420, 0)
+
+[node name="FormMargin" type="MarginContainer" parent="CenterContainer/LoginPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 26
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 26
+
+[node name="Form" type="VBoxContainer" parent="CenterContainer/LoginPanel/FormMargin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="CenterContainer/LoginPanel/FormMargin/Form"]
+layout_mode = 2
+text = "小马国之星"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 30
+
+[node name="Subtitle" type="Label" parent="CenterContainer/LoginPanel/FormMargin/Form"]
+layout_mode = 2
+text = "登录正式客户端"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.290196, 0.384314, 0.423529, 1)
+
+[node name="UsernameEdit" type="LineEdit" parent="CenterContainer/LoginPanel/FormMargin/Form"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "账号"
+clear_button_enabled = true
+
+[node name="PasswordRow" type="HBoxContainer" parent="CenterContainer/LoginPanel/FormMargin/Form"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PasswordEdit" type="LineEdit" parent="CenterContainer/LoginPanel/FormMargin/Form/PasswordRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "密码"
+
+[node name="TogglePasswordButton" type="Button" parent="CenterContainer/LoginPanel/FormMargin/Form/PasswordRow"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(76, 0)
+text = "显示"
+
+[node name="StatusLabel" type="Label" parent="CenterContainer/LoginPanel/FormMargin/Form"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="RetryRecoveryButton" type="Button" parent="CenterContainer/LoginPanel/FormMargin/Form"]
+unique_name_in_owner = true
+layout_mode = 2
+visible = false
+text = "重试恢复"
+
+[node name="LoginButton" type="Button" parent="CenterContainer/LoginPanel/FormMargin/Form"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "登录"
+
+[node name="RegisterButton" type="Button" parent="CenterContainer/LoginPanel/FormMargin/Form"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "创建新账号"
