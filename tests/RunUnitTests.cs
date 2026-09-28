@@ -163,11 +163,11 @@ public partial class RunUnitTests : SceneTree
 
         var inGame = CreateRoomDetail("IN_GAME");
         inGame.CurrentGameId = 9001;
-        AssertEqual(RoomStateModel.TargetForRoom(inGame), RoomPageTarget.GameTest, "IN_GAME 且存在 gameId 应进入游戏测试场景");
-        AssertEqual(RoomStateModel.TargetForCharacterSelect(inGame), RoomPageTarget.GameTest, "选角页应进入同一个游戏测试场景");
+        AssertEqual(RoomStateModel.TargetForRoom(inGame), RoomPageTarget.Game, "IN_GAME 且存在 gameId 应进入正式游戏场景");
+        AssertEqual(RoomStateModel.TargetForCharacterSelect(inGame), RoomPageTarget.Game, "选角页应进入同一个正式游戏场景");
 
         inGame.CurrentGameId = null;
-        AssertEqual(RoomStateModel.TargetForRoom(inGame), RoomPageTarget.Stay, "缺少 gameId 时不能进入游戏测试场景");
+        AssertEqual(RoomStateModel.TargetForRoom(inGame), RoomPageTarget.Stay, "缺少 gameId 时不能进入正式游戏场景");
     }
 
     private void TestSessionRoomClearing()
@@ -181,7 +181,7 @@ public partial class RunUnitTests : SceneTree
         var gate = new RoomNavigationGate();
         AssertTrue(gate.TryBegin(RoomPageTarget.CharacterSelect), "首次状态跳转应执行");
         AssertFalse(gate.TryBegin(RoomPageTarget.CharacterSelect), "重复轮询响应不能造成重复跳转");
-        AssertFalse(gate.TryBegin(RoomPageTarget.GameTest), "页面切换开始后不能再触发第二个目标");
+        AssertFalse(gate.TryBegin(RoomPageTarget.Game), "页面切换开始后不能再触发第二个目标");
         AssertEqual(gate.TransitionCount, 1, "重复响应只能产生一次跳转");
     }
 
@@ -321,7 +321,7 @@ public partial class RunUnitTests : SceneTree
         AssertEqual(selecting.Target, ActiveSessionTarget.CharacterSelect, "CHARACTER_SELECTING 应进入选角场景");
 
         var game = ActiveSessionModel.Resolve(new ActiveSessionResponseDto { Phase = "IN_GAME", RoomId = 12, GameId = 20 });
-        AssertEqual(game.Target, ActiveSessionTarget.GameTest, "IN_GAME 应进入游戏测试场景");
+        AssertEqual(game.Target, ActiveSessionTarget.Game, "IN_GAME 应进入正式游戏场景");
         AssertEqual(game.GameId, 20L, "IN_GAME 应保留 gameId");
 
         AssertEqual(

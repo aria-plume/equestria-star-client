@@ -16,7 +16,7 @@ public partial class RoomScreen : Control
     public delegate void EnterCharacterSelectEventHandler();
 
     [Signal]
-    public delegate void EnterGameTestEventHandler();
+    public delegate void EnterGameEventHandler();
 
     private readonly PackedScene _memberRowScene = GD.Load<PackedScene>("res://scenes/components/RoomMemberRow.tscn");
     private readonly Dictionary<long, RoomMemberRow> _memberRows = new();
@@ -413,10 +413,10 @@ public partial class RoomScreen : Control
         {
             EmitSignal(SignalName.EnterCharacterSelect);
         }
-        else if (target == RoomPageTarget.GameTest && _room?.CurrentGameId is long gameId)
+        else if (target == RoomPageTarget.Game && _room?.CurrentGameId is long gameId)
         {
             Session.SetCurrentGame(gameId);
-            EmitSignal(SignalName.EnterGameTest);
+            EmitSignal(SignalName.EnterGame);
         }
     }
 

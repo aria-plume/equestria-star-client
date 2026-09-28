@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/game/map/HexCell3D.cs" id="1_hex_cell"]
+
+[node name="HexCell3D" type="Node3D"]
+script = ExtResource("1_hex_cell")
+
+[node name="VisualRoot" type="Node3D" parent="."]
+
+[node name="BaseMesh" type="MeshInstance3D" parent="VisualRoot"]
+
+[node name="CustomMeshInstance" type="MeshInstance3D" parent="VisualRoot"]
+visible = false
+
+[node name="CustomVisualRoot" type="Node3D" parent="VisualRoot"]
+
+[node name="DecorationRoot" type="Node3D" parent="VisualRoot"]
+
+[node name="HighlightMesh" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+
+[node name="InteractionArea" type="Area3D" parent="."]
+collision_layer = 128
+collision_mask = 0
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
+
+[node name="ContentAnchor" type="Node3D" parent="."]
+
+[node name="TokenRoot" type="Node3D" parent="."]
+
+[node name="IconAnchor" type="Node3D" parent="."]
+
+[node name="DebugLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+visible = false
+billboard = 1
+no_depth_test = true
+text = "HEX\n(0,0)"
+font_size = 52
+outline_size = 10
+modulate = Color(0.96, 0.98, 1, 1)
+outline_modulate = Color(0.08, 0.11, 0.13, 0.92)
+pixel_size = 0.0045

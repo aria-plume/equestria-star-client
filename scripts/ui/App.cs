@@ -11,9 +11,10 @@ public partial class App : Control
     private readonly PackedScene _lobbyScene = GD.Load<PackedScene>("res://scenes/screens/LobbyScreen.tscn");
     private readonly PackedScene _roomScene = GD.Load<PackedScene>("res://scenes/screens/RoomScreen.tscn");
     private readonly PackedScene _characterSelectScene = GD.Load<PackedScene>("res://scenes/screens/CharacterSelectScreen.tscn");
-    private readonly PackedScene _gameTestScene = GD.Load<PackedScene>("res://scenes/screens/GameTestScreen.tscn");
+    private readonly PackedScene _gameScene = GD.Load<PackedScene>("res://scenes/screens/GameScreen.tscn");
 
     private Control _pageHost = null!;
+    private PanelContainer _footer = null!;
     private Label _footerLabel = null!;
     private Node? _currentScreen;
     private bool _handlingAuthClear;
@@ -26,6 +27,7 @@ public partial class App : Control
     public override void _Ready()
     {
         _pageHost = GetNode<Control>("MainLayout/PageHost");
+        _footer = GetNode<PanelContainer>("MainLayout/Footer");
         _footerLabel = GetNode<Label>("MainLayout/Footer/FooterMargin/FooterLabel");
         _session = GetNode<Session>("/root/Session");
         _apiClient = GetNode<ApiClient>("/root/ApiClient");
@@ -52,6 +54,7 @@ public partial class App : Control
 
     public void ShowLogin(string prefillUsername = "")
     {
+        _footer.Visible = true;
         var screen = SwitchTo<LoginScreen>(_loginScene);
         screen.RecoverySucceeded += OnRecoverySucceeded;
         screen.RequestRegister += OnRequestRegister;
@@ -60,6 +63,7 @@ public partial class App : Control
 
     public void ShowRegister(string prefillUsername = "")
     {
+        _footer.Visible = true;
         var screen = SwitchTo<RegisterScreen>(_registerScene);
         screen.BackToLogin += ShowLogin;
         screen.RegisterSucceeded += ShowLogin;
@@ -68,6 +72,7 @@ public partial class App : Control
 
     public void ShowLobby()
     {
+        _footer.Visible = true;
         var screen = SwitchTo<LobbyScreen>(_lobbyScene);
         screen.EnterRoom += ShowRoom;
         screen.LoggedOut += OnLoggedOut;
@@ -76,26 +81,29 @@ public partial class App : Control
 
     public void ShowRoom()
     {
+        _footer.Visible = true;
         var screen = SwitchTo<RoomScreen>(_roomScene);
         screen.ReturnLobby += ShowLobby;
         screen.EnterCharacterSelect += ShowCharacterSelect;
-        screen.EnterGameTest += ShowGameTest;
+        screen.EnterGame += ShowGame;
         screen.Start();
     }
 
     public void ShowCharacterSelect()
     {
+        _footer.Visible = true;
         var screen = SwitchTo<CharacterSelectScreen>(_characterSelectScene);
         screen.ReturnLobby += ShowLobby;
         screen.ReturnRoom += ShowRoom;
-        screen.EnterGameTest += ShowGameTest;
+        screen.EnterGame += ShowGame;
         screen.Start();
     }
 
-    public void ShowGameTest()
+    public void ShowGame()
     {
-        var screen = SwitchTo<GameTestScreen>(_gameTestScene);
-        screen.RefreshFromSession();
+        _footer.Visible = false;
+        var screen = SwitchTo<GameScreen>(_gameScene);
+        screen.Start();
     }
 
     private T SwitchTo<T>(PackedScene scene) where T : Node
@@ -113,6 +121,10 @@ public partial class App : Control
             else if (_currentScreen is CharacterSelectScreen characterSelect)
             {
                 characterSelect.Stop();
+            }
+            else if (_currentScreen is GameScreen game)
+            {
+                game.Stop();
             }
 
             _currentScreen.QueueFree();
@@ -142,8 +154,8 @@ public partial class App : Control
             case ActiveSessionTarget.CharacterSelect:
                 ShowCharacterSelect();
                 break;
-            case ActiveSessionTarget.GameTest:
-                ShowGameTest();
+            case ActiveSessionTarget.Game:
+                ShowGame();
                 break;
             default:
                 GD.PushWarning($"忽略无效的活动会话页面目标：{targetValue}。");

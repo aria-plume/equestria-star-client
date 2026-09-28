@@ -16,7 +16,7 @@ public partial class CharacterSelectScreen : Control
     public delegate void ReturnRoomEventHandler();
 
     [Signal]
-    public delegate void EnterGameTestEventHandler();
+    public delegate void EnterGameEventHandler();
 
     private readonly PackedScene _cardScene = GD.Load<PackedScene>("res://scenes/components/CharacterCardView.tscn");
     private readonly List<CharacterCardOption> _options = new();
@@ -783,9 +783,9 @@ public partial class CharacterSelectScreen : Control
             case RoomPageTarget.Room:
                 EmitSignal(SignalName.ReturnRoom);
                 break;
-            case RoomPageTarget.GameTest when gameId.HasValue:
+            case RoomPageTarget.Game when gameId.HasValue:
                 Session.SetCurrentGame(gameId.Value);
-                EmitSignal(SignalName.EnterGameTest);
+                EmitSignal(SignalName.EnterGame);
                 break;
         }
     }

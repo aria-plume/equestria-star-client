@@ -1,0 +1,189 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/game/map/HexCellDemo.cs" id="1_demo"]
+[ext_resource type="PackedScene" path="res://scenes/game/map/HexCell3D.tscn" id="2_cell"]
+[ext_resource type="Theme" path="res://assets/theme/client_theme.tres" id="3_theme"]
+
+[sub_resource type="Environment" id="Environment_demo"]
+background_mode = 1
+background_color = Color(0.055, 0.075, 0.09, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.64, 0.74, 0.82, 1)
+ambient_light_energy = 0.62
+reflected_light_source = 2
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial_floor"]
+albedo_color = Color(0.075, 0.105, 0.12, 1)
+roughness = 0.94
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+material = SubResource("StandardMaterial_floor")
+size = Vector2(12, 12)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial_custom"]
+albedo_color = Color(0.83, 0.32, 0.38, 1)
+metallic = 0.18
+roughness = 0.42
+
+[sub_resource type="BoxMesh" id="BoxMesh_custom"]
+material = SubResource("StandardMaterial_custom")
+size = Vector3(1.35, 0.34, 1.35)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_info"]
+bg_color = Color(0.045, 0.07, 0.085, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.28, 0.48, 0.55, 0.75)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button"]
+bg_color = Color(0.12, 0.26, 0.32, 0.96)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button_hover"]
+bg_color = Color(0.18, 0.39, 0.45, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="HexCellDemo" type="Node3D"]
+script = ExtResource("1_demo")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_demo")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-52, -32, 0)
+light_color = Color(0.89, 0.94, 1, 1)
+light_energy = 1.35
+shadow_enabled = true
+directional_shadow_max_distance = 20.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6, 3.5, 5.8)
+current = true
+fov = 42.0
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.215, 0)
+mesh = SubResource("PlaneMesh_floor")
+
+[node name="HexCell3D" parent="." instance=ExtResource("2_cell")]
+position = Vector3(-1.35, 0, 0)
+ShowDebugLabel = true
+
+[node name="CustomHexCell3D" parent="." instance=ExtResource("2_cell")]
+position = Vector3(1.35, 0, 0)
+CustomMesh = SubResource("BoxMesh_custom")
+ShowDebugLabel = true
+
+[node name="Interface" type="CanvasLayer" parent="."]
+
+[node name="RootMargin" type="MarginContainer" parent="Interface"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+theme = ExtResource("3_theme")
+mouse_filter = 2
+
+[node name="Layout" type="VBoxContainer" parent="Interface/RootMargin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="InfoPanel" type="PanelContainer" parent="Interface/RootMargin/Layout"]
+custom_minimum_size = Vector2(430, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBox_info")
+
+[node name="InfoMargin" type="MarginContainer" parent="Interface/RootMargin/Layout/InfoPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="Info" type="VBoxContainer" parent="Interface/RootMargin/Layout/InfoPanel/InfoMargin"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Title" type="Label" parent="Interface/RootMargin/Layout/InfoPanel/InfoMargin/Info"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.95, 0.97, 1)
+theme_override_font_sizes/font_size = 22
+text = "HexCell3D 预览"
+
+[node name="DataLabel" type="Label" parent="Interface/RootMargin/Layout/InfoPanel/InfoMargin/Info"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.62, 0.78, 0.82, 1)
+text = "左：默认程序化模型　　右：CustomMesh"
+
+[node name="StateLabel" type="Label" parent="Interface/RootMargin/Layout/InfoPanel/InfoMargin/Info"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.82, 0.42, 1)
+text = "当前状态：Normal"
+
+[node name="EventLabel" type="Label" parent="Interface/RootMargin/Layout/InfoPanel/InfoMargin/Info"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.84, 0.87, 1)
+text = "等待悬停或点击"
+
+[node name="StateButtons" type="HBoxContainer" parent="Interface/RootMargin/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 0
+
+[node name="NormalButton" type="Button" parent="Interface/RootMargin/Layout/StateButtons"]
+custom_minimum_size = Vector2(92, 40)
+layout_mode = 2
+mouse_filter = 0
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+text = "普通"
+
+[node name="CurrentButton" type="Button" parent="Interface/RootMargin/Layout/StateButtons"]
+custom_minimum_size = Vector2(108, 40)
+layout_mode = 2
+mouse_filter = 0
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+text = "当前位置"
+
+[node name="MovableButton" type="Button" parent="Interface/RootMargin/Layout/StateButtons"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+mouse_filter = 0
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+text = "可移动"
+
+[node name="SelectedButton" type="Button" parent="Interface/RootMargin/Layout/StateButtons"]
+custom_minimum_size = Vector2(92, 40)
+layout_mode = 2
+mouse_filter = 0
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+text = "选中"
+
+[node name="DisabledButton" type="Button" parent="Interface/RootMargin/Layout/StateButtons"]
+custom_minimum_size = Vector2(92, 40)
+layout_mode = 2
+mouse_filter = 0
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+text = "禁用"

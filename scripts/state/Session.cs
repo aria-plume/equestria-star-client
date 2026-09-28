@@ -106,7 +106,7 @@ public partial class Session : Node
                 CurrentRoomName = "";
                 CurrentGameId = null;
                 break;
-            case ActiveSessionTarget.GameTest:
+            case ActiveSessionTarget.Game:
                 CurrentRoomId = resolution.RoomId;
                 CurrentRoomName = "";
                 CurrentGameId = resolution.GameId;

@@ -9,7 +9,7 @@ public enum ActiveSessionTarget
     Lobby,
     Room,
     CharacterSelect,
-    GameTest
+    Game
 }
 
 public sealed class ActiveSessionResolution
@@ -86,7 +86,7 @@ public static class ActiveSessionModel
 
         return new ActiveSessionResolution
         {
-            Target = ActiveSessionTarget.GameTest,
+            Target = ActiveSessionTarget.Game,
             RoomId = session.RoomId,
             GameId = session.GameId
         };

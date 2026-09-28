@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://c1xv0nw7v6coh"]
+
+[ext_resource type="Script" uid="uid://bui333gp2udwy" path="res://scripts/game/ui/GameHudDemo.cs" id="1_demo"]
+[ext_resource type="PackedScene" path="res://scenes/game/ui/GameHud.tscn" id="2_hud"]
+[ext_resource type="Theme" path="res://assets/theme/client_theme.tres" id="3_theme"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_map_area"]
+bg_color = Color(0.145098, 0.25098, 0.25098, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.278431, 0.419608, 0.392157, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_demo_panel"]
+bg_color = Color(0.94902, 0.964706, 0.968627, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.631373, 0.721569, 0.756863, 0.9)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="GameHudDemo" type="Control" unique_id=531902727]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_theme")
+script = ExtResource("1_demo")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1674616064]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0823529, 0.137255, 0.145098, 1)
+
+[node name="MapArea" type="PanelContainer" parent="." unique_id=380952818]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 421.0
+offset_top = 130.0
+offset_right = -79.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_map_area")
+
+[node name="Placeholder" type="Label" parent="MapArea" unique_id=2077701160]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.580392, 0.741176, 0.701961, 1)
+theme_override_font_sizes/font_size = 26
+text = "3D 地图区域"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DemoControls" type="PanelContainer" parent="." unique_id=1841793547]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -460.0
+offset_top = 18.0
+offset_right = -18.0
+offset_bottom = 142.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBox_demo_panel")
+
+[node name="Margin" type="MarginContainer" parent="DemoControls" unique_id=1835954809]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 10
+
+[node name="Content" type="VBoxContainer" parent="DemoControls/Margin" unique_id=728256205]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="DemoControls/Margin/Content" unique_id=1036085440]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "GameHud 独立演示"
+
+[node name="StatusLabel" type="Label" parent="DemoControls/Margin/Content" unique_id=2026465076]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.290196, 0.384314, 0.423529, 1)
+theme_override_font_sizes/font_size = 14
+text = "准备模拟数据"
+text_overrun_behavior = 3
+
+[node name="Buttons" type="HBoxContainer" parent="DemoControls/Margin/Content" unique_id=1210757571]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="RefreshButton" type="Button" parent="DemoControls/Margin/Content/Buttons" unique_id=395760983]
+custom_minimum_size = Vector2(160, 38)
+layout_mode = 2
+text = "刷新模拟数据"
+
+[node name="RebindButton" type="Button" parent="DemoControls/Margin/Content/Buttons" unique_id=482609345]
+custom_minimum_size = Vector2(140, 38)
+layout_mode = 2
+text = "重复绑定"
+
+[node name="GameHud" parent="." unique_id=1551765230 instance=ExtResource("2_hud")]

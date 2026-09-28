@@ -1,0 +1,182 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/game/map/GameMapScene.cs" id="1_map"]
+[ext_resource type="PackedScene" path="res://scenes/game/map/HexCell3D.tscn" id="2_cell"]
+[ext_resource type="Theme" path="res://assets/theme/client_theme.tres" id="3_theme"]
+[ext_resource type="Script" path="res://scripts/game/map/MapCameraController.cs" id="4_camera"]
+
+[sub_resource type="Environment" id="Environment_map"]
+background_mode = 1
+background_color = Color(0.035, 0.052, 0.061, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.62, 0.71, 0.77, 1)
+ambient_light_energy = 0.7
+reflected_light_source = 2
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial_floor"]
+albedo_color = Color(0.052, 0.075, 0.082, 1)
+roughness = 0.96
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+material = SubResource("StandardMaterial_floor")
+size = Vector2(24, 24)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_status"]
+bg_color = Color(0.035, 0.058, 0.068, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.43, 0.48, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_error"]
+bg_color = Color(0.09, 0.055, 0.06, 0.96)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.65, 0.25, 0.29, 0.9)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_info"]
+bg_color = Color(0.03, 0.05, 0.058, 0.82)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="GameMapScene" type="Node3D"]
+script = ExtResource("1_map")
+CellScene = ExtResource("2_cell")
+
+[node name="MapRoot" type="Node3D" parent="."]
+
+[node name="Environment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_map")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-56, -28, 0)
+light_color = Color(0.9, 0.94, 1, 1)
+light_energy = 1.28
+shadow_enabled = true
+directional_shadow_max_distance = 40.0
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.185, 0)
+mesh = SubResource("PlaneMesh_floor")
+
+[node name="CameraRig" type="Node3D" parent="."]
+script = ExtResource("4_camera")
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig"]
+projection = 1
+size = 16.0
+near = 0.05
+far = 100.0
+current = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="LoadingState" type="CenterContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("3_theme")
+
+[node name="LoadingPanel" type="PanelContainer" parent="CanvasLayer/LoadingState"]
+custom_minimum_size = Vector2(340, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_status")
+
+[node name="LoadingMargin" type="MarginContainer" parent="CanvasLayer/LoadingState/LoadingPanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 18
+
+[node name="LoadingLabel" type="Label" parent="CanvasLayer/LoadingState/LoadingPanel/LoadingMargin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.82, 0.9, 0.92, 1)
+theme_override_font_sizes/font_size = 20
+text = "正在加载正式地图……"
+horizontal_alignment = 1
+
+[node name="ErrorState" type="CenterContainer" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("3_theme")
+
+[node name="ErrorPanel" type="PanelContainer" parent="CanvasLayer/ErrorState" groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_error")
+
+[node name="ErrorMargin" type="MarginContainer" parent="CanvasLayer/ErrorState/ErrorPanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="ErrorContent" type="VBoxContainer" parent="CanvasLayer/ErrorState/ErrorPanel/ErrorMargin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 14
+
+[node name="ErrorLabel" type="Label" parent="CanvasLayer/ErrorState/ErrorPanel/ErrorMargin/ErrorContent"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.96, 0.72, 0.72, 1)
+theme_override_font_sizes/font_size = 18
+text = "地图加载失败。"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="RetryButton" type="Button" parent="CanvasLayer/ErrorState/ErrorPanel/ErrorMargin/ErrorContent"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+text = "重试"
+
+[node name="MapInfoMargin" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -390.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 62.0
+grow_horizontal = 0
+theme = ExtResource("3_theme")
+mouse_filter = 2
+
+[node name="MapInfoLabel" type="Label" parent="CanvasLayer/MapInfoMargin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.78, 0.87, 0.89, 1)
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBox_info")
+text = "正式地图"
+horizontal_alignment = 1
+vertical_alignment = 1

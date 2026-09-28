@@ -226,6 +226,21 @@ public partial class ApiClient : Node
         return PostJsonAsync<object>($"/rooms/{roomId}/select-character", new { selectedCharacterId });
     }
 
+    public Task<ApiResult<GameMapDto>> GetMainMapAsync()
+    {
+        return GetJsonAsync<GameMapDto>("/maps/main", authorized: false);
+    }
+
+    public Task<ApiResult<GameMapDto>> GetGameMapAsync(long gameId)
+    {
+        return GetJsonAsync<GameMapDto>($"/games/{gameId}/map");
+    }
+
+    public Task<ApiResult<PlayerViewResponseDto>> GetPlayerViewAsync(long gameId)
+    {
+        return GetJsonAsync<PlayerViewResponseDto>($"/games/{gameId}/player-view");
+    }
+
     private void HandleAuthInvalidation<T>(ApiResult<T> result)
     {
         var isAuthError = result.IsAuthError

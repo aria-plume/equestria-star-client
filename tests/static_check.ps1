@@ -10,11 +10,18 @@ $required = @(
   "scenes/screens/LobbyScreen.tscn",
   "scenes/screens/RoomScreen.tscn",
   "scenes/screens/CharacterSelectScreen.tscn",
+  "scenes/screens/GameScreen.tscn",
   "scenes/screens/GameTestScreen.tscn",
   "scenes/components/RoomCard.tscn",
   "scenes/components/RoomMemberRow.tscn",
   "scenes/components/CharacterCardView.tscn",
   "scenes/components/CreateRoomDialog.tscn",
+  "scenes/game/map/HexCell3D.tscn",
+  "scenes/game/map/HexCellDemo.tscn",
+  "scenes/game/map/GameMapScene.tscn",
+  "scenes/game/ui/GameHud.tscn",
+  "scenes/game/ui/GameHudDemo.tscn",
+  "scenes/game/ui/OtherPlayerHudEntry.tscn",
   "assets/characters/cards/骰子.png",
   "assets/characters/cards/大布莱恩.jpg",
   "assets/characters/cards/橙羽.jpg",
@@ -34,6 +41,20 @@ $required = @(
   "scripts/state/RoomListModel.cs",
   "scripts/state/RoomStateModel.cs",
   "scripts/state/CharacterSelectionModel.cs",
+  "scripts/game/map/HexCellData.cs",
+  "scripts/game/map/HexCellMeshFactory.cs",
+  "scripts/game/map/HexCell3D.cs",
+  "scripts/game/map/HexCellDemo.cs",
+  "scripts/game/map/GameMapScene.cs",
+  "scripts/game/map/GameMapBuilder.cs",
+  "scripts/game/map/HexCoordinateConverter.cs",
+  "scripts/game/map/MapLayoutConfig.cs",
+  "scripts/game/map/MapDataValidator.cs",
+  "scripts/game/map/MapCameraFitter.cs",
+  "scripts/game/map/MapCameraController.cs",
+  "scripts/game/ui/GameHud.cs",
+  "scripts/game/ui/GameHudDemo.cs",
+  "scripts/game/ui/OtherPlayerHudEntry.cs",
   "scripts/ui/App.cs",
   "scripts/ui/LoginScreen.cs",
   "scripts/ui/RegisterScreen.cs",
@@ -44,11 +65,16 @@ $required = @(
   "scripts/ui/RoomMemberRow.cs",
   "scripts/ui/CharacterSelectScreen.cs",
   "scripts/ui/CharacterCardView.cs",
+  "scripts/ui/GameScreen.cs",
   "scripts/ui/GameTestScreen.cs",
   "tests/RunUnitTests.cs",
   "tests/RunRoomScreenTests.cs",
   "tests/RunCharacterSelectTests.cs",
-  "tests/RunActiveSessionTests.cs"
+  "tests/RunActiveSessionTests.cs",
+  "tests/RunHexCellTests.cs",
+  "tests/RunGameMapTests.cs",
+  "tests/RunGameScreenTests.cs",
+  "tests/RunMapSmokeTest.cs"
 )
 
 foreach ($path in $required) {
@@ -86,6 +112,13 @@ $legacyCharacterSelectRefs = Get-ChildItem -Path scripts,scenes -Recurse -Includ
   Select-String -Pattern 'CharacterSelectTestScreen|ShowCharacterSelectTest|EnterCharacterSelectTest'
 if ($legacyCharacterSelectRefs) {
   throw "Detected legacy character selection test screen semantics."
+}
+
+$legacyGameFlowRefs = Get-ChildItem -Path scripts -Recurse -Include *.cs |
+  Where-Object { $_.FullName -notlike "*scripts\ui\GameTestScreen.cs" } |
+  Select-String -Pattern 'GameTest|EnterGameTest|ShowGameTest'
+if ($legacyGameFlowRefs) {
+  throw "Detected legacy game test screen references in normal flow."
 }
 
 $removedStartEndpoint = Get-ChildItem -Path scripts -Recurse -Include *.cs |

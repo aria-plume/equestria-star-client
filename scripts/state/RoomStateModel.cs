@@ -11,7 +11,7 @@ public enum RoomPageTarget
     Lobby,
     Room,
     CharacterSelect,
-    GameTest
+    Game
 }
 
 public static class RoomStateModel
@@ -80,7 +80,7 @@ public static class RoomStateModel
 
         if (string.Equals(room.Status, "IN_GAME", StringComparison.OrdinalIgnoreCase) && room.CurrentGameId.HasValue)
         {
-            return RoomPageTarget.GameTest;
+            return RoomPageTarget.Game;
         }
 
         return RoomPageTarget.Stay;
@@ -95,7 +95,7 @@ public static class RoomStateModel
 
         if (string.Equals(room.Status, "IN_GAME", StringComparison.OrdinalIgnoreCase) && room.CurrentGameId.HasValue)
         {
-            return RoomPageTarget.GameTest;
+            return RoomPageTarget.Game;
         }
 
         return RoomPageTarget.Stay;

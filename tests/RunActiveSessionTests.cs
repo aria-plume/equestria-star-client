@@ -60,7 +60,7 @@ public partial class RunActiveSessionTests : SceneTree
             (new ActiveSessionResponseDto { Phase = "NONE" }, ActiveSessionTarget.Lobby),
             (new ActiveSessionResponseDto { Phase = "WAITING", RoomId = 10 }, ActiveSessionTarget.Room),
             (new ActiveSessionResponseDto { Phase = "CHARACTER_SELECTING", RoomId = 11 }, ActiveSessionTarget.CharacterSelect),
-            (new ActiveSessionResponseDto { Phase = "IN_GAME", RoomId = 12, GameId = 22 }, ActiveSessionTarget.GameTest)
+            (new ActiveSessionResponseDto { Phase = "IN_GAME", RoomId = 12, GameId = 22 }, ActiveSessionTarget.Game)
         };
 
         foreach (var (activeSession, expectedTarget) in cases)
@@ -244,7 +244,7 @@ public partial class RunActiveSessionTests : SceneTree
         transport.RoomStatus = "CHARACTER_SELECTING";
         await EmitRouteAndAssertAsync(app, host, ActiveSessionTarget.CharacterSelect, typeof(CharacterSelectScreen));
         _session.ApplyActiveSession(ActiveSessionModel.Resolve(new ActiveSessionResponseDto { Phase = "IN_GAME", RoomId = 10, GameId = 20 }));
-        await EmitRouteAndAssertAsync(app, host, ActiveSessionTarget.GameTest, typeof(GameTestScreen));
+        await EmitRouteAndAssertAsync(app, host, ActiveSessionTarget.Game, typeof(GameScreen));
 
         app.QueueFree();
         await ToSignal(this, SignalName.ProcessFrame);
@@ -401,6 +401,31 @@ public partial class RunActiveSessionTests : SceneTree
             if (path == "/characters" && typeof(T) == typeof(List<CharacterDto>))
             {
                 return (ApiResult<T>)(object)ApiResult<List<CharacterDto>>.Success([], "success", 200);
+            }
+
+            if (path == "/games/20/map" && typeof(T) == typeof(GameMapDto))
+            {
+                return (ApiResult<T>)(object)ApiResult<GameMapDto>.Success(
+                    RunGameMapTests.CreateValidMap(),
+                    "success",
+                    200
+                );
+            }
+
+            if (path == "/games/20/player-view" && typeof(T) == typeof(PlayerViewResponseDto))
+            {
+                return (ApiResult<T>)(object)ApiResult<PlayerViewResponseDto>.Success(new PlayerViewResponseDto
+                {
+                    GameId = 20,
+                    Players = [new PlayerViewPlayerDto
+                    {
+                        PlayerId = 101,
+                        UserId = 1,
+                        Nickname = "测试玩家",
+                        TurnOrder = 1,
+                        EffectiveAttributes = new EffectiveAttributesDto()
+                    }]
+                }, "success", 200);
             }
 
             return ApiResult<T>.Success(default, "success", 200);

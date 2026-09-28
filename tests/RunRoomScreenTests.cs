@@ -88,12 +88,26 @@ public partial class RunRoomScreenTests : SceneTree
         var gameCharacterScreen = characterScene.Instantiate<CharacterSelectScreen>();
         Root.AddChild(gameCharacterScreen);
         var gameTransitions = 0;
-        gameCharacterScreen.EnterGameTest += () => gameTransitions++;
+        gameCharacterScreen.EnterGame += () => gameTransitions++;
         gameCharacterScreen.Start();
         await WaitUntilAsync(() => gameTransitions == 1);
-        AssertEqual(session.CurrentGameId, 88L, "进入游戏测试页前应保存 gameId");
+        AssertEqual(session.CurrentGameId, 88L, "进入正式游戏页前应保存 gameId");
         gameCharacterScreen.Stop();
         gameCharacterScreen.QueueFree();
+
+        session.SetCurrentRoom(10, "测试房间");
+        transport.Detail = CreateReadyRoom();
+        transport.Detail.Status = "IN_GAME";
+        transport.Detail.CurrentGameId = 89;
+        var directGameRoomScreen = roomScene.Instantiate<RoomScreen>();
+        Root.AddChild(directGameRoomScreen);
+        var directGameTransitions = 0;
+        directGameRoomScreen.EnterGame += () => directGameTransitions++;
+        directGameRoomScreen.Start();
+        await WaitUntilAsync(() => directGameTransitions == 1);
+        AssertEqual(session.CurrentGameId, 89L, "房间轮询进入正式游戏前应保存 gameId");
+        directGameRoomScreen.Stop();
+        directGameRoomScreen.QueueFree();
 
         await VerifyApiPathsAsync(apiClient, transport);
         await VerifyLobbyRoutesToRoomAsync(session, transport);

@@ -357,3 +357,198 @@ public sealed class StartCharacterSelectionResponseDto
     [JsonPropertyName("characterSelectionDeadline")]
     public string? CharacterSelectionDeadline { get; set; }
 }
+
+public sealed class GameMapDto
+{
+    [JsonPropertyName("mapId")]
+    public long MapId { get; set; }
+
+    [JsonPropertyName("mapName")]
+    public string MapName { get; set; } = "";
+
+    [JsonPropertyName("cells")]
+    public List<MapCellDto>? Cells { get; set; }
+
+    [JsonPropertyName("edges")]
+    public List<MapEdgeDto>? Edges { get; set; }
+}
+
+public sealed class MapCellDto
+{
+    [JsonPropertyName("cellId")]
+    public long CellId { get; set; }
+
+    [JsonPropertyName("cellCode")]
+    public string CellCode { get; set; } = "";
+
+    [JsonPropertyName("boardCode")]
+    public string BoardCode { get; set; } = "";
+
+    [JsonPropertyName("cellName")]
+    public string CellName { get; set; } = "";
+
+    [JsonPropertyName("cellNameText")]
+    public string CellNameText { get; set; } = "";
+
+    [JsonPropertyName("q")]
+    public int? Q { get; set; }
+
+    [JsonPropertyName("r")]
+    public int? R { get; set; }
+
+    [JsonPropertyName("interactionTags")]
+    public List<string>? InteractionTags { get; set; }
+}
+
+public sealed class MapEdgeDto
+{
+    [JsonPropertyName("edgeId")]
+    public long EdgeId { get; set; }
+
+    [JsonPropertyName("fromCellId")]
+    public long FromCellId { get; set; }
+
+    [JsonPropertyName("toCellId")]
+    public long ToCellId { get; set; }
+
+    [JsonPropertyName("edgeType")]
+    public string EdgeType { get; set; } = "";
+
+    [JsonPropertyName("edgeTypeText")]
+    public string? EdgeTypeText { get; set; }
+
+    [JsonPropertyName("passable")]
+    public bool Passable { get; set; }
+
+    [JsonPropertyName("requiredAbility")]
+    public string? RequiredAbility { get; set; }
+
+    [JsonPropertyName("requiredAbilityText")]
+    public string? RequiredAbilityText { get; set; }
+}
+
+public sealed class PlayerViewResponseDto
+{
+    [JsonPropertyName("gameId")]
+    public long GameId { get; set; }
+
+    [JsonPropertyName("roomId")]
+    public long? RoomId { get; set; }
+
+    [JsonPropertyName("mapConfigId")]
+    public long MapConfigId { get; set; }
+
+    [JsonPropertyName("gameStatus")]
+    public string GameStatus { get; set; } = "";
+
+    [JsonPropertyName("gameStatusText")]
+    public string? GameStatusText { get; set; }
+
+    [JsonPropertyName("currentRound")]
+    public int CurrentRound { get; set; }
+
+    [JsonPropertyName("currentTurnUserId")]
+    public long? CurrentTurnUserId { get; set; }
+
+    [JsonPropertyName("currentTurnSeq")]
+    public int CurrentTurnSeq { get; set; }
+
+    [JsonPropertyName("stateVersion")]
+    public long StateVersion { get; set; }
+
+    [JsonPropertyName("winnerUserId")]
+    public long? WinnerUserId { get; set; }
+
+    [JsonPropertyName("players")]
+    public List<PlayerViewPlayerDto>? Players { get; set; }
+}
+
+public sealed class PlayerViewPlayerDto
+{
+    [JsonPropertyName("playerId")]
+    public long PlayerId { get; set; }
+
+    [JsonPropertyName("userId")]
+    public long UserId { get; set; }
+
+    [JsonPropertyName("nickname")]
+    public string Nickname { get; set; } = "";
+
+    [JsonPropertyName("initialCharacterId")]
+    public long InitialCharacterId { get; set; }
+
+    [JsonPropertyName("initialCharacterCode")]
+    public string? InitialCharacterCode { get; set; }
+
+    [JsonPropertyName("initialCharacterName")]
+    public string? InitialCharacterName { get; set; }
+
+    [JsonPropertyName("initialCharacterTitle")]
+    public string? InitialCharacterTitle { get; set; }
+
+    [JsonPropertyName("characterSkillName")]
+    public string? CharacterSkillName { get; set; }
+
+    [JsonPropertyName("characterSkillText")]
+    public string? CharacterSkillText { get; set; }
+
+    [JsonPropertyName("characterSkillEffectId")]
+    public string? CharacterSkillEffectId { get; set; }
+
+    [JsonPropertyName("turnOrder")]
+    public int TurnOrder { get; set; }
+
+    [JsonPropertyName("currentCellId")]
+    public long? CurrentCellId { get; set; }
+
+    [JsonPropertyName("currentCellCode")]
+    public string? CurrentCellCode { get; set; }
+
+    [JsonPropertyName("currentCellName")]
+    public string? CurrentCellName { get; set; }
+
+    [JsonPropertyName("currentCellNameText")]
+    public string? CurrentCellNameText { get; set; }
+
+    [JsonPropertyName("coins")]
+    public int Coins { get; set; }
+
+    [JsonPropertyName("prestige")]
+    public int Prestige { get; set; }
+
+    [JsonPropertyName("equivalentPrestige")]
+    public int EquivalentPrestige { get; set; }
+
+    [JsonPropertyName("currentSpeedPoints")]
+    public int CurrentSpeedPoints { get; set; }
+
+    [JsonPropertyName("currentSocialPoints")]
+    public int CurrentSocialPoints { get; set; }
+
+    [JsonPropertyName("isConnected")]
+    public int IsConnected { get; set; }
+
+    [JsonPropertyName("effectiveAttributes")]
+    public EffectiveAttributesDto? EffectiveAttributes { get; set; }
+}
+
+public sealed class EffectiveAttributesDto
+{
+    [JsonPropertyName("strength")]
+    public int Strength { get; set; }
+
+    [JsonPropertyName("speed")]
+    public int Speed { get; set; }
+
+    [JsonPropertyName("social")]
+    public int Social { get; set; }
+
+    [JsonPropertyName("charm")]
+    public int Charm { get; set; }
+
+    [JsonPropertyName("magic")]
+    public int Magic { get; set; }
+
+    [JsonPropertyName("mind")]
+    public int Mind { get; set; }
+}

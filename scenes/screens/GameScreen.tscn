@@ -1,0 +1,156 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/GameScreen.cs" id="1_game"]
+[ext_resource type="PackedScene" path="res://scenes/game/map/GameMapScene.tscn" id="2_map"]
+[ext_resource type="PackedScene" path="res://scenes/game/ui/GameHud.tscn" id="3_hud"]
+[ext_resource type="Theme" path="res://assets/theme/client_theme.tres" id="4_theme"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_status"]
+bg_color = Color(0.035, 0.058, 0.068, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.43, 0.48, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_error"]
+bg_color = Color(0.13, 0.075, 0.075, 0.97)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.74, 0.31, 0.31, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0.02, 0.03, 0.035, 0.3)
+shadow_size = 10
+
+[node name="GameScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_game")
+
+[node name="GameMap" parent="." instance=ExtResource("2_map")]
+AutoLoadOnReady = false
+RequireGameId = true
+
+[node name="GameHud" parent="." instance=ExtResource("3_hud")]
+
+[node name="PlayerViewTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="StatusLayer" type="CanvasLayer" parent="."]
+layer = 30
+
+[node name="HudLoadingState" type="MarginContainer" parent="StatusLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 18.0
+offset_bottom = 68.0
+grow_horizontal = 2
+mouse_filter = 2
+theme = ExtResource("4_theme")
+theme_override_constants/margin_left = 720
+theme_override_constants/margin_right = 720
+
+[node name="LoadingPanel" type="PanelContainer" parent="StatusLayer/HudLoadingState"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_status")
+
+[node name="LoadingMargin" type="MarginContainer" parent="StatusLayer/HudLoadingState/LoadingPanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 10
+
+[node name="LoadingLabel" type="Label" parent="StatusLayer/HudLoadingState/LoadingPanel/LoadingMargin"]
+layout_mode = 2
+mouse_filter = 2
+text = "正在加载玩家信息……"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.82, 0.9, 0.92, 1)
+
+[node name="HudErrorState" type="CenterContainer" parent="StatusLayer"]
+visible = false
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 18.0
+offset_bottom = 136.0
+grow_horizontal = 2
+mouse_filter = 2
+theme = ExtResource("4_theme")
+
+[node name="ErrorPanel" type="PanelContainer" parent="StatusLayer/HudErrorState" groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_error")
+
+[node name="ErrorMargin" type="MarginContainer" parent="StatusLayer/HudErrorState/ErrorPanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 12
+
+[node name="ErrorContent" type="HBoxContainer" parent="StatusLayer/HudErrorState/ErrorPanel/ErrorMargin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 14
+
+[node name="ErrorLabel" type="Label" parent="StatusLayer/HudErrorState/ErrorPanel/ErrorMargin/ErrorContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+text = "玩家信息同步失败。"
+autowrap_mode = 3
+vertical_alignment = 1
+theme_override_colors/font_color = Color(0.98, 0.8, 0.8, 1)
+
+[node name="RetryButton" type="Button" parent="StatusLayer/HudErrorState/ErrorPanel/ErrorMargin/ErrorContent"]
+custom_minimum_size = Vector2(96, 40)
+layout_mode = 2
+text = "重试"
+
+[node name="FatalState" type="CenterContainer" parent="StatusLayer" groups=["blocks_map_input"]]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_theme")
+
+[node name="FatalPanel" type="PanelContainer" parent="StatusLayer/FatalState"]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_error")
+
+[node name="FatalMargin" type="MarginContainer" parent="StatusLayer/FatalState/FatalPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="FatalLabel" type="Label" parent="StatusLayer/FatalState/FatalPanel/FatalMargin"]
+layout_mode = 2
+text = "缺少有效对局信息。"
+horizontal_alignment = 1
+autowrap_mode = 3
+theme_override_colors/font_color = Color(0.98, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 18
