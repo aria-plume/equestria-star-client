@@ -31,13 +31,16 @@ public partial class GameMapScene : Node3D
     public float CellRadius { get; set; } = 0.55f;
 
     [Export(PropertyHint.Range, "0.02,1.0,0.01")]
-    public float CellHeight { get; set; } = 0.16f;
+    public float CellHeight { get; set; } = 0.11f;
 
     [Export(PropertyHint.Range, "0.0,0.2,0.005")]
     public float CellBevelWidth { get; set; } = 0.035f;
 
     [Export]
-    public bool ShowQrCoordinates { get; set; } = true;
+    public bool ShowQrCoordinates { get; set; }
+
+    [Export]
+    public bool UseOrigamiArt { get; set; } = true;
 
     private readonly GameMapBuilder _builder = new();
     private Node3D _mapRoot = null!;
@@ -172,7 +175,8 @@ public partial class GameMapScene : Node3D
             CellRadius,
             CellHeight,
             CellBevelWidth,
-            ShowQrCoordinates
+            ShowQrCoordinates,
+            UseOrigamiArt
         );
         if (!buildResult.Ok)
         {

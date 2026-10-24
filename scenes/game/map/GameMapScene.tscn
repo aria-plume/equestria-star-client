@@ -7,15 +7,15 @@
 
 [sub_resource type="Environment" id="Environment_map"]
 background_mode = 1
-background_color = Color(0.035, 0.052, 0.061, 1)
-ambient_light_source = 3
-ambient_light_color = Color(0.62, 0.71, 0.77, 1)
-ambient_light_energy = 0.7
-reflected_light_source = 2
+background_color = Color(0.82, 0.87, 0.84, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.79, 0.86, 0.94, 1)
+ambient_light_energy = 0.55
+reflected_light_source = 1
 tonemap_mode = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial_floor"]
-albedo_color = Color(0.052, 0.075, 0.082, 1)
+albedo_color = Color(0.77, 0.82, 0.77, 1)
 roughness = 0.96
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
@@ -64,9 +64,11 @@ environment = SubResource("Environment_map")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 rotation_degrees = Vector3(-56, -28, 0)
-light_color = Color(0.9, 0.94, 1, 1)
-light_energy = 1.28
+light_color = Color(1, 0.94, 0.83, 1)
+light_energy = 0.95
 shadow_enabled = true
+shadow_opacity = 0.65
+shadow_blur = 1.5
 directional_shadow_max_distance = 40.0
 
 [node name="Floor" type="MeshInstance3D" parent="."]

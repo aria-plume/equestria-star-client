@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/art/origami/crystal-ground/terrain.glb" id="terrain"]
+
+[node name="OrigamiAsset" type="Node3D"]
+rotation_degrees = Vector3(0, 30, 0)
+
+[node name="Terrain" parent="." instance=ExtResource("terrain")]

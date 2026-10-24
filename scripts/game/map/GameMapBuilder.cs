@@ -31,7 +31,8 @@ public sealed class GameMapBuilder
         float radius,
         float height,
         float bevelWidth,
-        bool showDebugLabels
+        bool showDebugLabels,
+        bool useOrigamiArt = true
     )
     {
         var validation = MapDataValidator.Validate(map);
@@ -49,6 +50,7 @@ public sealed class GameMapBuilder
         var maxX = float.MinValue;
         var minZ = float.MaxValue;
         var maxZ = float.MinValue;
+        var maxVisualHeight = 0.0f;
 
         try
         {
@@ -90,6 +92,9 @@ public sealed class GameMapBuilder
                     InteractionTags = tags
                 });
 
+                if (useOrigamiArt && OrigamiArtCatalog.Resolve(cell.Data!) is { } art)
+                    maxVisualHeight = Math.Max(maxVisualHeight, OrigamiArtCatalog.Apply(cell, art));
+
                 var debugLabel = cell.GetNode<Label3D>("DebugLabel");
                 debugLabel.FontSize = 34;
                 debugLabel.OutlineSize = 8;
@@ -119,7 +124,7 @@ public sealed class GameMapBuilder
         _edges = map.Edges!.AsReadOnly();
         var bounds = new Aabb(
             new Vector3(minX, -safeHeight, minZ),
-            new Vector3(maxX - minX, safeHeight, maxZ - minZ)
+            new Vector3(maxX - minX, safeHeight + maxVisualHeight, maxZ - minZ)
         );
         return new MapBuildResult(true, "", _cellsById.Count, _edges.Count, bounds);
     }

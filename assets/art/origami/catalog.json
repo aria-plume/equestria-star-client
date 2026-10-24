@@ -1,0 +1,3539 @@
+{
+  "schemaVersion": 1,
+  "sourceUnits": "metres",
+  "sourceRadius": 1.0,
+  "sourceThickness": 0.2,
+  "godotRotationDegreesY": 30,
+  "materialPolicy": "Matte base colours and embedded image decals; procedural Blender fibres are not baked.",
+  "unavailable": [
+    {
+      "name": "市政厅",
+      "reason": "制作源尚未标准化和独立拆分，暂用可交互基础地块"
+    }
+  ],
+  "assets": [
+    {
+      "id": "grass-light",
+      "name": "基础_浅绿草地",
+      "aliases": [
+        "基础_浅绿草地"
+      ],
+      "status": "technical-ready",
+      "sourceReadme": "交付/地块/基础_浅绿草地/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/基础_浅绿草地/01_地块.blend",
+          "sourceSha256": "85f0bdce626879cb78fab0b6abfeab38e00718209e1c52bdba6c206ecaab06bb",
+          "path": "res://assets/art/origami/grass-light/terrain.glb",
+          "sha256": "aaba14c145989f78d251c8a2404e2f4ec4812e32fe19b34cd8450c5312ee9921",
+          "bytes": 6632,
+          "assemblyOffsetBlender": [
+            0,
+            0,
+            0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "grass-dark",
+      "name": "基础_深绿草地",
+      "aliases": [
+        "基础_深绿草地"
+      ],
+      "status": "technical-ready",
+      "sourceReadme": "交付/地块/基础_深绿草地/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/基础_深绿草地/01_地块.blend",
+          "sourceSha256": "d53d619daaa50f646b05dccfd582a1b86928c80e3ed6976559a76e7ab2ece6fb",
+          "path": "res://assets/art/origami/grass-dark/terrain.glb",
+          "sha256": "acf1b4240670ddf93eed332f5197275ce05614007bafc4d400b193705c7752cb",
+          "bytes": 6624,
+          "assemblyOffsetBlender": [
+            0,
+            0,
+            0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "sand",
+      "name": "基础_沙地",
+      "aliases": [
+        "基础_沙地"
+      ],
+      "status": "technical-ready",
+      "sourceReadme": "交付/地块/基础_沙地/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/基础_沙地/01_地块.blend",
+          "sourceSha256": "b21ea57118c246d66183cd379bedbb01151e8c6a5a3e28211015d76f6e6cc81f",
+          "path": "res://assets/art/origami/sand/terrain.glb",
+          "sha256": "7ef980f4613eb689723fcf8aa384cbe8bdec9860877a79ecfa320e328a847bbc",
+          "bytes": 6592,
+          "assemblyOffsetBlender": [
+            0,
+            0,
+            0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "stone",
+      "name": "基础_石地",
+      "aliases": [
+        "基础_石地"
+      ],
+      "status": "technical-ready",
+      "sourceReadme": "交付/地块/基础_石地/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/基础_石地/01_地块.blend",
+          "sourceSha256": "fd2a39630f96aef7a714b41e393eccebd1db5a13609da3b1774506a870e5c70f",
+          "path": "res://assets/art/origami/stone/terrain.glb",
+          "sha256": "aa91f7b10e3bed027183a1949cd7ced18e6c37bd6d854fb5b1d5fa1cc37aea91",
+          "bytes": 6596,
+          "assemblyOffsetBlender": [
+            0,
+            0,
+            0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "crystal-ground",
+      "name": "基础_水晶地",
+      "aliases": [
+        "基础_水晶地"
+      ],
+      "status": "technical-ready",
+      "sourceReadme": "交付/地块/基础_水晶地/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/基础_水晶地/01_地块.blend",
+          "sourceSha256": "1097f9ca200d8e29102438c8cfa8b10c509f21fd4c19e57677174bd6673d92b6",
+          "path": "res://assets/art/origami/crystal-ground/terrain.glb",
+          "sha256": "7c48066747bb70617f8fee54cf07587cdcdae55970bcfc917e0e981fcb8914c2",
+          "bytes": 6624,
+          "assemblyOffsetBlender": [
+            0,
+            0,
+            0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "snow",
+      "name": "基础_雪地",
+      "aliases": [
+        "基础_雪地"
+      ],
+      "status": "technical-ready",
+      "sourceReadme": "交付/地块/基础_雪地/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/基础_雪地/01_地块.blend",
+          "sourceSha256": "b0dbfc12e1ed5ff26f8050a017bac1b6e639dbcd8ca3dd3caf51d2d6ef69bc1d",
+          "path": "res://assets/art/origami/snow/terrain.glb",
+          "sha256": "2629c6a93554b7ba355b45186c9745736f9b152e585f2ad3567bdf0333f63aa8",
+          "bytes": 6592,
+          "assemblyOffsetBlender": [
+            0,
+            0,
+            0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "sugarcube",
+      "name": "糖块屋",
+      "aliases": [
+        "糖块屋",
+        "方糖屋",
+        "方糖甜点屋",
+        "SugarcubeCorner"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/糖块屋/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/糖块屋/01_地块.blend",
+          "sourceSha256": "1bfff702916dea72b181b07ba1f4413ebda30a39c894502959363e55ea5850ee",
+          "path": "res://assets/art/origami/sugarcube/terrain.glb",
+          "sha256": "e9ab81eb6bf6f07b8788eb4d9583d3582af1a2b6f219ecacd0f49a7b6b30d0e2",
+          "bytes": 6564,
+          "assemblyOffsetBlender": [
+            0,
+            0,
+            0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/糖块屋/02_建筑.blend",
+          "sourceSha256": "eb2c09dbb7c57b693dbe294f40d6d91ef08383d52cef4c4be4d549db90602c6c",
+          "path": "res://assets/art/origami/sugarcube/building.glb",
+          "sha256": "bbe08aeeb89623334cf45dd495d44cb0f92e7ed65e1ad2b4dabd1890e058bc16",
+          "bytes": 204920,
+          "assemblyOffsetBlender": [
+            0,
+            0,
+            0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.8700000047683716,
+              -0.7900000214576721,
+              0.0
+            ],
+            "max": [
+              0.949999988079071,
+              0.6000000238418579,
+              2.75
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "everfree",
+      "name": "无尽自由森林",
+      "aliases": [
+        "无尽自由森林",
+        "无尽之森",
+        "EverfreeEntrance",
+        "EverfreeLeft",
+        "EverfreeCenter",
+        "EverfreeRight"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/无尽自由森林/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/无尽自由森林/01_地块.blend",
+          "sourceSha256": "9a173c7fa88bef3a2ebb4c661eb09c80c2c3f2efc8e9be9308a6bd53818847b1",
+          "path": "res://assets/art/origami/everfree/terrain.glb",
+          "sha256": "c5b1a86836840675d466a2db6747c9021eb9f36bdb5e6b7fe98b7a3768b05579",
+          "bytes": 13548,
+          "assemblyOffsetBlender": [
+            0,
+            0,
+            0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.03674386069178581
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/无尽自由森林/03_装饰.blend",
+          "sourceSha256": "868ee7b6004983e11aa74b6f1d9e4cbe7853ce2e827c95be162d7ef73d897fcc",
+          "path": "res://assets/art/origami/everfree/decoration.glb",
+          "sha256": "8ce1c0f012113eb290b51e0ceb26ccbd3051d6da12ec6ec887c10e0fcb1848eb",
+          "bytes": 165164,
+          "assemblyOffsetBlender": [
+            0,
+            0,
+            0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.8404052257537842,
+              -0.7717617750167847,
+              -0.03455986827611923
+            ],
+            "max": [
+              0.8362888097763062,
+              0.7513008713722229,
+              1.0691999197006226
+            ]
+          },
+          "meshObjects": 6,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "sweet-apple-acres",
+      "name": "香甜苹果园",
+      "aliases": [
+        "香甜苹果园",
+        "甜苹果园",
+        "SweetAppleAcres"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/香甜苹果园/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/香甜苹果园/01_地块.blend",
+          "sourceSha256": "30fd8ec1c51776b247b59f3d461b3db6b0b2136316d256abbd9bcd55e998cfc8",
+          "path": "res://assets/art/origami/sweet-apple-acres/terrain.glb",
+          "sha256": "116a5c2d45698e131e090aa23bf546f8de2ff02687711e60ae419fd317df65f2",
+          "bytes": 13528,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/香甜苹果园/02_建筑.blend",
+          "sourceSha256": "7c4f0bdd837d6ffcaee465ac53229021ec4a0b1d480f48836f5b91be8119d991",
+          "path": "res://assets/art/origami/sweet-apple-acres/building.glb",
+          "sha256": "bd1c63075cf1a85cff9f467e2e82dd795dbed0c489dbf86cc9687fe5b0ba7ad0",
+          "bytes": 1170532,
+          "assemblyOffsetBlender": [
+            -0.08743040263652802,
+            0.15804895758628845,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.5865808129310608,
+              -0.30101633071899414,
+              0.0
+            ],
+            "max": [
+              0.41172003746032715,
+              0.617114245891571,
+              1.4452199935913086
+            ]
+          },
+          "meshObjects": 3,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/香甜苹果园/03_装饰.blend",
+          "sourceSha256": "f1ae67c3766f96fbb25e42ce94f1ab708049e80983880d120ba0e62b44b09fb1",
+          "path": "res://assets/art/origami/sweet-apple-acres/decoration.glb",
+          "sha256": "06eb5b874877c44baa7cae45d0433e13a8e1f8dd69bd4501303614d802c7ca66",
+          "bytes": 806232,
+          "assemblyOffsetBlender": [
+            -0.010593801736831665,
+            -0.08896318078041077,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7193905115127563,
+              -0.8573651313781738,
+              0.0
+            ],
+            "max": [
+              0.698202908039093,
+              0.6794387698173523,
+              1.5549598932266235
+            ]
+          },
+          "meshObjects": 4,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "fluttershy",
+      "name": "小蝶家",
+      "aliases": [
+        "小蝶家",
+        "柔柔小屋",
+        "FluttershyCottage"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/小蝶家/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/小蝶家/01_地块.blend",
+          "sourceSha256": "cebdbbb8e5e990a7ec8e1ddc36a948a0ee40d48ddb8c7b7786eafec51f001e1c",
+          "path": "res://assets/art/origami/fluttershy/terrain.glb",
+          "sha256": "1d620e62df9bba5a79b18e8cdaba97e288f753a8c83d7d9fadd488d8e81e7ccc",
+          "bytes": 5416,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/小蝶家/02_建筑.blend",
+          "sourceSha256": "574c370ab20f284bbbd04cc4161145afcd3f6f303555dc6d565192833065503a",
+          "path": "res://assets/art/origami/fluttershy/building.glb",
+          "sha256": "8a805eb31cd1eefaf548a5098838fd1043d9396707bc659a286be70cc2375654",
+          "bytes": 189200,
+          "assemblyOffsetBlender": [
+            -0.021199971437454224,
+            0.3883511424064636,
+            -0.007651940453797579
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6399999856948853,
+              -0.06395372748374939,
+              -0.007651940453797579
+            ],
+            "max": [
+              0.5976000428199768,
+              0.8406559824943542,
+              1.1984000205993652
+            ]
+          },
+          "meshObjects": 4,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/小蝶家/03_装饰.blend",
+          "sourceSha256": "790112ff6f3d3beea611f297e1f21e13898fdff04ba8423b33cbd8eeb0c79ec3",
+          "path": "res://assets/art/origami/fluttershy/decoration.glb",
+          "sha256": "3c3acba1d667971ba55513aa9917d9b8a23de34776ecc15ec3fb5835e443282b",
+          "bytes": 349104,
+          "assemblyOffsetBlender": [
+            0.04990309476852417,
+            0.007947206497192383,
+            -0.005581558682024479
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.8701938390731812,
+              -0.7151056528091431,
+              -0.005581558682024479
+            ],
+            "max": [
+              0.9700000286102295,
+              0.7310000658035278,
+              0.47999998927116394
+            ]
+          },
+          "meshObjects": 4,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "fashion-shop",
+      "name": "时装店",
+      "aliases": [
+        "时装店",
+        "FashionShop"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/时装店/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/时装店/01_地块.blend",
+          "sourceSha256": "30980aee814294986e6075713845bb4302f0a6d62515df32e5620c5f3cd2c7c4",
+          "path": "res://assets/art/origami/fashion-shop/terrain.glb",
+          "sha256": "85d6c2b5c416c1d9f4f60050c4cbd6819e0e6bee481a476867b0280020b70aba",
+          "bytes": 5416,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/时装店/02_建筑.blend",
+          "sourceSha256": "0b8034b8a583504455487b7f81b7a181175650b713f73379d37344e042bc902d",
+          "path": "res://assets/art/origami/fashion-shop/building.glb",
+          "sha256": "26e847a7018e4b87ab8d52cb2974f90303c63bd2ec55feab1f0d838f0cdbb1f3",
+          "bytes": 3554724,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.38074997067451477,
+            -0.010053026489913464
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.4724999964237213,
+              -0.10100001096725464,
+              -0.010053026489913464
+            ],
+            "max": [
+              0.4724999964237213,
+              0.8624999523162842,
+              1.2949999570846558
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": [
+            "Roof_PrintedHarlequin",
+            "Carousel_TransparentPrintedInk"
+          ]
+        },
+        "decoration": {
+          "source": "交付/地块/时装店/03_装饰.blend",
+          "sourceSha256": "3b0d08b9ef29c2debd385c6d4ec21f488c4425ac51e7c0e88c8474e6ea53aa33",
+          "path": "res://assets/art/origami/fashion-shop/decoration.glb",
+          "sha256": "2445ad8922eb671c592657ba5d2263e0214ba8710158167801089404a0efd05a",
+          "bytes": 379944,
+          "assemblyOffsetBlender": [
+            0.0,
+            -0.03750002384185791,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.8250000476837158,
+              -0.7900000810623169,
+              0.0
+            ],
+            "max": [
+              0.8250000476837158,
+              0.7150000333786011,
+              0.08100000023841858
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "rainbow-house",
+      "name": "云宝家",
+      "aliases": [
+        "云宝家",
+        "RainbowDashHouse"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/云宝家/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/云宝家/01_地块.blend",
+          "sourceSha256": "a829984db4913907d51d9a86b0c72c2cda1862052b11b56c5422c3f0b3faf7a3",
+          "path": "res://assets/art/origami/rainbow-house/terrain.glb",
+          "sha256": "72401fb8b031b83ebfbb903f8ad46de3de48ec01633dab370d0e2cdfa7ad83f2",
+          "bytes": 5416,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/云宝家/02_建筑.blend",
+          "sourceSha256": "ef59af8fcdb1c7f756719e09c6411f2737907f895a857ed4abcc7765deba33e0",
+          "path": "res://assets/art/origami/rainbow-house/building.glb",
+          "sha256": "e4179a793180fd1264e04b4d1563d2502413cb80e5ba696219787ba713f60dc3",
+          "bytes": 473340,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.2456769347190857,
+            0.40454572439193726
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7291200160980225,
+              -0.2284063696861267,
+              0.40454572439193726
+            ],
+            "max": [
+              0.7291200160980225,
+              0.7197602391242981,
+              2.603600025177002
+            ]
+          },
+          "meshObjects": 4,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/云宝家/03_装饰.blend",
+          "sourceSha256": "79e2c492511cb7ff1d17d0207accc9c37fb4bc69604d39fe8ceed7484ad6700d",
+          "path": "res://assets/art/origami/rainbow-house/decoration.glb",
+          "sha256": "7c6c8f70d1bf9552cb0df2ac328411d5f9b9bda25d7aa9b8de019065203cb5d1",
+          "bytes": 17216,
+          "assemblyOffsetBlender": [
+            0.0014590024948120117,
+            -0.03999999165534973,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.8170820474624634,
+              -0.2941267788410187,
+              0.0
+            ],
+            "max": [
+              0.8200000524520874,
+              0.2141267955303192,
+              0.10199999809265137
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "old-castle",
+      "name": "姐妹城堡",
+      "aliases": [
+        "姐妹城堡",
+        "旧城堡",
+        "古城遗迹",
+        "OldCastle"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/姐妹城堡/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/姐妹城堡/01_地块.blend",
+          "sourceSha256": "355cf93c74eeef4ad1132cadea6a3908e41e49d0ed394d9d810cd5ef88f1a634",
+          "path": "res://assets/art/origami/old-castle/terrain.glb",
+          "sha256": "1a6bbb2f470624d92c8223b5c983eb95cce85ed1aef8b793763e14461686694a",
+          "bytes": 79152,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/姐妹城堡/02_建筑.blend",
+          "sourceSha256": "16aa0e516ce06a867906eb5d515dd24996c891e32c90234ee31a6687238250c7",
+          "path": "res://assets/art/origami/old-castle/building.glb",
+          "sha256": "990edf57887532e3eda17b636b6da2576f8063356ce301c51a5040174bb982ff",
+          "bytes": 149540,
+          "assemblyOffsetBlender": [
+            -0.0032999515533447266,
+            0.21139001846313477,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.5676000118255615,
+              -0.2516000270843506,
+              0.0
+            ],
+            "max": [
+              0.5610001087188721,
+              0.6743800640106201,
+              1.4968799352645874
+            ]
+          },
+          "meshObjects": 4,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/姐妹城堡/03_装饰.blend",
+          "sourceSha256": "a004adbc850dbb7c9f438db26b1f47d66eca0a80fdb7bf191ccc44c9ffa7ee61",
+          "path": "res://assets/art/origami/old-castle/decoration.glb",
+          "sha256": "3395155736beb6aeeef7c8f8d5a62f3c220236bd46ef8093e5f241d04571f0fc",
+          "bytes": 194600,
+          "assemblyOffsetBlender": [
+            -0.07049587368965149,
+            -0.05403757095336914,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0515179634094238,
+              -0.8466096520423889,
+              0.0
+            ],
+            "max": [
+              0.9105262756347656,
+              0.7385345101356506,
+              0.7983906269073486
+            ]
+          },
+          "meshObjects": 5,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "zecora",
+      "name": "泽可拉小屋",
+      "aliases": [
+        "泽可拉小屋",
+        "泽科拉小屋",
+        "ZecoraHut"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/泽可拉小屋/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/泽可拉小屋/01_地块.blend",
+          "sourceSha256": "388513c52970f08bcb8ad35662c318cc8c38dae8040022f2910d97fa322e3ee6",
+          "path": "res://assets/art/origami/zecora/terrain.glb",
+          "sha256": "ab29b9f2316e9c4bde2c088e9815650a8e52544930e47f884ebe5cf7c417d302",
+          "bytes": 70112,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/泽可拉小屋/02_建筑.blend",
+          "sourceSha256": "1855e8f3741acc7119dd740722778953e01a9313da1bd9dbd1a59cc3b2736763",
+          "path": "res://assets/art/origami/zecora/building.glb",
+          "sha256": "7bdc80ab36636ac85025884b5ce73612c040a3729c539735780b6759c8c4fc4e",
+          "bytes": 319952,
+          "assemblyOffsetBlender": [
+            0.023005008697509766,
+            0.33581286668777466,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7964504957199097,
+              -0.11720000207424164,
+              0.0
+            ],
+            "max": [
+              0.8424605131149292,
+              0.7888257503509521,
+              1.3775359392166138
+            ]
+          },
+          "meshObjects": 5,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/泽可拉小屋/03_装饰.blend",
+          "sourceSha256": "5d6d87f3a342122b3a071551b0265eabffad278ee8136ebbc819d8139f089880",
+          "path": "res://assets/art/origami/zecora/decoration.glb",
+          "sha256": "7560c589be0c80c25bedcaf688d556ebe5db0e8a8ae8e5f99b901ce6e690c56f",
+          "bytes": 218504,
+          "assemblyOffsetBlender": [
+            0.008017271757125854,
+            0.03711274266242981,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.9410958886146545,
+              -0.7166095972061157,
+              0.0
+            ],
+            "max": [
+              0.9571304321289062,
+              0.7908351421356201,
+              0.5781449675559998
+            ]
+          },
+          "meshObjects": 4,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "harmony-tree",
+      "name": "谐律之树",
+      "aliases": [
+        "谐律之树",
+        "韵律之树",
+        "TreeOfHarmony"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/谐律之树/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/谐律之树/01_地块.blend",
+          "sourceSha256": "25790e7a3f5d48277cff7f02c270feb508d3f81e4b426c93a82da419f192f90c",
+          "path": "res://assets/art/origami/harmony-tree/terrain.glb",
+          "sha256": "e080ddecffe61b21ef0e5d9e5f3bf93a702780646bf8f344171311dd9c70b5f5",
+          "bytes": 70088,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/谐律之树/02_主体.blend",
+          "sourceSha256": "e0b102611801be86b91ea49ffd0a4b8b6859608a2616eef1a86c2f8eaf7c59fc",
+          "path": "res://assets/art/origami/harmony-tree/building.glb",
+          "sha256": "f4f5b3e192f61f3315dbe1a6ac1fe66cf94240b737a5f8842cd94d349cb96275",
+          "bytes": 253568,
+          "assemblyOffsetBlender": [
+            0.018308937549591064,
+            0.2346917986869812,
+            0.006000000052154064
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7078490257263184,
+              -0.14475952088832855,
+              0.006000000052154064
+            ],
+            "max": [
+              0.7444669008255005,
+              0.6141431331634521,
+              1.555612564086914
+            ]
+          },
+          "meshObjects": 4,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/谐律之树/03_装饰.blend",
+          "sourceSha256": "2d8126f06323a3701a4e9c6f13cf74377864ffd0a71c7db108d0311553b27f86",
+          "path": "res://assets/art/origami/harmony-tree/decoration.glb",
+          "sha256": "0f3b556dc35ae548ef6219a8f0e138d1eab4e0b06bdfc2d4b4394d367aa0a8d8",
+          "bytes": 156832,
+          "assemblyOffsetBlender": [
+            -0.06844568252563477,
+            0.05541360378265381,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.9600913524627686,
+              -0.6466096639633179,
+              0.0
+            ],
+            "max": [
+              0.823199987411499,
+              0.7574368715286255,
+              0.5506142973899841
+            ]
+          },
+          "meshObjects": 4,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "twilight-castle",
+      "name": "暮光城堡",
+      "aliases": [
+        "暮光城堡",
+        "TwilightCastle"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/暮光城堡/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/暮光城堡/01_地块.blend",
+          "sourceSha256": "3dc3fd09c40694e326e227728b1390ab87c4ae3d93b38b02f8cbf488f3db327d",
+          "path": "res://assets/art/origami/twilight-castle/terrain.glb",
+          "sha256": "6a6887b6377f3c1a009948c6d081cbda817b83e1221066c116584e7157f3010f",
+          "bytes": 13504,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/暮光城堡/02_建筑.blend",
+          "sourceSha256": "03b65266f09682b6a725b677ef8280bfeb5e6bb20c5674bcdf4c700d1e4b7303",
+          "path": "res://assets/art/origami/twilight-castle/building.glb",
+          "sha256": "07746bc77b591e72f7b38d43d15ada8ebc62bab7d5f34ed30afff6288fe76775",
+          "bytes": 680552,
+          "assemblyOffsetBlender": [
+            0.04001396894454956,
+            0.132064551115036,
+            0.0004349999944679439
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6811354160308838,
+              -0.20986604690551758,
+              0.0004349999944679439
+            ],
+            "max": [
+              0.7611633539199829,
+              0.4739951491355896,
+              1.9793319702148438
+            ]
+          },
+          "meshObjects": 6,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/暮光城堡/03_装饰.blend",
+          "sourceSha256": "207880fe4a534dd0caad378cd2c8298dbf73f41352151648c055fb790c61bcd1",
+          "path": "res://assets/art/origami/twilight-castle/decoration.glb",
+          "sha256": "9b74c40264e8221f8852dc1b1a72602305579909417a6d71e3d24782c33ecaf9",
+          "bytes": 27428,
+          "assemblyOffsetBlender": [
+            -0.013544797897338867,
+            -0.13232147693634033,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7378895282745361,
+              -0.8500000238418579,
+              0.0
+            ],
+            "max": [
+              0.7107999324798584,
+              0.5853570699691772,
+              0.11527983844280243
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "manehattan-district",
+      "name": "马哈顿火车站",
+      "aliases": [
+        "马哈顿火车站"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/马哈顿火车站/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/马哈顿火车站/01_地块.blend",
+          "sourceSha256": "2ebd6d5c74ab59bc80df8d6da8279665cbe2af4737f24f3d2a91465b84374b55",
+          "path": "res://assets/art/origami/manehattan-district/terrain.glb",
+          "sha256": "bd2d379fa155be9ee7a047b76d3ec9bfea8133a3a86d83be3a7b4ce71867980e",
+          "bytes": 13600,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/马哈顿火车站/02_建筑.blend",
+          "sourceSha256": "460296d745ce50b5cce1c4064f9bfbb816aab522c9973ec43eade2b3811e9193",
+          "path": "res://assets/art/origami/manehattan-district/building.glb",
+          "sha256": "73387af2efe170572d30d33ef25a379e2d3586446815b801e3ee1eef023d1bdb",
+          "bytes": 1032108,
+          "assemblyOffsetBlender": [
+            -0.017499983310699463,
+            0.16049998998641968,
+            0.019999999552965164
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7770000100135803,
+              -0.29600000381469727,
+              0.019999999552965164
+            ],
+            "max": [
+              0.7420000433921814,
+              0.6169999837875366,
+              1.9711220264434814
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/马哈顿火车站/03_装饰.blend",
+          "sourceSha256": "4154fba70f2aa924065c91697f827f6983ee8101ea3f36c27adcf3c6c2ccaea9",
+          "path": "res://assets/art/origami/manehattan-district/decoration.glb",
+          "sha256": "6df66deed902ae72ffcf42460d2bb86cda18eba7f1095130962e2d51e974c561",
+          "bytes": 47788,
+          "assemblyOffsetBlender": [
+            0.0034401416778564453,
+            -0.15666726231575012,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.8568542003631592,
+              -0.5733345150947571,
+              0.0
+            ],
+            "max": [
+              0.8637344837188721,
+              0.25999999046325684,
+              0.4887999892234802
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "appleloosa",
+      "name": "苹果鲁萨",
+      "aliases": [
+        "苹果鲁萨",
+        "Appleloosa"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/苹果鲁萨/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/苹果鲁萨/01_地块.blend",
+          "sourceSha256": "3a241e6580ac83e9a39571b819acd12b86633020bf8e519367e72a4621cddc94",
+          "path": "res://assets/art/origami/appleloosa/terrain.glb",
+          "sha256": "056f671d5456e883103cccf6ad6919ad699afab06cb270f1f4d7e3a6bebad56f",
+          "bytes": 13548,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/苹果鲁萨/02_建筑.blend",
+          "sourceSha256": "16a1ffe180e4cc30e8a00080e99c0c80553806a725780223151e595035f2ba23",
+          "path": "res://assets/art/origami/appleloosa/building.glb",
+          "sha256": "87022a49986f16ca6af9bd4a0389ae596b39c257cfcfd20431d68aba7bd3e6ab",
+          "bytes": 1035356,
+          "assemblyOffsetBlender": [
+            0.004999995231628418,
+            0.15514999628067017,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.75,
+              -0.29250001907348633,
+              0.0
+            ],
+            "max": [
+              0.7599999904632568,
+              0.6028000116348267,
+              1.570237159729004
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/苹果鲁萨/03_装饰.blend",
+          "sourceSha256": "24f934ec42b9768dc4de65b0a2fde78cb6c883d833f7243119953fb897963c9e",
+          "path": "res://assets/art/origami/appleloosa/decoration.glb",
+          "sha256": "f5523e7c0da0558d9352a25c9633ed9d9bf4bf6832fd1afbad97d67bc04d11f1",
+          "bytes": 95580,
+          "assemblyOffsetBlender": [
+            -0.019293606281280518,
+            0.0098000168800354,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.8610872030258179,
+              -0.7649999856948853,
+              0.0
+            ],
+            "max": [
+              0.8224999904632568,
+              0.784600019454956,
+              1.0097999572753906
+            ]
+          },
+          "meshObjects": 3,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "tartarus",
+      "name": "塔塔罗斯",
+      "aliases": [
+        "塔塔罗斯",
+        "地狱",
+        "塔尔塔罗斯",
+        "Tartarus"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/塔塔罗斯/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/塔塔罗斯/01_地块.blend",
+          "sourceSha256": "81fb790f2f1d56c1e4bf1cacaea397056c1230401e495fe63e5afcfa27324749",
+          "path": "res://assets/art/origami/tartarus/terrain.glb",
+          "sha256": "f96cb7fd9e33abc29cf705559b39f5a2dc2e3909fa167c3772eda80c38e0f083",
+          "bytes": 13552,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/塔塔罗斯/02_建筑.blend",
+          "sourceSha256": "492dcd0c0573af80b8bcc6a5c8aa895010b93b2c887825d798fc2ac905c6ce05",
+          "path": "res://assets/art/origami/tartarus/building.glb",
+          "sha256": "da552dca428f51a65268b68e5bcdeac41be79d1cd80806fe7e9f52ee6fd28db6",
+          "bytes": 272668,
+          "assemblyOffsetBlender": [
+            -0.007500052452087402,
+            -0.09598967432975769,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.5450000762939453,
+              -0.8514793515205383,
+              0.0
+            ],
+            "max": [
+              0.5299999713897705,
+              0.659500002861023,
+              1.9101393222808838
+            ]
+          },
+          "meshObjects": 4,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/塔塔罗斯/03_装饰.blend",
+          "sourceSha256": "c0d8e6a76fac978470bbaceb041b940d9ed879080148b9c9fdb98257aa20ff1b",
+          "path": "res://assets/art/origami/tartarus/decoration.glb",
+          "sha256": "c0535006bac802ac397b8144313baeab5fccd0c12f3c95bac4e682e492e58a93",
+          "bytes": 40436,
+          "assemblyOffsetBlender": [
+            0.007218122482299805,
+            0.13999998569488525,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6955637335777283,
+              -0.47799426317214966,
+              0.0
+            ],
+            "max": [
+              0.7099999785423279,
+              0.7579942345619202,
+              0.27000001072883606
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "friendship-school",
+      "name": "友谊学院",
+      "aliases": [
+        "友谊学院"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/友谊学院/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/友谊学院/01_地块.blend",
+          "sourceSha256": "e24d94e334ea73abf8dbe38c7722bfb86c7686e6b0f520ef6675b5529bf305c1",
+          "path": "res://assets/art/origami/friendship-school/terrain.glb",
+          "sha256": "52e006147dd765e70da5428dbcae80a5a566e2dc88f0451ac66029f169a8d482",
+          "bytes": 13504,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/友谊学院/02_建筑.blend",
+          "sourceSha256": "91c1e05c921ba0f767ea90b3104b302efca66a42d8405005389ac87937583931",
+          "path": "res://assets/art/origami/friendship-school/building.glb",
+          "sha256": "edcd60caae338d0c58574ac354f330b7a07b15cbd28cb81b9fcaa4405e8526bf",
+          "bytes": 2592364,
+          "assemblyOffsetBlender": [
+            0.025696396827697754,
+            0.06545543670654297,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.5727728605270386,
+              -0.3294171690940857,
+              0.0
+            ],
+            "max": [
+              0.6241656541824341,
+              0.46032804250717163,
+              1.537500023841858
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/友谊学院/03_装饰.blend",
+          "sourceSha256": "0007b1d34c23cd3642a913d13aa36c7b33bdbbce8ed8b7a4ff6ef13f4ad4d076",
+          "path": "res://assets/art/origami/friendship-school/decoration.glb",
+          "sha256": "ade3d9422a439816f696116171c765b33e20e4280c7a9ece3d47dfd8ce1fc45d",
+          "bytes": 704468,
+          "assemblyOffsetBlender": [
+            0.01365545392036438,
+            0.006151944398880005,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7038828134536743,
+              -0.7132678627967834,
+              0.0
+            ],
+            "max": [
+              0.7311937212944031,
+              0.7255717515945435,
+              1.3899999856948853
+            ]
+          },
+          "meshObjects": 5,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "ponyville-market",
+      "name": "小马镇集市",
+      "aliases": [
+        "小马镇集市",
+        "集市"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/小马镇集市/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/小马镇集市/01_地块.blend",
+          "sourceSha256": "fe6d91c56399eac49bb1296fca3cd335ff162994e29f9361d26e3da5a33276b9",
+          "path": "res://assets/art/origami/ponyville-market/terrain.glb",
+          "sha256": "481335ac67b3d16d9be5c33594165694ef62471107301375cfadc1143c764fa0",
+          "bytes": 13528,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/小马镇集市/02_建筑.blend",
+          "sourceSha256": "9ea01561bbbdae5e87e33c441e07e8fcd295a66777797783235517e3cc901232",
+          "path": "res://assets/art/origami/ponyville-market/building.glb",
+          "sha256": "f51f1d9d4c3f1fe6dc127bea1e5e1ae876ee631ff5b804efee9ff8fdcd1491e9",
+          "bytes": 353348,
+          "assemblyOffsetBlender": [
+            -0.020171552896499634,
+            0.22554178535938263,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6703431010246277,
+              -0.18041642010211945,
+              0.0
+            ],
+            "max": [
+              0.6299999952316284,
+              0.6315000057220459,
+              0.8600000143051147
+            ]
+          },
+          "meshObjects": 3,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/小马镇集市/03_装饰.blend",
+          "sourceSha256": "caf97595f58f27b068c22ff15a7675d4abf4a4e40c455080b01259c2fd53826a",
+          "path": "res://assets/art/origami/ponyville-market/decoration.glb",
+          "sha256": "254e3de40afac30713fecee6c20aafd452c4a7857eea27e131c98a19cc01b967",
+          "bytes": 451380,
+          "assemblyOffsetBlender": [
+            -0.0065000057220458984,
+            -0.1109999418258667,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7749999761581421,
+              -0.8299999237060547,
+              0.0
+            ],
+            "max": [
+              0.7619999647140503,
+              0.6080000400543213,
+              0.8399999737739563
+            ]
+          },
+          "meshObjects": 4,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "ponyville-station",
+      "name": "小马谷火车站",
+      "aliases": [
+        "小马谷火车站",
+        "StationPonyville",
+        "小马谷车站"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/小马谷火车站/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/小马谷火车站/01_地块.blend",
+          "sourceSha256": "4406e6fbb90f30f6e7870085eec3554bb1de5a7f6b658dca734cbea2221b7d61",
+          "path": "res://assets/art/origami/ponyville-station/terrain.glb",
+          "sha256": "cdb11e6aef8d2bd1cf23a028b07057cbcb8f478b26f9db0749cfae380e8bf596",
+          "bytes": 13552,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/小马谷火车站/02_建筑.blend",
+          "sourceSha256": "37119b7f7b838800074c36f41ae04e0f290d39a09dd1f0fcda25d8d6b75acadf",
+          "path": "res://assets/art/origami/ponyville-station/building.glb",
+          "sha256": "fcaaf6fe56bfb7eefde48893447035c498db1c27815e11b3ed44de78f6f8ee43",
+          "bytes": 351008,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0778626799583435,
+            0.10000000149011612
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.5244156718254089,
+              -0.18333503603935242,
+              0.10000000149011612
+            ],
+            "max": [
+              0.5244156718254089,
+              0.33906039595603943,
+              0.9359999895095825
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/小马谷火车站/03_装饰.blend",
+          "sourceSha256": "ccc98c4c6e8825c8640a34c4652a20abcf335a642c9e391fac985f8e135f5628",
+          "path": "res://assets/art/origami/ponyville-station/decoration.glb",
+          "sha256": "0d7abcbe286ce2375bda3c8cf38527f33595a193209bfb6237c54d8926a2eef2",
+          "bytes": 309416,
+          "assemblyOffsetBlender": [
+            0.07333394885063171,
+            -0.061951637268066406,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6060662865638733,
+              -0.6431035995483398,
+              0.0
+            ],
+            "max": [
+              0.7527341842651367,
+              0.519200325012207,
+              0.8484100103378296
+            ]
+          },
+          "meshObjects": 3,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "crystal-castle",
+      "name": "水晶城堡",
+      "aliases": [
+        "水晶城堡",
+        "CrystalCastle"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/水晶城堡/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/水晶城堡/01_地块.blend",
+          "sourceSha256": "87aaf059e7370cca2c5edcee1537602e65ee49cc366ed4ca399ddb6d503542d9",
+          "path": "res://assets/art/origami/crystal-castle/terrain.glb",
+          "sha256": "3eb12051d81f45394b810135d0ad38b217d0b7d5ba8ca11a4887940077b7bd00",
+          "bytes": 13540,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/水晶城堡/02_建筑.blend",
+          "sourceSha256": "213696f10631be66c561416e74d55035b87fb62b3e4445bc4b7aa1b4f4ab861a",
+          "path": "res://assets/art/origami/crystal-castle/building.glb",
+          "sha256": "a47bf0e05c72599d2072dd3a674f6c398d8a21c03e4414d4923cd765c3a5feab",
+          "bytes": 2262348,
+          "assemblyOffsetBlender": [
+            -0.004999995231628418,
+            0.0765647292137146,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6753000020980835,
+              -0.3052999973297119,
+              0.0
+            ],
+            "max": [
+              0.6653000116348267,
+              0.4584294557571411,
+              1.9900000095367432
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/水晶城堡/03_装饰.blend",
+          "sourceSha256": "fb4953e464b4d48373f3807418128f0f684ac155d4681995f2754d0f1dca1cd1",
+          "path": "res://assets/art/origami/crystal-castle/decoration.glb",
+          "sha256": "1d5a29cb797dfd0557d5d1297f9750ee639f004e8e43365b81278b0d5c4ac802",
+          "bytes": 26552,
+          "assemblyOffsetBlender": [
+            -0.009999990463256836,
+            -0.08749997615814209,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7599999904632568,
+              -0.8500000238418579,
+              0.0
+            ],
+            "max": [
+              0.7400000095367432,
+              0.6750000715255737,
+              0.36000001430511475
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "crystal-empire",
+      "name": "水晶帝国",
+      "aliases": [
+        "水晶帝国",
+        "CrystalEmpire"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/水晶帝国/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/水晶帝国/01_地块.blend",
+          "sourceSha256": "dbf85f9a0ce80ae67c9ec4621dbbf7d741c4c2f4b6de720a7b6b8e106cf3cda4",
+          "path": "res://assets/art/origami/crystal-empire/terrain.glb",
+          "sha256": "8a17c109849444445fdaa544b34305288c3429f76714577dedf8893e5fae36cf",
+          "bytes": 13540,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/水晶帝国/02_建筑.blend",
+          "sourceSha256": "4d989b79d6bc39babb560106fd0d8494e8046cf49b5399a9e00f455d69a7b1d0",
+          "path": "res://assets/art/origami/crystal-empire/building.glb",
+          "sha256": "c4065ce81d1a6f274a5a228fd1ae4fa2915957689a9a1476ce7643dee71b856d",
+          "bytes": 1403748,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7907596230506897,
+              -0.7803000211715698,
+              0.0
+            ],
+            "max": [
+              0.7907596230506897,
+              0.7803000211715698,
+              0.9551999568939209
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/水晶帝国/03_装饰.blend",
+          "sourceSha256": "b874ee3c3e2b20610c5359257847969ac05914bfacb89bf4d70f86aa2d980747",
+          "path": "res://assets/art/origami/crystal-empire/decoration.glb",
+          "sha256": "eb1e8b81c9706410413f1a8964cb347a566d1b7120b3cd422d28bc1e5d2a59a6",
+          "bytes": 409080,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.8759999871253967,
+              -0.8600000143051147,
+              0.0
+            ],
+            "max": [
+              0.8759999871253967,
+              0.8600000143051147,
+              0.20399999618530273
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "crystal-market",
+      "name": "水晶集市_候选方案",
+      "aliases": [
+        "水晶集市_候选方案",
+        "水晶集市",
+        "CrystalMarket"
+      ],
+      "status": "candidate",
+      "sourceReadme": "交付/地块/水晶集市_候选方案/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/水晶集市_候选方案/01_地块.blend",
+          "sourceSha256": "9242604bf11b422b26a067b098241df21790866f698d19025f274427cf423447",
+          "path": "res://assets/art/origami/crystal-market/terrain.glb",
+          "sha256": "21cfd2619573a9d50b9b8c6f4be46ac8575384e64a5db22e78eace9ccfb39f66",
+          "bytes": 13640,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/水晶集市_候选方案/02_建筑.blend",
+          "sourceSha256": "59324c77a76bbd1baa5902828b6e1a46443463065beac42edd1b0d2ab917abdf",
+          "path": "res://assets/art/origami/crystal-market/building.glb",
+          "sha256": "be5816050886fdbc33a452e775a51e0b735c00cbda5464adfbe37cd9cfdd5f5b",
+          "bytes": 171380,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.008705630898475647,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6720235347747803,
+              -0.4999768137931824,
+              0.0
+            ],
+            "max": [
+              0.6720235347747803,
+              0.5173879861831665,
+              1.4800000190734863
+            ]
+          },
+          "meshObjects": 5,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/水晶集市_候选方案/03_装饰.blend",
+          "sourceSha256": "f437fa90ccb6c59810310b4e87d84075debab30a2ad223b8194e76ae97d7d84a",
+          "path": "res://assets/art/origami/crystal-market/decoration.glb",
+          "sha256": "99e33090f6335e002ff8febc8b62cdea3083db436aa8b817d498d1fd5aaed7ea",
+          "bytes": 43424,
+          "assemblyOffsetBlender": [
+            0.011065781116485596,
+            -0.15664267539978027,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7942792177200317,
+              -0.7377206087112427,
+              0.0
+            ],
+            "max": [
+              0.8164107799530029,
+              0.42443525791168213,
+              1.0012364387512207
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "crystal-stadium",
+      "name": "水晶运动场",
+      "aliases": [
+        "水晶运动场",
+        "运动场"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/水晶运动场/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/水晶运动场/01_地块.blend",
+          "sourceSha256": "4c85a3df2c88d97bc0db9f962e50d0820a5f1764d487560327296cf392bcb1c8",
+          "path": "res://assets/art/origami/crystal-stadium/terrain.glb",
+          "sha256": "1466b677db82bd2fe9a2a771a808487a402dda0e37e4b7a44f16271a861144a1",
+          "bytes": 13564,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/水晶运动场/02_建筑.blend",
+          "sourceSha256": "1554f3408282a4b933b1410012bdb7dc7db94f1c517106664df06ad36d77cf65",
+          "path": "res://assets/art/origami/crystal-stadium/building.glb",
+          "sha256": "aa3383b08ccf0aba9f421008a588f5bf89664726c35417045ee012f968fc1c4c",
+          "bytes": 637572,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.017327427864074707,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7625051736831665,
+              -0.5775819420814514,
+              0.0
+            ],
+            "max": [
+              0.7625051736831665,
+              0.6122367978096008,
+              0.3569999933242798
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/水晶运动场/03_装饰.blend",
+          "sourceSha256": "de7e7262949b5f8d7c63f9b72798af9c9d950d83c53c83d1f6118eb387720287",
+          "path": "res://assets/art/origami/crystal-stadium/decoration.glb",
+          "sha256": "8bc6aee45d1eb0d7a2c72a3e0154502180d7fe69dc8f38791247ecca641baba9",
+          "bytes": 131020,
+          "assemblyOffsetBlender": [
+            0.009828627109527588,
+            -0.0720173716545105,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.861257016658783,
+              -0.83482426404953,
+              0.0
+            ],
+            "max": [
+              0.8809142708778381,
+              0.690789520740509,
+              0.7319999933242798
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "yakyakistan",
+      "name": "牦牦斯坦",
+      "aliases": [
+        "牦牦斯坦",
+        "耗耗斯坦",
+        "Yakyakistan"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/牦牦斯坦/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/牦牦斯坦/01_地块.blend",
+          "sourceSha256": "693b7fc643b4bcabed66ce84a01edfe3cd038927ad0a778cdcab7ce683f59e32",
+          "path": "res://assets/art/origami/yakyakistan/terrain.glb",
+          "sha256": "1af38c8f1782da3d4bfd3981bd314f6d603caa9993faaeb17999e5de1172dde6",
+          "bytes": 13488,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/牦牦斯坦/02_建筑.blend",
+          "sourceSha256": "303f99291bd84a5fbda5f58dd5b1cc59b028c85f1dd968f792a72af8115f3045",
+          "path": "res://assets/art/origami/yakyakistan/building.glb",
+          "sha256": "8d43a35dc2b0d203438eda9394ea6f9e1d3ed88856e3f67bfa4092b82c999b16",
+          "bytes": 394284,
+          "assemblyOffsetBlender": [
+            0.001012563705444336,
+            0.12720142304897308,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7018582820892334,
+              -0.3991704285144806,
+              0.0
+            ],
+            "max": [
+              0.7038834095001221,
+              0.6535732746124268,
+              0.7100000381469727
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/牦牦斯坦/03_装饰.blend",
+          "sourceSha256": "27919640ae4322b264305f6d72b53ac686e74ecd9269866d2e2b7e1a17d24c95",
+          "path": "res://assets/art/origami/yakyakistan/decoration.glb",
+          "sha256": "ce9eff2135059302d232513b0d1642bb756a5d434ab18f72a8530a608a87174e",
+          "bytes": 159428,
+          "assemblyOffsetBlender": [
+            0.0004970431327819824,
+            -0.11084556579589844,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7403509616851807,
+              -0.7696669101715088,
+              0.0
+            ],
+            "max": [
+              0.7413450479507446,
+              0.5479757785797119,
+              0.4300000071525574
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "las-pegasus",
+      "name": "天马维加斯",
+      "aliases": [
+        "天马维加斯",
+        "拉斯飞马斯",
+        "LasPegasus"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/天马维加斯/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/天马维加斯/01_地块.blend",
+          "sourceSha256": "92edc97b7bc76c2bef6e08aa744916ed5be7c4c90faafecd35fa2facd7930da9",
+          "path": "res://assets/art/origami/las-pegasus/terrain.glb",
+          "sha256": "f6ca74057e61b8ef796c68719b318e1dc59072d3504eda8c9deeafda08fa4092",
+          "bytes": 13564,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/天马维加斯/02_建筑.blend",
+          "sourceSha256": "f3d9e9398cc75984baaf070ad561e3e61147af6633a496285fcab7ae010665a8",
+          "path": "res://assets/art/origami/las-pegasus/building.glb",
+          "sha256": "ed3a79a942b5ecbeacb969f32406f980a0d210e0c97405c1eec8b2832d5e12c5",
+          "bytes": 1130464,
+          "assemblyOffsetBlender": [
+            -0.016888558864593506,
+            0.11363780498504639,
+            0.18000000715255737
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6743237972259521,
+              -0.2745967507362366,
+              0.18000000715255737
+            ],
+            "max": [
+              0.6405466794967651,
+              0.5018723607063293,
+              1.6340000629425049
+            ]
+          },
+          "meshObjects": 3,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/天马维加斯/03_装饰.blend",
+          "sourceSha256": "4eef9ba41cf8336a276c66526d12be6f5b46c5972014fc342a071f96b502c279",
+          "path": "res://assets/art/origami/las-pegasus/decoration.glb",
+          "sha256": "5cac76853b8c7531670cb46cf212955cf6e7b56fc1c879a6ff3742b4d2512924",
+          "bytes": 437136,
+          "assemblyOffsetBlender": [
+            0.007988452911376953,
+            -0.11069518327713013,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7690161466598511,
+              -0.7677375078201294,
+              0.0
+            ],
+            "max": [
+              0.784993052482605,
+              0.5463471412658691,
+              1.5194599628448486
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "weather-factory",
+      "name": "天气工厂",
+      "aliases": [
+        "天气工厂",
+        "WeatherFactory"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/天气工厂/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/天气工厂/01_地块.blend",
+          "sourceSha256": "431551ce584b6b667c929dbd3de76c660d5076a0d8eb478db97e6aa96075f489",
+          "path": "res://assets/art/origami/weather-factory/terrain.glb",
+          "sha256": "1cb03665eeb0392967a934a299ec0f12ce78a1440dd03213e439ee8288432bd2",
+          "bytes": 13540,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/天气工厂/02_建筑.blend",
+          "sourceSha256": "a8bd22d4a359c6702bd38c1bd8df4a17153860317db56a2f4f25cdd6cf22ce44",
+          "path": "res://assets/art/origami/weather-factory/building.glb",
+          "sha256": "49f9a13bf645ee65f638c01515c224d9e732a9f1596b02ee218c861e41058fcf",
+          "bytes": 2197020,
+          "assemblyOffsetBlender": [
+            0.05019134283065796,
+            0.14300000667572021,
+            0.25999999046325684
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6449173092842102,
+              -0.2540000081062317,
+              0.25999999046325684
+            ],
+            "max": [
+              0.7452999949455261,
+              0.5400000214576721,
+              1.372499942779541
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/天气工厂/03_装饰.blend",
+          "sourceSha256": "e07e10083a491d84c74f31477dc98f9aac9757b8ff3c8f15d65c6195dfebe96f",
+          "path": "res://assets/art/origami/weather-factory/decoration.glb",
+          "sha256": "a8096093a9c83ccbb6b8b7b4ce53db65bcc34ba147d400da36256f334e21baa7",
+          "bytes": 733092,
+          "assemblyOffsetBlender": [
+            0.0,
+            -0.09289899468421936,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7275999784469604,
+              -0.743798017501831,
+              0.0
+            ],
+            "max": [
+              0.7275999784469604,
+              0.5580000281333923,
+              1.0990924835205078
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "cloudsdale",
+      "name": "云中城",
+      "aliases": [
+        "云中城"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/云中城/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/云中城/01_地块.blend",
+          "sourceSha256": "b7a4d62d029ef074e7cddab4c9f42aab347e873c4a3fe7deb930935332041d04",
+          "path": "res://assets/art/origami/cloudsdale/terrain.glb",
+          "sha256": "23db1844aaa146828493369b851740be63196f983e6bbc9ed405deb60a65d1b9",
+          "bytes": 13516,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/云中城/02_建筑.blend",
+          "sourceSha256": "043832288519f8dd5b5d6969d2951c1d95a32561cfccf2bdf30dcefaf8f0e249",
+          "path": "res://assets/art/origami/cloudsdale/building.glb",
+          "sha256": "a76497564cc3c3c13fe13c0a7a1774c21623bd141b90a43be324b05bc034d334",
+          "bytes": 1226816,
+          "assemblyOffsetBlender": [
+            0.00847160816192627,
+            0.062448740005493164,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.5798811912536621,
+              -0.27357009053230286,
+              0.0
+            ],
+            "max": [
+              0.5968244075775146,
+              0.3984675705432892,
+              1.24399995803833
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/云中城/03_装饰.blend",
+          "sourceSha256": "4933ef593825ebf28b08b506b7b963756890be0de9de421a9fee1f8d877ae6d1",
+          "path": "res://assets/art/origami/cloudsdale/decoration.glb",
+          "sha256": "cbfab36e458b5d47cffbf979428921786de09ad7a86bb0c985ba3aec7a44d8af",
+          "bytes": 1479388,
+          "assemblyOffsetBlender": [
+            0.0,
+            -0.08796575665473938,
+            0.007143999915570021
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7427670955657959,
+              -0.6482223868370056,
+              0.007143999915570021
+            ],
+            "max": [
+              0.7427670955657959,
+              0.47229087352752686,
+              1.1244252920150757
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "equality-town",
+      "name": "平等镇",
+      "aliases": [
+        "平等镇",
+        "EqualityTown"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/平等镇/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/平等镇/01_地块.blend",
+          "sourceSha256": "30cbd23fa91d4fde3924d4dd61a35ac8e52091a677de30872ae4d238272af8f5",
+          "path": "res://assets/art/origami/equality-town/terrain.glb",
+          "sha256": "7c6b4939b8951e8bf483acdc3c832be178e0d83e89b82d1b0caeabe418156553",
+          "bytes": 13516,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/平等镇/02_建筑.blend",
+          "sourceSha256": "fad7e65fcf906dc70340fa9143a3db1b75697bee040aa663782a1b04bdcc471f",
+          "path": "res://assets/art/origami/equality-town/building.glb",
+          "sha256": "6d31d7664a5084e4af27df6558adc4430478029606b911c7d1fba9660b7a28b2",
+          "bytes": 387952,
+          "assemblyOffsetBlender": [
+            -2.9802322387695312e-08,
+            0.0936729907989502,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.5646664500236511,
+              -0.5470031499862671,
+              0.0
+            ],
+            "max": [
+              0.5646663904190063,
+              0.7343491315841675,
+              0.5260000228881836
+            ]
+          },
+          "meshObjects": 7,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/平等镇/03_装饰.blend",
+          "sourceSha256": "6aa3f1768d0edfbc0d655616b9ae1a2f509eb73b28b58da94893076d1e13e6e5",
+          "path": "res://assets/art/origami/equality-town/decoration.glb",
+          "sha256": "943b3dc13221d0a5060c3b1167acf3ffaa6886db81f57538f987a86273472a3b",
+          "bytes": 97800,
+          "assemblyOffsetBlender": [
+            0.017380356788635254,
+            -0.04604727029800415,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.69228196144104,
+              -0.7918526530265808,
+              0.0
+            ],
+            "max": [
+              0.7270426750183105,
+              0.6997581124305725,
+              0.6076449751853943
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "rainbow-market",
+      "name": "彩虹瀑布镇",
+      "aliases": [
+        "彩虹瀑布镇",
+        "RainbowFallsMarket",
+        "彩虹瀑布集市"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/彩虹瀑布镇/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/彩虹瀑布镇/01_地块.blend",
+          "sourceSha256": "468ca9340366e22d2f080a64690e0cd3187d9677b8ac21b53860ed8a4c49046c",
+          "path": "res://assets/art/origami/rainbow-market/terrain.glb",
+          "sha256": "8d889ebbd59ba26a350016956ff814e694fe44edc6738091f56bf26fb2670f06",
+          "bytes": 13528,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/彩虹瀑布镇/02_建筑.blend",
+          "sourceSha256": "46f210948178a6066de27f3ef480e2f3aa1be256e5d9f10c2d5a4e44e06e3ab6",
+          "path": "res://assets/art/origami/rainbow-market/building.glb",
+          "sha256": "d762284b98165d013e2e96408886d58168b529f37939a235403a6477275abb7e",
+          "bytes": 230876,
+          "assemblyOffsetBlender": [
+            0.0,
+            -0.0831499993801117,
+            0.28999999165534973
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6152999997138977,
+              -0.5565999746322632,
+              0.28999999165534973
+            ],
+            "max": [
+              0.6152999997138977,
+              0.3902999758720398,
+              1.0429999828338623
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/彩虹瀑布镇/03_装饰.blend",
+          "sourceSha256": "27ca8077c42d822b7be9a2141734cadbc45c16f743046f7137b096ed2b2b306a",
+          "path": "res://assets/art/origami/rainbow-market/decoration.glb",
+          "sha256": "8d43b52fd415aab6d78d6f53680b8e639078ac55f5502469a04656e954fa3666",
+          "bytes": 942968,
+          "assemblyOffsetBlender": [
+            0.004600018262863159,
+            -0.052847445011138916,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7632999420166016,
+              -0.814805269241333,
+              0.0
+            ],
+            "max": [
+              0.7724999785423279,
+              0.7091103792190552,
+              1.5643190145492554
+            ]
+          },
+          "meshObjects": 5,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "rainbow-falls",
+      "name": "彩虹瀑布",
+      "aliases": [
+        "彩虹瀑布"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/彩虹瀑布/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/彩虹瀑布/01_地块.blend",
+          "sourceSha256": "30ced7b0775afdf65cc6adb6f4d1a5ca254fea674573b0b8c7896c26045b2ef3",
+          "path": "res://assets/art/origami/rainbow-falls/terrain.glb",
+          "sha256": "9e63ea70dd9bd361b834a927619f5548e2c882167e6434e644ba36e5ff2c93df",
+          "bytes": 13504,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/彩虹瀑布/02_建筑.blend",
+          "sourceSha256": "7cb0a6e3818bdc56514969374aa0bfe6c756d1edcaf3fdfb5fe4c568eb668e8a",
+          "path": "res://assets/art/origami/rainbow-falls/building.glb",
+          "sha256": "3d4f343a77e81b5de42bcbc9d8d002a088668437d64ad692b7bd1ec9976dea6a",
+          "bytes": 91132,
+          "assemblyOffsetBlender": [
+            -0.012011051177978516,
+            -0.02709484100341797,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7632999420166016,
+              -0.7633000612258911,
+              0.0
+            ],
+            "max": [
+              0.7392778396606445,
+              0.7091103792190552,
+              1.2000000476837158
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/彩虹瀑布/03_装饰.blend",
+          "sourceSha256": "be10a2a057ff520567f57c1956d59a6b0f555e73bf22f38bb01610b23daff0f5",
+          "path": "res://assets/art/origami/rainbow-falls/decoration.glb",
+          "sha256": "b0e9a5fc5dd68539319da0b4f1bcbe6232656fb8f5b17e1155a243a1a26f3022",
+          "bytes": 546780,
+          "assemblyOffsetBlender": [
+            0.038437485694885254,
+            -0.08197402954101562,
+            0.009999999776482582
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6956250071525574,
+              -0.8163226842880249,
+              0.009999999776482582
+            ],
+            "max": [
+              0.7724999785423279,
+              0.6523746252059937,
+              1.5730082988739014
+            ]
+          },
+          "meshObjects": 3,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "liberty-statue",
+      "name": "马哈顿_友谊雕像",
+      "aliases": [
+        "马哈顿_友谊雕像",
+        "马哈顿",
+        "Manehattan"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/马哈顿_友谊雕像/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/马哈顿_友谊雕像/01_地块.blend",
+          "sourceSha256": "09d80328ecc83327656e729185f3f0d54fc484011edb4f8e509d5db3e00699a0",
+          "path": "res://assets/art/origami/liberty-statue/terrain.glb",
+          "sha256": "d414d5473fc6725d6f5bc3382fcc7fb5326bbe741ae167fb8e7328d81434836c",
+          "bytes": 13608,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/马哈顿_友谊雕像/02_建筑.blend",
+          "sourceSha256": "0e514da096b1a92877e1299667e27aded6a9c705d61b25778e613dacfca2e7b7",
+          "path": "res://assets/art/origami/liberty-statue/building.glb",
+          "sha256": "22eaeb784fee575a9d111a5416a2966eb935587a2041b15d4d55140d002dec9a",
+          "bytes": 256228,
+          "assemblyOffsetBlender": [
+            -0.011368781328201294,
+            0.06100000441074371,
+            0.22520437836647034
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.5037375688552856,
+              -0.09799998998641968,
+              0.22520437836647034
+            ],
+            "max": [
+              0.48100000619888306,
+              0.2199999988079071,
+              1.7203400135040283
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/马哈顿_友谊雕像/03_装饰.blend",
+          "sourceSha256": "e47fb7bd37a3f5b84c69146d841ea71c56c76d2c9496de9a2ebfbe7c65eafbf8",
+          "path": "res://assets/art/origami/liberty-statue/decoration.glb",
+          "sha256": "14ab10bc64cdf8d3cb96e85845381797a5d165e33d98aed8aeec7106e3b21d43",
+          "bytes": 236664,
+          "assemblyOffsetBlender": [
+            0.01250004768371582,
+            0.06559999287128448,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6449999809265137,
+              -0.4487999677658081,
+              0.0
+            ],
+            "max": [
+              0.6700000762939453,
+              0.5799999833106995,
+              0.6664999723434448
+            ]
+          },
+          "meshObjects": 6,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "hotel-candidate",
+      "name": "高档场所_酒店候选方案",
+      "aliases": [
+        "高档场所_酒店候选方案",
+        "高档场所"
+      ],
+      "status": "candidate",
+      "sourceReadme": "交付/地块/高档场所_酒店候选方案/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/高档场所_酒店候选方案/01_地块.blend",
+          "sourceSha256": "ff915e0285d27eb003e502e8fcf368200e43aee17aa9dabeb37d402ec037cf9f",
+          "path": "res://assets/art/origami/hotel-candidate/terrain.glb",
+          "sha256": "61da27f41eacd2c03fe5a5b72d5cfc73576b26f2d94d9c401ff613651020e6f4",
+          "bytes": 13688,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/高档场所_酒店候选方案/02_建筑.blend",
+          "sourceSha256": "d9c40949c5b20b452c4ebda9ef3b51d3c3195af6bf9d51eb2224048980c1d562",
+          "path": "res://assets/art/origami/hotel-candidate/building.glb",
+          "sha256": "36425a52878dfc417c8f2519f851bea2f72c81f7926d207508f7f037f2b30923",
+          "bytes": 1567292,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.1237500011920929,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.5184999704360962,
+              -0.3125,
+              0.0
+            ],
+            "max": [
+              0.5184999704360962,
+              0.5600000023841858,
+              1.159999966621399
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/高档场所_酒店候选方案/03_装饰.blend",
+          "sourceSha256": "a5897df19a4e2d8eca7c93c384ab301d5b64659b2ef5a5af6c01670b0fa1f21a",
+          "path": "res://assets/art/origami/hotel-candidate/decoration.glb",
+          "sha256": "7975698c664fa7155aa038ce8bc05f578475952daa7086b50ce638e30573df97",
+          "bytes": 120860,
+          "assemblyOffsetBlender": [
+            2.9802322387695312e-08,
+            -0.02133333683013916,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6899999976158142,
+              -0.5986666679382324,
+              0.0
+            ],
+            "max": [
+              0.690000057220459,
+              0.5559999942779541,
+              0.9300000071525574
+            ]
+          },
+          "meshObjects": 4,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "canterlot",
+      "name": "皇城",
+      "aliases": [
+        "皇城",
+        "坎特洛特",
+        "RoyalCity"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/皇城/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/皇城/01_地块.blend",
+          "sourceSha256": "4d81716662ca95f71706ba5aba70991e5599e65edd9b3f9275e997bf66f195e5",
+          "path": "res://assets/art/origami/canterlot/terrain.glb",
+          "sha256": "cb348e335a25a3f0d3e1700be2bf711566e9f9b58cccebeb580b13a127e8de33",
+          "bytes": 13492,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/皇城/02_建筑.blend",
+          "sourceSha256": "2934d2f4bbd3eb22642db3c0a9ed3922ec892a40e97e61303180ad1095b4edba",
+          "path": "res://assets/art/origami/canterlot/building.glb",
+          "sha256": "653377b7ae41c95caca5ac0803e6327cb6f525bf2d41fc9149c0e54d03b71f63",
+          "bytes": 1169708,
+          "assemblyOffsetBlender": [
+            -0.008223176002502441,
+            0.09351910650730133,
+            0.1599999964237213
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6389464139938354,
+              -0.335999995470047,
+              0.1599999964237213
+            ],
+            "max": [
+              0.6225000619888306,
+              0.5230382084846497,
+              1.6979999542236328
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/皇城/03_装饰.blend",
+          "sourceSha256": "d9f3e1575be29887f18fa8e6c855af704a7310222cde297d840f3486d57d1c55",
+          "path": "res://assets/art/origami/canterlot/decoration.glb",
+          "sha256": "f678662a5589399ffe6217957bb55ed78d43e659b0d72d58b34bcccbd9ff14e2",
+          "bytes": 207348,
+          "assemblyOffsetBlender": [
+            0.03100001811981201,
+            -0.036325812339782715,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6679999828338623,
+              -0.7900000214576721,
+              0.0
+            ],
+            "max": [
+              0.7300000190734863,
+              0.7173483967781067,
+              1.6100000143051147
+            ]
+          },
+          "meshObjects": 3,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "canterlot-station",
+      "name": "中心城火车站",
+      "aliases": [
+        "中心城火车站"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/中心城火车站/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/中心城火车站/01_地块.blend",
+          "sourceSha256": "577a8d0c115f83fb178e95bcd0eae47c20de260fbeecfe2c7bce6d67b05405e3",
+          "path": "res://assets/art/origami/canterlot-station/terrain.glb",
+          "sha256": "b41910ae4806116ab4e4e6b19be400c63ff811fd16feb5645f491efaf300a2de",
+          "bytes": 13588,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/中心城火车站/02_建筑.blend",
+          "sourceSha256": "0507e27c45fd731df2ae3b3f8ca412105b54742ef262c4d5e6c55e1cbc8a2633",
+          "path": "res://assets/art/origami/canterlot-station/building.glb",
+          "sha256": "db9e5f4ef3faec7233b0130013cd28a63d088ad65cb36d1f8fcb7f91b72bce83",
+          "bytes": 1777232,
+          "assemblyOffsetBlender": [
+            0.00950765609741211,
+            0.1596357822418213,
+            0.07500000298023224
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.5633166432380676,
+              -0.24376684427261353,
+              0.07500000298023224
+            ],
+            "max": [
+              0.5823319554328918,
+              0.5630384087562561,
+              1.0160000324249268
+            ]
+          },
+          "meshObjects": 3,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/中心城火车站/03_装饰.blend",
+          "sourceSha256": "f152262728c98bdd40548f56bca9895ada667b60701f9c74bf990b86e94ed999",
+          "path": "res://assets/art/origami/canterlot-station/decoration.glb",
+          "sha256": "c3fbd74fa0656c4e70607192d23160073c4aab77c6223cfae372b0835db243fe",
+          "bytes": 1594760,
+          "assemblyOffsetBlender": [
+            0.0032465457916259766,
+            -0.06261134147644043,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6400271654129028,
+              -0.6400271654129028,
+              0.0
+            ],
+            "max": [
+              0.6465202569961548,
+              0.514804482460022,
+              0.3400000035762787
+            ]
+          },
+          "meshObjects": 4,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "canterlot-market",
+      "name": "皇城商业街",
+      "aliases": [
+        "皇城商业街",
+        "商业街"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/皇城商业街/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/皇城商业街/01_地块.blend",
+          "sourceSha256": "580992e9b00fa41d7a412c9f1b53bb9f71fe5649c45477349290f29e3ffb766e",
+          "path": "res://assets/art/origami/canterlot-market/terrain.glb",
+          "sha256": "c8def88f724d18371214de00441e0a01b5535db4eb67c7698f293f4524d5da07",
+          "bytes": 13564,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/皇城商业街/02_建筑.blend",
+          "sourceSha256": "fea0512016ff9b5ce323b51b536ee0fe05db0ad785d244d6d87bd9e36e0ce4f4",
+          "path": "res://assets/art/origami/canterlot-market/building.glb",
+          "sha256": "cbacfe7db09f50d1b776fbe0123fbb9d1d5a19450e8a82a21dc902f6a5ae7891",
+          "bytes": 1954068,
+          "assemblyOffsetBlender": [
+            0.014680087566375732,
+            0.1625000238418579,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6406399011611938,
+              -0.2149999886751175,
+              0.0
+            ],
+            "max": [
+              0.6700000762939453,
+              0.5400000214576721,
+              1.4900000095367432
+            ]
+          },
+          "meshObjects": 3,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/皇城商业街/03_装饰.blend",
+          "sourceSha256": "0a696b2b50b19a92607182f6f0bf0d71b0d5fdc99ce8d7d4473aeec442c2d23a",
+          "path": "res://assets/art/origami/canterlot-market/decoration.glb",
+          "sha256": "58ddf40b24386db9195c11823d072129e28e0446c6d9a4c53da8e296bf3ec4d2",
+          "bytes": 846460,
+          "assemblyOffsetBlender": [
+            0.0029999911785125732,
+            -0.0800294280052185,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7549999952316284,
+              -0.660058856010437,
+              0.0
+            ],
+            "max": [
+              0.7609999775886536,
+              0.5,
+              0.6600000262260437
+            ]
+          },
+          "meshObjects": 4,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "banquet-candidate",
+      "name": "宴会厅_开放剖面候选方案",
+      "aliases": [
+        "宴会厅_开放剖面候选方案",
+        "宴会厅",
+        "CanterlotBanquetHall",
+        "坎特洛特宴会厅"
+      ],
+      "status": "candidate",
+      "sourceReadme": "交付/地块/宴会厅_开放剖面候选方案/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/宴会厅_开放剖面候选方案/01_地块.blend",
+          "sourceSha256": "23bfd75427df6236d69bc29f87e194cc3b58a5799d0fef5de69ff12e446a10e9",
+          "path": "res://assets/art/origami/banquet-candidate/terrain.glb",
+          "sha256": "9545639fbf514728a3e3b7fb43ee7d281588b25e35c4a49a1e4fd97aa481c0ff",
+          "bytes": 13712,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/宴会厅_开放剖面候选方案/02_建筑.blend",
+          "sourceSha256": "1f0cb81585baf361fe64389e870a8fcbd6346a7755d51d92fb949fbdaf0d3605",
+          "path": "res://assets/art/origami/banquet-candidate/building.glb",
+          "sha256": "1956227225030712a8b4a275d8d2fc453534026afed8c794f7b88ea0ff45f8ca",
+          "bytes": 2103864,
+          "assemblyOffsetBlender": [
+            0.039069026708602905,
+            0.09703600406646729,
+            0.11999999731779099
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6398619413375854,
+              -0.36799997091293335,
+              0.11999999731779099
+            ],
+            "max": [
+              0.7179999947547913,
+              0.5620719790458679,
+              1.369999885559082
+            ]
+          },
+          "meshObjects": 5,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/宴会厅_开放剖面候选方案/03_装饰.blend",
+          "sourceSha256": "fecac45a1a1024074bafca82724bca54b16a311c392df8de7e7d54eabdf32f20",
+          "path": "res://assets/art/origami/banquet-candidate/decoration.glb",
+          "sha256": "559f7635e7ccccd87a57e5a8adb5b4f2d3d05ce0acd498673f39017c1e48e74c",
+          "bytes": 940500,
+          "assemblyOffsetBlender": [
+            0.0,
+            -0.033799976110458374,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.6000000238418579,
+              -0.6166000366210938,
+              0.0
+            ],
+            "max": [
+              0.6000000238418579,
+              0.549000084400177,
+              0.9300000071525574
+            ]
+          },
+          "meshObjects": 5,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "griffonstone",
+      "name": "狮鹫岩",
+      "aliases": [
+        "狮鹫岩",
+        "Griffonstone"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/狮鹫岩/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/狮鹫岩/01_地块.blend",
+          "sourceSha256": "0669eda190c642e5e33e35d8b51c1ffcc2280352a684dfb50cdbdd24253a84e9",
+          "path": "res://assets/art/origami/griffonstone/terrain.glb",
+          "sha256": "d2d55108fecc63a8596939ed4e7ab96347eba54f5d6234044b8cb4f084d09e9b",
+          "bytes": 13516,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/狮鹫岩/02_建筑.blend",
+          "sourceSha256": "fa7697a6151803603b3e9f3019bd4543922cc2c74a0a4363c02a6b77625e6514",
+          "path": "res://assets/art/origami/griffonstone/building.glb",
+          "sha256": "43cebef81217dcf718f63a690d567f67ca93e3f76d24916caf04e37d756a038d",
+          "bytes": 1010404,
+          "assemblyOffsetBlender": [
+            -0.062116026878356934,
+            0.028373777866363525,
+            0.14868000149726868
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.8334156274795532,
+              -0.4897400140762329,
+              0.14868000149726868
+            ],
+            "max": [
+              0.7091835737228394,
+              0.54648756980896,
+              2.1975998878479004
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/狮鹫岩/03_装饰.blend",
+          "sourceSha256": "d245059cd9b5c07332d523ab190be7c3651aa1e7dad5cd5d6495411bc36d3501",
+          "path": "res://assets/art/origami/griffonstone/decoration.glb",
+          "sha256": "e29ea693e3f2451c0ccf2072b0368699e3a66537eb3914fdb42fc0a107ca51f9",
+          "bytes": 103864,
+          "assemblyOffsetBlender": [
+            -0.01298666000366211,
+            -0.13768544793128967,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7610135078430176,
+              -0.7847709059715271,
+              0.0
+            ],
+            "max": [
+              0.7350401878356934,
+              0.5094000101089478,
+              0.48500001430511475
+            ]
+          },
+          "meshObjects": 2,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "baltimare",
+      "name": "巴尔的马",
+      "aliases": [
+        "巴尔的马",
+        "Baltimare"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/巴尔的马/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/巴尔的马/01_地块.blend",
+          "sourceSha256": "c875e8790d49ddd6141583d60c5082ebed93225fb13b61e5b0c214acc42a7bf1",
+          "path": "res://assets/art/origami/baltimare/terrain.glb",
+          "sha256": "95408daa62d18617494e34cd4d0289f8e4874ef37801bc9b00a6f6873d92ed80",
+          "bytes": 13540,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/巴尔的马/02_建筑.blend",
+          "sourceSha256": "04e1fbc0ca2a86c142577c3f628fbfe9c5af9e29007cd95f9884d53a4a6e3c3e",
+          "path": "res://assets/art/origami/baltimare/building.glb",
+          "sha256": "f746364904de8a01bf2718fd192c14b8a4b40c8d995d4f238b9e728bf39fbd9b",
+          "bytes": 630340,
+          "assemblyOffsetBlender": [
+            0.08360004425048828,
+            -0.009326398372650146,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.5902999639511108,
+              -0.5789999961853027,
+              0.0
+            ],
+            "max": [
+              0.7575000524520874,
+              0.5603471994400024,
+              1.6440000534057617
+            ]
+          },
+          "meshObjects": 3,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/巴尔的马/03_装饰.blend",
+          "sourceSha256": "08893c3c5f424db6d2e85f5bc84bd8f3deeb526779f120e8bb2a203c6e8b4880",
+          "path": "res://assets/art/origami/baltimare/decoration.glb",
+          "sha256": "cb2fef425b315149c6c8f1ab511a0a7b6ac49b5e2ddc754e5c02c1bfa34df5e3",
+          "bytes": 210960,
+          "assemblyOffsetBlender": [
+            0.0030232369899749756,
+            0.024987488985061646,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7214535474777222,
+              -0.5009999871253967,
+              0.0
+            ],
+            "max": [
+              0.7275000214576721,
+              0.55097496509552,
+              1.2400000095367432
+            ]
+          },
+          "meshObjects": 4,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "dragon-lands",
+      "name": "巨龙之地",
+      "aliases": [
+        "巨龙之地",
+        "龙之国",
+        "DragonLands"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/巨龙之地/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/巨龙之地/01_地块.blend",
+          "sourceSha256": "dec84173f92f650f864dfeedd266b737ef61d0fec4d3d6914a9dd3f335d8fd7b",
+          "path": "res://assets/art/origami/dragon-lands/terrain.glb",
+          "sha256": "2c2a3cf575e259affd354714a1d8f415108dba93bde6b03a045ff21018dd199a",
+          "bytes": 13536,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/巨龙之地/02_建筑.blend",
+          "sourceSha256": "88f6f33c35e12f59bb30e57b6dfbbbe852e8aac2369d33499f5169470a8887aa",
+          "path": "res://assets/art/origami/dragon-lands/building.glb",
+          "sha256": "91034434ecda669b5cb8812dcc00db354ba7fa39c93d0004f1327b659f2d8850",
+          "bytes": 40844,
+          "assemblyOffsetBlender": [
+            -0.012370288372039795,
+            0.09944593906402588,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.727358341217041,
+              -0.6103571653366089,
+              0.0
+            ],
+            "max": [
+              0.7026177644729614,
+              0.8092490434646606,
+              0.6481056213378906
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/巨龙之地/03_装饰.blend",
+          "sourceSha256": "9aaddad7a11e90aaa980fa886602dcded1b9d3ce838cd659d8e3f3e71e20c10c",
+          "path": "res://assets/art/origami/dragon-lands/decoration.glb",
+          "sha256": "6b0e2aa55c04a79d37b5f2155b53ad5f73ca8d2d01d398aed5669d923fa68be2",
+          "bytes": 80672,
+          "assemblyOffsetBlender": [
+            0.005000680685043335,
+            -0.10021916031837463,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7699986100196838,
+              -0.8224779367446899,
+              0.0
+            ],
+            "max": [
+              0.7799999713897705,
+              0.6220396161079407,
+              0.5411399602890015
+            ]
+          },
+          "meshObjects": 3,
+          "decalMaterials": []
+        }
+      }
+    },
+    {
+      "id": "hippogriff",
+      "name": "骏鹰王国",
+      "aliases": [
+        "骏鹰王国",
+        "鹰马王国",
+        "HippogriffKingdom"
+      ],
+      "status": "visual-review-pending",
+      "sourceReadme": "交付/地块/骏鹰王国/README.md",
+      "components": {
+        "terrain": {
+          "source": "交付/地块/骏鹰王国/01_地块.blend",
+          "sourceSha256": "828c2c635bd1f8e92c4f43a9aa6eb0975ef1edfca452b53e85994fe646d84a13",
+          "path": "res://assets/art/origami/hippogriff/terrain.glb",
+          "sha256": "79064e25f2314758f312aafb3addaa1ba84f9d029767a7febd315d3de6781d59",
+          "bytes": 13532,
+          "assemblyOffsetBlender": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -1.0,
+              -0.8660253882408142,
+              -0.20000000298023224
+            ],
+            "max": [
+              1.0,
+              0.8660253882408142,
+              0.0
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "building": {
+          "source": "交付/地块/骏鹰王国/02_建筑.blend",
+          "sourceSha256": "5fbeee1e76850d40dcdb4261fb133b3c3b0cbd52657fa608e905c7da825962a9",
+          "path": "res://assets/art/origami/hippogriff/building.glb",
+          "sha256": "7b0d301b24417b1f1769ab946f06ba18f738a91b851f2918215d891966911763",
+          "bytes": 119048,
+          "assemblyOffsetBlender": [
+            0.04074499011039734,
+            0.034740567207336426,
+            0.03150000050663948
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.262580007314682,
+              -0.3845188617706299,
+              0.03150000050663948
+            ],
+            "max": [
+              0.3440699875354767,
+              0.45399999618530273,
+              1.6019999980926514
+            ]
+          },
+          "meshObjects": 1,
+          "decalMaterials": []
+        },
+        "decoration": {
+          "source": "交付/地块/骏鹰王国/03_装饰.blend",
+          "sourceSha256": "f25ae73a00c7af28acf5a87d9af0881a5edd90f08baa938a24b9a550a86580a2",
+          "path": "res://assets/art/origami/hippogriff/decoration.glb",
+          "sha256": "21e1a3d81277c9a715573f7b7bec4351913a2b85720b9b590d7776fb48299026",
+          "bytes": 556820,
+          "assemblyOffsetBlender": [
+            -0.04337644577026367,
+            -0.045922279357910156,
+            0.0
+          ],
+          "boundsBlender": {
+            "min": [
+              -0.7693750858306885,
+              -0.7686001062393188,
+              0.0
+            ],
+            "max": [
+              0.6826221942901611,
+              0.6767555475234985,
+              1.4600471258163452
+            ]
+          },
+          "meshObjects": 3,
+          "decalMaterials": []
+        }
+      }
+    }
+  ]
+}

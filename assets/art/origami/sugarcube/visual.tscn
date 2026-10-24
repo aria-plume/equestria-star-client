@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/art/origami/sugarcube/terrain.glb" id="terrain"]
+[ext_resource type="PackedScene" path="res://assets/art/origami/sugarcube/building.glb" id="building"]
+
+[node name="OrigamiAsset" type="Node3D"]
+rotation_degrees = Vector3(0, 30, 0)
+
+[node name="Terrain" parent="." instance=ExtResource("terrain")]
+
+[node name="Building" parent="." instance=ExtResource("building")]

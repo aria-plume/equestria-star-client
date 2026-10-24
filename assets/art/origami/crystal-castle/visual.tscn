@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/art/origami/crystal-castle/terrain.glb" id="terrain"]
+[ext_resource type="PackedScene" path="res://assets/art/origami/crystal-castle/building.glb" id="building"]
+[ext_resource type="PackedScene" path="res://assets/art/origami/crystal-castle/decoration.glb" id="decoration"]
+
+[node name="OrigamiAsset" type="Node3D"]
+rotation_degrees = Vector3(0, 30, 0)
+
+[node name="Terrain" parent="." instance=ExtResource("terrain")]
+
+[node name="Building" parent="." instance=ExtResource("building")]
+
+[node name="Decoration" parent="." instance=ExtResource("decoration")]

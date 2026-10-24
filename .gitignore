@@ -5,3 +5,6 @@ obj/
 *.tmp
 *.user
 *.suo
+.art-tools/
+artifacts/
+__pycache__/

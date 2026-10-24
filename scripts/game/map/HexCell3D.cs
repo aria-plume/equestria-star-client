@@ -53,6 +53,12 @@ public partial class HexCell3D : Node3D
 
     [ExportGroup("美术替换")]
     [Export]
+    public Vector3 CustomVisualScale { get; set; } = Vector3.One;
+
+    [Export]
+    public float CustomTerrainHeightScale { get; set; } = 1.0f;
+
+    [Export]
     public Mesh? CustomMesh
     {
         get => _customMesh;
@@ -246,6 +252,13 @@ public partial class HexCell3D : Node3D
             SetDefaultMeshVisible(false);
             _customMeshInstance.Visible = false;
             _customVisualInstance = CustomVisualScene.Instantiate();
+            if (_customVisualInstance is Node3D visual)
+            {
+                visual.Scale = CustomVisualScale;
+                var terrain = visual.GetNodeOrNull<Node3D>("Terrain");
+                if (terrain != null)
+                    terrain.Scale = new Vector3(1, CustomTerrainHeightScale, 1);
+            }
             _customVisualRoot.AddChild(_customVisualInstance);
             return;
         }
