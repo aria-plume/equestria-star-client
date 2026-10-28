@@ -31,7 +31,7 @@ public sealed class GameMapBuilder
         float radius,
         float height,
         float bevelWidth,
-        bool showDebugLabels
+        bool showCellNames
     )
     {
         var validation = MapDataValidator.Validate(map);
@@ -63,7 +63,8 @@ public sealed class GameMapBuilder
                 cell.BevelWidth = bevelWidth;
                 cell.TopMaterial = MapLayoutConfig.GetTopMaterial(dto.BoardCode);
                 cell.SideMaterial = MapLayoutConfig.GetSideMaterial(dto.BoardCode);
-                cell.ShowDebugLabel = showDebugLabels;
+                cell.ShowCellNames = showCellNames;
+                cell.CellNameHeight = safeHeight + 0.06f;
                 cell.Position = HexCoordinateConverter.ToWorld(q, r, dto.BoardCode, safeRadius);
 
                 var tags = new Godot.Collections.Array<string>();
@@ -90,11 +91,10 @@ public sealed class GameMapBuilder
                     InteractionTags = tags
                 });
 
-                var debugLabel = cell.GetNode<Label3D>("DebugLabel");
-                debugLabel.FontSize = 34;
-                debugLabel.OutlineSize = 8;
-                debugLabel.PixelSize = 0.0024f;
-                debugLabel.Position = new Vector3(0.0f, safeHeight + 0.06f, 0.0f);
+                var cellNameLabel = cell.GetNode<Label3D>("CellNameLabel");
+                cellNameLabel.FontSize = 34;
+                cellNameLabel.OutlineSize = 8;
+                cellNameLabel.PixelSize = 0.0024f;
 
                 newRoot.AddChild(cell);
                 newCellsById.Add(dto.CellId, cell);

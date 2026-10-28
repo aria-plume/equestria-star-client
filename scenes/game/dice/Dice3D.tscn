@@ -1,0 +1,193 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/game/dice/Dice3D.cs" id="1_dice"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial_pip"]
+albedo_color = Color(0.018, 0.022, 0.026, 1)
+roughness = 0.32
+
+[sub_resource type="SphereMesh" id="SphereMesh_pip"]
+material = SubResource("StandardMaterial_pip")
+radius = 0.065
+height = 0.035
+radial_segments = 16
+rings = 8
+
+[sub_resource type="BoxShape3D" id="BoxShape_dice"]
+resource_local_to_scene = true
+size = Vector3(1, 1, 1)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dice"]
+friction = 0.76
+bounce = 0.26
+
+[node name="Dice3D" type="RigidBody3D"]
+mass = 1.15
+physics_material_override = SubResource("PhysicsMaterial_dice")
+freeze = true
+continuous_cd = true
+linear_damp = 1.55
+angular_damp = 1.35
+collision_layer = 512
+collision_mask = 1
+script = ExtResource("1_dice")
+
+[node name="VisualRoot" type="Node3D" parent="."]
+
+[node name="DiceMesh" type="MeshInstance3D" parent="VisualRoot"]
+
+[node name="PipsRoot" type="Node3D" parent="VisualRoot"]
+
+[node name="Face1" type="Node3D" parent="VisualRoot/PipsRoot"]
+
+[node name="Pip1" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face1"]
+position = Vector3(0, 0.508, 0)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Face2" type="Node3D" parent="VisualRoot/PipsRoot"]
+
+[node name="Pip1" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face2"]
+position = Vector3(-0.2, 0.2, 0.508)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Pip2" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face2"]
+position = Vector3(0.2, -0.2, 0.508)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Face3" type="Node3D" parent="VisualRoot/PipsRoot"]
+
+[node name="Pip1" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face3"]
+position = Vector3(0.508, 0.22, -0.22)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Pip2" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face3"]
+position = Vector3(0.508, 0, 0)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Pip3" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face3"]
+position = Vector3(0.508, -0.22, 0.22)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Face4" type="Node3D" parent="VisualRoot/PipsRoot"]
+
+[node name="Pip1" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face4"]
+position = Vector3(-0.508, 0.2, -0.2)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Pip2" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face4"]
+position = Vector3(-0.508, 0.2, 0.2)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Pip3" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face4"]
+position = Vector3(-0.508, -0.2, -0.2)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Pip4" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face4"]
+position = Vector3(-0.508, -0.2, 0.2)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Face5" type="Node3D" parent="VisualRoot/PipsRoot"]
+
+[node name="Pip1" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face5"]
+position = Vector3(-0.2, 0.2, -0.508)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Pip2" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face5"]
+position = Vector3(0.2, 0.2, -0.508)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Pip3" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face5"]
+position = Vector3(0, 0, -0.508)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Pip4" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face5"]
+position = Vector3(-0.2, -0.2, -0.508)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Pip5" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face5"]
+position = Vector3(0.2, -0.2, -0.508)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Face6" type="Node3D" parent="VisualRoot/PipsRoot"]
+
+[node name="Pip1" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face6"]
+position = Vector3(-0.2, -0.508, -0.24)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Pip2" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face6"]
+position = Vector3(-0.2, -0.508, 0)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Pip3" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face6"]
+position = Vector3(-0.2, -0.508, 0.24)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Pip4" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face6"]
+position = Vector3(0.2, -0.508, -0.24)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Pip5" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face6"]
+position = Vector3(0.2, -0.508, 0)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="Pip6" type="MeshInstance3D" parent="VisualRoot/PipsRoot/Face6"]
+position = Vector3(0.2, -0.508, 0.24)
+mesh = SubResource("SphereMesh_pip")
+cast_shadow = 0
+
+[node name="FaceMarkers" type="Node3D" parent="."]
+
+[node name="Face1Marker" type="Marker3D" parent="FaceMarkers"]
+position = Vector3(0, 0.525, 0)
+
+[node name="Face2Marker" type="Marker3D" parent="FaceMarkers"]
+position = Vector3(0, 0, 0.525)
+
+[node name="Face3Marker" type="Marker3D" parent="FaceMarkers"]
+position = Vector3(0.525, 0, 0)
+
+[node name="Face4Marker" type="Marker3D" parent="FaceMarkers"]
+position = Vector3(-0.525, 0, 0)
+
+[node name="Face5Marker" type="Marker3D" parent="FaceMarkers"]
+position = Vector3(0, 0, -0.525)
+
+[node name="Face6Marker" type="Marker3D" parent="FaceMarkers"]
+position = Vector3(0, -0.525, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_dice")

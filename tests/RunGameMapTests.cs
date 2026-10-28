@@ -121,6 +121,17 @@ public partial class RunGameMapTests : SceneTree
         AssertEqual(builder.CellsById.Count, 138, "应建立完整 cellId 字典");
         AssertEqual(builder.CellsByCode.Count, 138, "应建立完整 cellCode 字典");
         AssertEqual(builder.Edges.Count, 385, "构建器应保留边 DTO");
+        foreach (var cell in builder.CellsById.Values)
+        {
+            var nameLabel = cell.GetNode<Label3D>("CellNameLabel");
+            AssertTrue(nameLabel.Visible, $"格子 {cell.Data?.CellCode} 应默认显示名称");
+            AssertEqual(
+                nameLabel.Text.Replace("\n", ""),
+                cell.Data?.DisplayName ?? "",
+                $"格子 {cell.Data?.CellCode} 应绑定统一 DisplayName"
+            );
+            AssertFalse(nameLabel.Text.Contains('('), $"格子 {cell.Data?.CellCode} 不得显示 QR 坐标");
+        }
 
         var aCell = builder.CellsByCode["A10"];
         var bCell = builder.CellsByCode["B24"];
@@ -142,6 +153,10 @@ public partial class RunGameMapTests : SceneTree
         AssertEqual(mapRoot.GetChildCount(), 1, "重复加载后 MapRoot 只能保留一个生成根节点");
         AssertFalse(ReferenceEquals(mapRoot.GetChild(0), oldGeneratedRoot), "重复加载应替换旧生成根节点");
         AssertFalse(oldCell.IsInsideTree(), "旧格子应立即离开场景树");
+        AssertFalse(
+            builder.CellsByCode["A10"].GetNode<Label3D>("CellNameLabel").Visible,
+            "构建时关闭 ShowCellNames 应隐藏全部名称"
+        );
 
         var plan = MapCameraFitter.Calculate(secondBuild.Bounds, 16.0f / 9.0f);
         AssertTrue(MapCameraFitter.ContainsBounds(plan, 16.0f / 9.0f), "1920x1080 正交取景应包含全部格子");
@@ -305,20 +320,31 @@ public partial class RunGameMapTests : SceneTree
         controller.ResetToInitialView();
         var cell = scene.CellsByCode["A10"];
         var clickCount = 0;
+        var emptyClickCount = 0;
+        scene.MapEmptyClicked += () => emptyClickCount++;
+        controller.BeginPointerGesture(new Vector2(180, 180), Vector3.Zero);
+        controller.EndPointerGesture(new Vector2(180, 180));
+        await ToSignal(this, SignalName.ProcessFrame);
+        AssertEqual(emptyClickCount, 1, "未命中格子的短按释放应发送地图空白点击");
+
         cell.CellClicked += _ => clickCount++;
         cell.BeginPointerClick();
         controller.BeginPointerGesture(new Vector2(200, 200), Vector3.Zero);
         controller.UpdatePointerGesture(new Vector2(203, 202), new Vector3(-0.1f, 0.0f, 0.1f));
-        controller.EndPointerGesture();
+        controller.EndPointerGesture(new Vector2(203, 202));
         AssertTrue(cell.CompletePointerClick(), "小于阈值的操作仍应允许点击格子");
+        await ToSignal(this, SignalName.ProcessFrame);
         AssertEqual(clickCount, 1, "小幅移动后释放应发送 CellClicked");
+        AssertEqual(emptyClickCount, 1, "格子点击不得同时发送地图空白点击");
 
         cell.BeginPointerClick();
         controller.BeginPointerGesture(new Vector2(200, 200), Vector3.Zero);
         controller.UpdatePointerGesture(new Vector2(220, 220), new Vector3(-1.0f, 0.0f, 1.0f));
-        controller.EndPointerGesture();
+        controller.EndPointerGesture(new Vector2(220, 220));
+        await ToSignal(this, SignalName.ProcessFrame);
         AssertFalse(cell.CompletePointerClick(), "从格子表面开始拖动后不得确认点击");
         AssertEqual(clickCount, 1, "拖动地图不得误发 CellClicked");
+        AssertEqual(emptyClickCount, 1, "拖动地图不得发送地图空白点击");
 
         controller.BeginPointerGesture(new Vector2(50, 50), Vector3.Zero);
         controller.UpdatePointerGesture(new Vector2(70, 70), new Vector3(-1.0f, 0.0f, 1.0f));

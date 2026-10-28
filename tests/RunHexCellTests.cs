@@ -68,6 +68,11 @@ public partial class RunHexCellTests : SceneTree
         AssertEqual(data.DisplayName, "后备名称", "缺少 CellNameText 时应回退 CellName");
         data.CellNameText = "玩家名称";
         AssertEqual(data.DisplayName, "玩家名称", "展示名称应优先使用 CellNameText");
+        data.CellNameText = " ";
+        data.CellName = "";
+        AssertEqual(data.DisplayName, "A10", "名称字段均为空时应回退 CellCode");
+        data.CellCode = "";
+        AssertEqual(data.DisplayName, "未命名格子", "名称和编号均为空时应显示未命名兜底");
         AssertTrue(data.HasInteractionTag("shop"), "交互标签查询应忽略英文大小写");
         AssertFalse(data.HasInteractionTag("WORK"), "不存在的交互标签应返回 false");
     }
@@ -87,7 +92,7 @@ public partial class RunHexCellTests : SceneTree
             "ContentAnchor",
             "TokenRoot",
             "IconAnchor",
-            "DebugLabel"
+            "CellNameLabel"
         })
         {
             AssertTrue(cell.HasNode(path), $"HexCell3D 缺少节点：{path}");
@@ -154,7 +159,7 @@ public partial class RunHexCellTests : SceneTree
 
     private void VerifyDataBinding(HexCell3D cell)
     {
-        cell.ShowDebugLabel = true;
+        cell.ShowCellNames = true;
         cell.BindData(new HexCellData
         {
             CellId = 88,
@@ -165,8 +170,33 @@ public partial class RunHexCellTests : SceneTree
             R = 5
         });
         AssertEqual(cell.Data?.DisplayName, "星辉广场", "绑定后应保留玩家展示名称");
-        AssertEqual(cell.GetNode<Label3D>("DebugLabel").Text, "A10\n(1,5)", "调试标签应显示两行编码和坐标");
-        AssertTrue(cell.GetNode<Label3D>("DebugLabel").Visible, "ShowDebugLabel=true 时标签应显示");
+        var label = cell.GetNode<Label3D>("CellNameLabel");
+        AssertEqual(label.Text, "星辉广场", "名称标签应只显示 CellNameText");
+        AssertFalse(label.Text.Contains("A10", StringComparison.Ordinal), "CellNameText 存在时不得显示 cellCode");
+        AssertFalse(label.Text.Contains('('), "名称标签不得包含 QR 坐标格式");
+        AssertTrue(label.Visible, "ShowCellNames=true 时标签应显示");
+
+        cell.BindData(new HexCellData { CellId = 88, CellCode = "A10", CellName = "后备名称" });
+        AssertEqual(label.Text, "后备名称", "CellNameText 为空时标签应回退 CellName");
+        cell.BindData(new HexCellData { CellId = 88, CellCode = "A10" });
+        AssertEqual(label.Text, "A10", "名称字段为空时标签应回退 CellCode");
+        cell.BindData(new HexCellData { CellId = 88, CellCode = "" });
+        AssertEqual(label.Text, "未命名格子", "三个字段均为空时标签应显示未命名兜底");
+
+        var normalFontSize = label.FontSize;
+        cell.BindData(new HexCellData
+        {
+            CellId = 88,
+            CellCode = "A10",
+            CellNameText = "这是一个需要适配的超长中文格子名称"
+        });
+        AssertTrue(label.Text.Split('\n').Length <= 2, "长名称最多只能显示两行");
+        AssertTrue(label.FontSize < normalFontSize, "长名称应降低字号以限制显示范围");
+        AssertFalse(label.Text.Contains('('), "长名称适配不得重新引入坐标文本");
+
+        cell.ShowCellNames = false;
+        AssertFalse(label.Visible, "ShowCellNames=false 时应隐藏名称标签");
+        cell.ShowCellNames = true;
     }
 
     private void VerifyStatePriorityAndSignals(HexCell3D cell)
@@ -246,6 +276,11 @@ public partial class RunHexCellTests : SceneTree
             Q = 3,
             R = 1
         });
+        AssertEqual(
+            cell.GetNode<Label3D>("CellNameLabel").Text.Replace("\n", ""),
+            "自定义模型测试格",
+            "自定义素材应继续显示同一套格子名称"
+        );
         cell.SetSelected(true);
         AssertEqual(cell.VisualState, HexCellVisualState.Selected, "自定义素材不得影响状态切换");
         AssertTrue(cell.TryActivate(), "自定义素材不得影响格子点击");

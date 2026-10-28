@@ -783,3 +783,15 @@ POST /rooms/{roomId}/leave
 - `user/controller/UserController.java`
 
 请求和响应字段以各模块的 `dto`、`vo` 类为准。
+
+## 14. 任务主动掷骰（2026-09-30）
+
+`QUEST_SOCIAL_CHECK` 和 `QUEST_FULL_SOCIAL_CHECK` 改为两阶段操作。原行动接口只创建待判定，成功响应包含 `resultType=CHECK_ROLL_PENDING` 和 `pendingCheck`，此时不会推进任务或发放奖励。
+
+- `GET /api/v1/games/{gameId}/checks/pending`：查询当前登录玩家未完成的判定；没有时 `data=null`，重连后用它恢复掷骰界面。
+- `POST /api/v1/games/{gameId}/checks/{checkId}/roll`：提交 `{"dice":1到6,"stateVersion":pendingCheck.stateVersion}`。
+- 客户端不能提交成功结果、最终值或奖励。服务端负责属性、修正、难度、任务进度和奖励结算。
+- 返回状态仍为 `WAITING_ROLL` 时表示需要再次掷骰；`COMPLETED` 才表示最终结算完成。
+- 待判定存在时不能执行其他行动。单阶段超时 120 秒后由服务端代掷并标记 `fallbackUsed=true`。
+
+完整字段、错误码和恢复流程见项目根目录的 `Godot_任务主动掷骰接入说明.md`。

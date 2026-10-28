@@ -1,0 +1,155 @@
+[gd_scene format=3 uid="uid://dx62ap48mon1i"]
+
+[ext_resource type="Script" uid="uid://dxlaj1xnyngkq" path="res://scripts/game/dice/DiceDemo.cs" id="1_demo"]
+[ext_resource type="PackedScene" path="res://scenes/game/dice/Dice3D.tscn" id="2_dice"]
+[ext_resource type="PackedScene" path="res://scenes/game/dice/DiceTray.tscn" id="3_tray"]
+[ext_resource type="Script" uid="uid://cy582ctfo4h1k" path="res://scripts/game/dice/DiceRollController.cs" id="4_controller"]
+[ext_resource type="Theme" uid="uid://cn82v5pyl54f6" path="res://assets/theme/client_theme.tres" id="5_theme"]
+
+[sub_resource type="Environment" id="Environment_demo"]
+background_mode = 1
+background_color = Color(0.028, 0.044, 0.052, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.58, 0.69, 0.74, 1)
+ambient_light_energy = 0.72
+reflected_light_source = 2
+tonemap_mode = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_status"]
+bg_color = Color(0.035, 0.058, 0.068, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.46, 0.5, 0.82)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button"]
+bg_color = Color(0.1, 0.29, 0.34, 0.98)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button_hover"]
+bg_color = Color(0.14, 0.4, 0.45, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="DiceDemo" type="Node3D" unique_id=634334374]
+script = ExtResource("1_demo")
+
+[node name="DiceTray" parent="." unique_id=1634492039 instance=ExtResource("3_tray")]
+
+[node name="Dice3D" parent="." unique_id=1069458405 instance=ExtResource("2_dice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.56, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1353109135]
+environment = SubResource("Environment_demo")
+
+[node name="KeyLight" type="DirectionalLight3D" parent="." unique_id=1777939732]
+transform = Transform3D(0.8290376, 0.44065, -0.34427354, 0, 0.6156615, 0.7880107, 0.5591929, -0.6532905, 0.51040655, 0, 0, 0)
+light_color = Color(1, 0.96, 0.9, 1)
+light_energy = 1.45
+shadow_enabled = true
+directional_shadow_max_distance = 20.0
+
+[node name="FillLight" type="OmniLight3D" parent="." unique_id=1845899095]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5937376, 3.8, 0.48503256)
+light_color = Color(0.55, 0.75, 1, 1)
+light_energy = 4.0
+omni_range = 9.0
+
+[node name="CameraRig" type="Node3D" parent="." unique_id=1946177272]
+script = ExtResource("4_controller")
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig" unique_id=862605755]
+transform = Transform3D(1, 0, 0, 0, 0.76424646, 0.6449243, 0, -0.6449243, 0.76424646, 0, 5.4, 6.4)
+current = true
+fov = 42.0
+
+[node name="Interface" type="CanvasLayer" parent="." unique_id=1670109032]
+layer = 10
+
+[node name="Root" type="Control" parent="Interface" unique_id=1132034517]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("5_theme")
+
+[node name="StatusMargin" type="MarginContainer" parent="Interface/Root" unique_id=1779502157]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 354.0
+offset_bottom = 206.0
+mouse_filter = 2
+
+[node name="StatusPanel" type="PanelContainer" parent="Interface/Root/StatusMargin" unique_id=1934753118]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_status")
+
+[node name="StatusContent" type="VBoxContainer" parent="Interface/Root/StatusMargin/StatusPanel" unique_id=874951988]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Interface/Root/StatusMargin/StatusPanel/StatusContent" unique_id=1850575154]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.96, 0.97, 1)
+theme_override_font_sizes/font_size = 24
+text = "物理六面骰"
+horizontal_alignment = 1
+
+[node name="StateLabel" type="Label" parent="Interface/Root/StatusMargin/StatusPanel/StatusContent" unique_id=965927564]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.86, 0.89, 1)
+theme_override_font_sizes/font_size = 18
+text = "状态：待机"
+horizontal_alignment = 1
+
+[node name="TierLabel" type="Label" parent="Interface/Root/StatusMargin/StatusPanel/StatusContent" unique_id=590916905]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.76, 0.87, 0.9, 1)
+theme_override_font_sizes/font_size = 18
+text = "档位：—"
+horizontal_alignment = 1
+
+[node name="ResultLabel" type="Label" parent="Interface/Root/StatusMargin/StatusPanel/StatusContent" unique_id=1570932056]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.82, 0.36, 1)
+theme_override_font_sizes/font_size = 22
+text = "点数：—"
+horizontal_alignment = 1
+
+[node name="ResetMargin" type="MarginContainer" parent="Interface/Root" unique_id=1256366825]
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -224.0
+offset_top = -88.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="ResetButton" type="Button" parent="Interface/Root/ResetMargin" unique_id=488030195 groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(200, 54)
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+text = "重新投掷"

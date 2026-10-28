@@ -241,6 +241,24 @@ public partial class ApiClient : Node
         return GetJsonAsync<PlayerViewResponseDto>($"/games/{gameId}/player-view");
     }
 
+    public Task<ApiResult<List<AvailableActionDto>>> GetAvailableActionsAsync(long gameId, long playerId)
+    {
+        return GetJsonAsync<List<AvailableActionDto>>(
+            $"/games/{gameId}/available-actions",
+            new Dictionary<string, string?> { ["playerId"] = playerId.ToString() }
+        );
+    }
+
+    public Task<ApiResult<List<MapCellDto>>> GetMovableCellsAsync(long gameId, long playerId)
+    {
+        return GetJsonAsync<List<MapCellDto>>($"/games/{gameId}/players/{playerId}/movable-cells");
+    }
+
+    public Task<ApiResult<GameActionResponseDto>> SubmitGameActionAsync(long gameId, GameActionRequestDto request)
+    {
+        return PostJsonAsync<GameActionResponseDto>($"/games/{gameId}/actions", request);
+    }
+
     private void HandleAuthInvalidation<T>(ApiResult<T> result)
     {
         var isAuthError = result.IsAuthError

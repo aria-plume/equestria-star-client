@@ -1,4 +1,6 @@
 using Godot;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace EquestriaStar.Game.Map;
 
@@ -31,7 +33,7 @@ public partial class HexCell3D : Node3D
     private MeshInstance3D _highlightMesh = null!;
     private Area3D _interactionArea = null!;
     private CollisionShape3D _collisionShape = null!;
-    private Label3D _debugLabel = null!;
+    private Label3D _cellNameLabel = null!;
     private float _radius = 1.0f;
     private float _height = 0.2f;
     private float _bevelWidth = 0.05f;
@@ -40,7 +42,9 @@ public partial class HexCell3D : Node3D
     private bool _isMovable;
     private bool _isSelected;
     private bool _isDisabled;
-    private bool _showDebugLabel;
+    private bool _showCellNames;
+    private int _baseCellNameFontSize;
+    private float _cellNameHeight = 0.32f;
     private uint _inputCollisionLayer = 128;
     private Mesh? _customMesh;
     private PackedScene? _customVisualScene;
@@ -121,10 +125,10 @@ public partial class HexCell3D : Node3D
     public Color HoveredColor { get; set; } = new(0.22f, 0.78f, 0.95f, 0.42f);
 
     [Export]
-    public Color CurrentColor { get; set; } = new(0.30f, 0.56f, 0.98f, 0.34f);
+    public Color CurrentColor { get; set; } = new(1.0f, 0.76f, 0.16f, 0.48f);
 
     [Export]
-    public Color MovableColor { get; set; } = new(0.24f, 0.86f, 0.47f, 0.46f);
+    public Color MovableColor { get; set; } = new(0.20f, 0.62f, 1.0f, 0.5f);
 
     [Export]
     public Color SelectedColor { get; set; } = new(1.0f, 0.72f, 0.20f, 0.56f);
@@ -147,17 +151,31 @@ public partial class HexCell3D : Node3D
         }
     }
 
-    [ExportGroup("调试")]
+    [ExportGroup("格子名称")]
     [Export]
-    public bool ShowDebugLabel
+    public bool ShowCellNames
     {
-        get => _showDebugLabel;
+        get => _showCellNames;
         set
         {
-            _showDebugLabel = value;
-            if (GodotObject.IsInstanceValid(_debugLabel))
+            _showCellNames = value;
+            if (GodotObject.IsInstanceValid(_cellNameLabel))
             {
-                _debugLabel.Visible = value;
+                _cellNameLabel.Visible = value;
+            }
+        }
+    }
+
+    [Export(PropertyHint.Range, "0.02,1.5,0.01")]
+    public float CellNameHeight
+    {
+        get => _cellNameHeight;
+        set
+        {
+            _cellNameHeight = Mathf.Max(0.02f, value);
+            if (GodotObject.IsInstanceValid(_cellNameLabel))
+            {
+                _cellNameLabel.Position = new Vector3(0.0f, _cellNameHeight, 0.0f);
             }
         }
     }
@@ -167,6 +185,7 @@ public partial class HexCell3D : Node3D
     public Mesh? GeneratedMesh => _baseMesh?.Mesh;
     public Shape3D? InteractionShape => _collisionShape.Shape;
     public bool UsesCustomVisual => CustomVisualScene != null || CustomMesh != null;
+    public Node3D TokenRoot => GetNode<Node3D>("TokenRoot");
 
     public override void _Ready()
     {
@@ -176,7 +195,9 @@ public partial class HexCell3D : Node3D
         _highlightMesh = GetNode<MeshInstance3D>("HighlightMesh");
         _interactionArea = GetNode<Area3D>("InteractionArea");
         _collisionShape = GetNode<CollisionShape3D>("InteractionArea/CollisionShape3D");
-        _debugLabel = GetNode<Label3D>("DebugLabel");
+        _cellNameLabel = GetNode<Label3D>("CellNameLabel");
+        _baseCellNameFontSize = _cellNameLabel.FontSize;
+        _cellNameLabel.Position = new Vector3(0.0f, CellNameHeight, 0.0f);
 
         _interactionArea.CollisionLayer = InputCollisionLayer;
         _interactionArea.InputRayPickable = true;
@@ -187,7 +208,7 @@ public partial class HexCell3D : Node3D
         ApplyGeometry();
         RefreshVisualSource();
         BindData(InitialData ?? new HexCellData());
-        _debugLabel.Visible = ShowDebugLabel;
+        _cellNameLabel.Visible = ShowCellNames;
         RefreshVisualState();
     }
 
@@ -207,9 +228,9 @@ public partial class HexCell3D : Node3D
     {
         Data = data;
         InitialData = data;
-        if (GodotObject.IsInstanceValid(_debugLabel))
+        if (GodotObject.IsInstanceValid(_cellNameLabel))
         {
-            _debugLabel.Text = $"{data.CellCode}\n({data.Q},{data.R})";
+            ApplyCellName(data.DisplayName);
         }
     }
 
@@ -513,5 +534,55 @@ public partial class HexCell3D : Node3D
         {
             ApplyGeometry();
         }
+    }
+
+    private void ApplyCellName(string displayName)
+    {
+        var textElements = SplitTextElements(displayName);
+        if (textElements.Count <= 6)
+        {
+            _cellNameLabel.Text = string.Concat(textElements);
+        }
+        else
+        {
+            var visibleElements = textElements.Count > 12
+                ? textElements.GetRange(0, 11)
+                : textElements;
+            if (textElements.Count > 12)
+            {
+                visibleElements.Add("…");
+            }
+
+            var firstLineCount = (visibleElements.Count + 1) / 2;
+            _cellNameLabel.Text = string.Concat(visibleElements.GetRange(0, firstLineCount))
+                + "\n"
+                + string.Concat(visibleElements.GetRange(firstLineCount, visibleElements.Count - firstLineCount));
+        }
+
+        var longestLineLength = 0;
+        foreach (var line in _cellNameLabel.Text.Split('\n'))
+        {
+            longestLineLength = Mathf.Max(longestLineLength, SplitTextElements(line).Count);
+        }
+
+        var scale = longestLineLength switch
+        {
+            <= 4 => 1.0f,
+            5 => 0.9f,
+            _ => 0.8f
+        };
+        _cellNameLabel.FontSize = Mathf.Max(16, Mathf.RoundToInt(_baseCellNameFontSize * scale));
+    }
+
+    private static List<string> SplitTextElements(string value)
+    {
+        var elements = new List<string>();
+        var enumerator = StringInfo.GetTextElementEnumerator(value);
+        while (enumerator.MoveNext())
+        {
+            elements.Add(enumerator.GetTextElement());
+        }
+
+        return elements;
     }
 }

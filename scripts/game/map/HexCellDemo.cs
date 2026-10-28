@@ -17,7 +17,7 @@ public partial class HexCellDemo : Node3D
         _stateLabel = GetNode<Label>("Interface/RootMargin/Layout/InfoPanel/InfoMargin/Info/StateLabel");
         _eventLabel = GetNode<Label>("Interface/RootMargin/Layout/InfoPanel/InfoMargin/Info/EventLabel");
 
-        _cell.ShowDebugLabel = true;
+        _cell.ShowCellNames = true;
         _cell.BindData(new HexCellData
         {
             CellId = 10,
@@ -32,13 +32,13 @@ public partial class HexCellDemo : Node3D
         _cell.CellHoverChanged += OnCellHoverChanged;
         _cell.VisualStateChanged += OnVisualStateChanged;
 
-        _customCell.ShowDebugLabel = true;
+        _customCell.ShowCellNames = true;
         _customCell.BindData(new HexCellData
         {
             CellId = 21,
             CellCode = "B21",
             CellName = "自定义格",
-            CellNameText = "自定义素材",
+            CellNameText = "自定义素材示范区域",
             Q = 2,
             R = 5,
             InteractionTags = ["DEMO"]

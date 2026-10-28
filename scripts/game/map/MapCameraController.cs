@@ -13,6 +13,9 @@ public partial class MapCameraController : Node3D
     [Signal]
     public delegate void DragEndedEventHandler();
 
+    [Signal]
+    public delegate void MapPointerClickedEventHandler(Vector2 screenPosition);
+
     [ExportGroup("缩放")]
     [Export(PropertyHint.Range, "0.5,0.99,0.01")]
     public float ZoomFactor { get; set; } = 0.9f;
@@ -193,7 +196,7 @@ public partial class MapCameraController : Node3D
                 }
                 else
                 {
-                    EndPointerGesture();
+                    EndPointerGesture(mouseButton.Position);
                 }
             }
 
@@ -311,7 +314,7 @@ public partial class MapCameraController : Node3D
         ClampRigPosition();
     }
 
-    public void EndPointerGesture()
+    public void EndPointerGesture(Vector2? screenPosition = null)
     {
         if (!_pointerDown)
         {
@@ -327,6 +330,10 @@ public partial class MapCameraController : Node3D
         if (wasDragging)
         {
             EmitSignal(SignalName.DragEnded);
+        }
+        else if (screenPosition.HasValue)
+        {
+            EmitSignal(SignalName.MapPointerClicked, screenPosition.Value);
         }
     }
 

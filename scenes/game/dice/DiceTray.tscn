@@ -1,0 +1,78 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://scripts/game/dice/DiceTray.cs" id="1_tray"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial_floor"]
+albedo_color = Color(0.08, 0.2, 0.22, 1)
+roughness = 0.88
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial_wall"]
+albedo_color = Color(0.13, 0.32, 0.34, 1)
+roughness = 0.72
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+material = SubResource("StandardMaterial_floor")
+size = Vector3(7, 0.18, 7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall_north"]
+material = SubResource("StandardMaterial_wall")
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall_south"]
+material = SubResource("StandardMaterial_wall")
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall_west"]
+material = SubResource("StandardMaterial_wall")
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall_east"]
+material = SubResource("StandardMaterial_wall")
+
+[sub_resource type="BoxShape3D" id="BoxShape_floor"]
+size = Vector3(7, 0.18, 7)
+
+[sub_resource type="BoxShape3D" id="BoxShape_wall_north"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_wall_south"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_wall_west"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_wall_east"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tray"]
+friction = 0.78
+bounce = 0.24
+
+[node name="DiceTray" type="StaticBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_tray")
+script = ExtResource("1_tray")
+
+[node name="VisualRoot" type="Node3D" parent="."]
+
+[node name="FloorMesh" type="MeshInstance3D" parent="VisualRoot"]
+mesh = SubResource("BoxMesh_floor")
+
+[node name="WallNorthMesh" type="MeshInstance3D" parent="VisualRoot"]
+mesh = SubResource("BoxMesh_wall_north")
+
+[node name="WallSouthMesh" type="MeshInstance3D" parent="VisualRoot"]
+mesh = SubResource("BoxMesh_wall_south")
+
+[node name="WallWestMesh" type="MeshInstance3D" parent="VisualRoot"]
+mesh = SubResource("BoxMesh_wall_west")
+
+[node name="WallEastMesh" type="MeshInstance3D" parent="VisualRoot"]
+mesh = SubResource("BoxMesh_wall_east")
+
+[node name="FloorCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_floor")
+
+[node name="WallNorthCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_wall_north")
+
+[node name="WallSouthCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_wall_south")
+
+[node name="WallWestCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_wall_west")
+
+[node name="WallEastCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_wall_east")

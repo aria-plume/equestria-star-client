@@ -4,6 +4,7 @@ $ErrorActionPreference = "Stop"
 $required = @(
   "project.godot",
   "EquestriaStar.csproj",
+  "AGENTS.md",
   "scenes/app/App.tscn",
   "scenes/screens/LoginScreen.tscn",
   "scenes/screens/RegisterScreen.tscn",
@@ -19,9 +20,13 @@ $required = @(
   "scenes/game/map/HexCell3D.tscn",
   "scenes/game/map/HexCellDemo.tscn",
   "scenes/game/map/GameMapScene.tscn",
+  "scenes/game/map/PlayerToken3D.tscn",
   "scenes/game/ui/GameHud.tscn",
   "scenes/game/ui/GameHudDemo.tscn",
   "scenes/game/ui/OtherPlayerHudEntry.tscn",
+  "scenes/game/dice/Dice3D.tscn",
+  "scenes/game/dice/DiceTray.tscn",
+  "scenes/game/dice/DiceDemo.tscn",
   "assets/characters/cards/骰子.png",
   "assets/characters/cards/大布莱恩.jpg",
   "assets/characters/cards/橙羽.jpg",
@@ -52,9 +57,18 @@ $required = @(
   "scripts/game/map/MapDataValidator.cs",
   "scripts/game/map/MapCameraFitter.cs",
   "scripts/game/map/MapCameraController.cs",
+  "scripts/game/map/PlayerToken3D.cs",
+  "scripts/game/map/PlayerTokenLayout.cs",
+  "scripts/game/map/PlayerTokenManager.cs",
+  "scripts/game/map/PlayerMoveState.cs",
   "scripts/game/ui/GameHud.cs",
   "scripts/game/ui/GameHudDemo.cs",
   "scripts/game/ui/OtherPlayerHudEntry.cs",
+  "scripts/game/dice/DiceMeshFactory.cs",
+  "scripts/game/dice/Dice3D.cs",
+  "scripts/game/dice/DiceTray.cs",
+  "scripts/game/dice/DiceRollController.cs",
+  "scripts/game/dice/DiceDemo.cs",
   "scripts/ui/App.cs",
   "scripts/ui/LoginScreen.cs",
   "scripts/ui/RegisterScreen.cs",
@@ -74,7 +88,10 @@ $required = @(
   "tests/RunHexCellTests.cs",
   "tests/RunGameMapTests.cs",
   "tests/RunGameScreenTests.cs",
-  "tests/RunMapSmokeTest.cs"
+  "tests/RunPlayerTokenTests.cs",
+  "tests/RunPlayerMoveTests.cs",
+  "tests/RunMapSmokeTest.cs",
+  "tests/RunDiceTests.cs"
 )
 
 foreach ($path in $required) {

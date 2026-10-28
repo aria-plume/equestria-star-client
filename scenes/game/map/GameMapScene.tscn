@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://scripts/game/map/GameMapScene.cs" id="1_map"]
 [ext_resource type="PackedScene" path="res://scenes/game/map/HexCell3D.tscn" id="2_cell"]
 [ext_resource type="Theme" path="res://assets/theme/client_theme.tres" id="3_theme"]
 [ext_resource type="Script" path="res://scripts/game/map/MapCameraController.cs" id="4_camera"]
+[ext_resource type="Script" path="res://scripts/game/map/PlayerTokenManager.cs" id="5_token_manager"]
+[ext_resource type="PackedScene" path="res://scenes/game/map/PlayerToken3D.tscn" id="6_token"]
 
 [sub_resource type="Environment" id="Environment_map"]
 background_mode = 1
@@ -56,8 +58,13 @@ corner_radius_bottom_left = 4
 [node name="GameMapScene" type="Node3D"]
 script = ExtResource("1_map")
 CellScene = ExtResource("2_cell")
+ShowCellNames = true
 
 [node name="MapRoot" type="Node3D" parent="."]
+
+[node name="PlayerTokenManager" type="Node3D" parent="."]
+script = ExtResource("5_token_manager")
+TokenScene = ExtResource("6_token")
 
 [node name="Environment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_map")

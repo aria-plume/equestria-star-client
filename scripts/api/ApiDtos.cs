@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using System.Text.Json.Nodes;
 using System.Collections.Generic;
 
 namespace EquestriaStar.Api;
@@ -551,4 +552,109 @@ public sealed class EffectiveAttributesDto
 
     [JsonPropertyName("mind")]
     public int Mind { get; set; }
+}
+
+public sealed class AvailableActionDto
+{
+    [JsonPropertyName("actionType")]
+    public string ActionType { get; set; } = "";
+
+    [JsonPropertyName("actionTypeText")]
+    public string? ActionTypeText { get; set; }
+
+    [JsonPropertyName("available")]
+    public bool Available { get; set; }
+
+    [JsonPropertyName("reason")]
+    public string? Reason { get; set; }
+
+    [JsonPropertyName("reasonText")]
+    public string? ReasonText { get; set; }
+}
+
+public sealed class GameActionRequestDto
+{
+    [JsonPropertyName("playerId")]
+    public long PlayerId { get; set; }
+
+    [JsonPropertyName("stateVersion")]
+    public long StateVersion { get; set; }
+
+    [JsonPropertyName("actionType")]
+    public string ActionType { get; set; } = "";
+
+    [JsonPropertyName("payload")]
+    public JsonObject Payload { get; set; } = new();
+}
+
+public sealed class GameActionResponseDto
+{
+    [JsonPropertyName("gameId")]
+    public long GameId { get; set; }
+
+    [JsonPropertyName("oldStateVersion")]
+    public long OldStateVersion { get; set; }
+
+    [JsonPropertyName("newStateVersion")]
+    public long NewStateVersion { get; set; }
+
+    [JsonPropertyName("actionType")]
+    public string ActionType { get; set; } = "";
+
+    [JsonPropertyName("actionTypeText")]
+    public string? ActionTypeText { get; set; }
+
+    [JsonPropertyName("resultType")]
+    public string? ResultType { get; set; }
+
+    [JsonPropertyName("resultTypeText")]
+    public string? ResultTypeText { get; set; }
+
+    [JsonPropertyName("playerFacingMessage")]
+    public string? PlayerFacingMessage { get; set; }
+
+    [JsonPropertyName("movement")]
+    public GameMovementResultDto? Movement { get; set; }
+
+    [JsonPropertyName("playerViewState")]
+    public PlayerViewResponseDto? PlayerViewState { get; set; }
+
+    [JsonPropertyName("nextAvailableActions")]
+    public List<AvailableActionDto>? NextAvailableActions { get; set; }
+}
+
+public sealed class GameMovementResultDto
+{
+    [JsonPropertyName("fromCellId")]
+    public long FromCellId { get; set; }
+
+    [JsonPropertyName("fromCellCode")]
+    public string? FromCellCode { get; set; }
+
+    [JsonPropertyName("fromCellName")]
+    public string? FromCellName { get; set; }
+
+    [JsonPropertyName("requestedTargetCellId")]
+    public long RequestedTargetCellId { get; set; }
+
+    [JsonPropertyName("requestedTargetCellCode")]
+    public string? RequestedTargetCellCode { get; set; }
+
+    [JsonPropertyName("requestedTargetCellName")]
+    public string? RequestedTargetCellName { get; set; }
+
+    [JsonPropertyName("actualTargetCellId")]
+    public long ActualTargetCellId { get; set; }
+
+    [JsonPropertyName("actualTargetCellCode")]
+    public string? ActualTargetCellCode { get; set; }
+
+    [JsonPropertyName("actualTargetCellName")]
+    public string? ActualTargetCellName { get; set; }
+
+    [JsonPropertyName("costSpeed")]
+    public int CostSpeed { get; set; }
+
+    [JsonPropertyName("remainingSpeed")]
+    public int RemainingSpeed { get; set; }
 }

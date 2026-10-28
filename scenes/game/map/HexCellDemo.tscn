@@ -80,12 +80,13 @@ mesh = SubResource("PlaneMesh_floor")
 
 [node name="HexCell3D" parent="." instance=ExtResource("2_cell")]
 position = Vector3(-1.35, 0, 0)
-ShowDebugLabel = true
+ShowCellNames = true
 
 [node name="CustomHexCell3D" parent="." instance=ExtResource("2_cell")]
 position = Vector3(1.35, 0, 0)
 CustomMesh = SubResource("BoxMesh_custom")
-ShowDebugLabel = true
+ShowCellNames = true
+CellNameHeight = 0.55
 
 [node name="Interface" type="CanvasLayer" parent="."]
 

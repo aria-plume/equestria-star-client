@@ -29,7 +29,23 @@ public partial class HexCellData : Resource
     [Export]
     public Godot.Collections.Array<string> InteractionTags { get; set; } = [];
 
-    public string DisplayName => string.IsNullOrWhiteSpace(CellNameText) ? CellName : CellNameText;
+    public string DisplayName
+    {
+        get
+        {
+            if (!string.IsNullOrWhiteSpace(CellNameText))
+            {
+                return CellNameText.Trim();
+            }
+
+            if (!string.IsNullOrWhiteSpace(CellName))
+            {
+                return CellName.Trim();
+            }
+
+            return string.IsNullOrWhiteSpace(CellCode) ? "未命名格子" : CellCode.Trim();
+        }
+    }
     public bool HasValidIdentity => CellId > 0 && !string.IsNullOrWhiteSpace(CellCode);
 
     public bool HasInteractionTag(string tag)
