@@ -58,7 +58,7 @@ public partial class GameHudDemo : Control
     private void PreviewFirstOtherPlayer()
     {
         var firstEntry = _hud
-            .GetNode<VBoxContainer>("HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/ContentMargin/Content/OtherPlayersScroll/OtherPlayersList")
+            .GetNode<VBoxContainer>("HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/OtherPlayersScroll/OtherPlayersList")
             .GetChildren()
             .OfType<OtherPlayerHudEntry>()
             .FirstOrDefault();
@@ -71,13 +71,13 @@ public partial class GameHudDemo : Control
     private bool VerifyDemoBinding()
     {
         var currentNickname = _hud.GetNode<Label>(
-            "HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/NicknameLabel"
+            "HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/NameRibbon/NicknameLabel"
         );
         var currentCoins = _hud.GetNode<Label>(
-            "HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/ResourceRow/CoinsValue"
+            "HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/CoinsBox/CoinsValue"
         );
         var playerList = _hud.GetNode<VBoxContainer>(
-            "HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/ContentMargin/Content/OtherPlayersScroll/OtherPlayersList"
+            "HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/OtherPlayersScroll/OtherPlayersList"
         );
 
         var currentPlayer = _view.Players![1];

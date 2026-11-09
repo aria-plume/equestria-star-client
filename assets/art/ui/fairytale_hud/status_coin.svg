@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42">
+  <defs>
+    <linearGradient id="cream" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff8de"/><stop offset="1" stop-color="#ffeccb"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff2a0"/><stop offset=".38" stop-color="#f9ce67"/><stop offset="1" stop-color="#dfa041"/>
+    </linearGradient>
+    <linearGradient id="lilac" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#e8c5f6"/><stop offset="1" stop-color="#b47bcf"/>
+    </linearGradient>
+  </defs>
+  <circle cx="21" cy="22" r="17.5" fill="#a16726" opacity=".2"/>
+  <circle cx="21" cy="20.5" r="17.5" fill="#f5bb42" stroke="#c4841e" stroke-width="1.8"/>
+  <circle cx="21" cy="20.5" r="14" fill="#ffc953" stroke="#ffe69c" stroke-width="1.9"/>
+  <circle cx="21" cy="20.5" r="11.9" fill="none" stroke="#df9e2d" stroke-width="1.05"/>
+  <path d="M21 12.5 Q22.5 18.5 29 20.5 Q22.5 22.5 21 28.5 Q19.5 22.5 13 20.5 Q19.5 18.5 21 12.5Z" fill="#ffe6a0" stroke="#d89629" stroke-width=".9"/>
+</svg>

@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[node name="ReadOnlyQuestCard" type="AspectRatioContainer"]
+custom_minimum_size = Vector2(500, 336)
+layout_mode = 2
+mouse_filter = 2
+ratio = 1.48727
+stretch_mode = 2
+
+[node name="CardTexture" type="TextureRect" parent="."]
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5

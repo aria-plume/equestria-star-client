@@ -99,8 +99,35 @@ public partial class RunPlayerTokenTests : SceneTree
         manager.NotifyMapLoaded();
         AssertEqual(manager.TokenCount, 5, "地图重新加载后应从缓存状态重新绑定棋子");
 
+        var landmarkCell = CreateCell(cellScene, 301, "A10");
+        landmarkCell.Radius = 0.55f;
+        landmarkCell.CustomVisualScale = 1.0f;
+        landmarkCell.CustomVisualRotationYDegrees = 30.0f;
+        landmarkCell.CustomVisualScene = GD.Load<PackedScene>(
+            "res://scenes/game/map/visuals/origami/town-hall/OrigamiCellVisual.tscn"
+        );
+        Root.AddChild(landmarkCell);
+        var landmarkManager = new PlayerTokenManager { TokenScene = tokenScene };
+        Root.AddChild(landmarkManager);
+        await ToSignal(this, SignalName.ProcessFrame);
+        landmarkManager.BindCells(new Dictionary<long, HexCell3D> { [301] = landmarkCell });
+        var landmarkPlayers = Enumerable.Range(1, 6)
+            .Select(index => CreatePlayer(3000 + index, index, index, 301))
+            .ToList();
+        landmarkManager.SyncPlayerView(CreateView(landmarkPlayers), 1);
+        AssertEqual(landmarkManager.TokenCount, 6, "地标格也应支持同格六名玩家");
+        AssertTrue(
+            landmarkManager.TokensByPlayerId.Values.All(token => token.GetParent() == landmarkCell.TokenRoot),
+            "地标格棋子仍必须挂载到原 HexCell3D.TokenRoot"
+        );
+        VerifyStableManagerLayout(landmarkManager, landmarkPlayers);
+        landmarkManager.SetPlayerLifted(3001, true, true);
+        AssertTrue(landmarkManager.TokensByPlayerId[3001].LiftRoot.Position.Y > 0.0f, "地标格上的移动棋子仍应正常抬起");
+
         manager.QueueFree();
         cachedManager.QueueFree();
+        landmarkManager.QueueFree();
+        landmarkCell.QueueFree();
         cell1.QueueFree();
         cell2.QueueFree();
         await ToSignal(this, SignalName.ProcessFrame);
@@ -114,6 +141,8 @@ public partial class RunPlayerTokenTests : SceneTree
         {
             var positions = PlayerTokenLayout.Calculate(count, 0.29f, tokenRadius);
             AssertEqual(positions.Count, count, $"{count} 人布局数量必须正确");
+            var center = positions.Aggregate(Vector3.Zero, (sum, position) => sum + position) / positions.Count;
+            AssertVectorApprox(center, Vector3.Zero, 0.0001f, $"{count} 人布局必须围绕格子中心");
             for (var first = 0; first < positions.Count; first++)
             {
                 for (var second = first + 1; second < positions.Count; second++)
@@ -163,6 +192,16 @@ public partial class RunPlayerTokenTests : SceneTree
         AssertTrue(current.GetNode<Area3D>("LiftRoot/InteractionArea").InputRayPickable, "当前玩家棋子必须可点击");
         AssertFalse(other.GetNode<Area3D>("LiftRoot/InteractionArea").InputRayPickable, "其他玩家棋子不得阻挡底层格子点击");
         AssertFalse(current.GetNode<Label3D>("LiftRoot/NameLabel").Visible, "NameLabel 默认必须隐藏");
+        var tokenMaterial = current.GetNode<MeshInstance3D>("LiftRoot/VisualRoot/CylinderMesh").MaterialOverride as StandardMaterial3D;
+        AssertTrue(tokenMaterial?.NoDepthTest == true, "棋子视觉必须关闭深度测试以避免被建筑遮挡");
+        AssertTrue(tokenMaterial?.Transparency == BaseMaterial3D.TransparencyEnum.Alpha, "棋子置顶材质必须进入可排序透明通道");
+        AssertTrue(tokenMaterial?.RenderPriority >= 2, "棋子视觉必须使用稳定绘制优先级");
+        var indicatorMaterial = current.GetNode<MeshInstance3D>("CurrentPlayerIndicator").GetActiveMaterial(0) as StandardMaterial3D;
+        AssertTrue(indicatorMaterial?.NoDepthTest == true, "当前玩家指示环也必须显示在地图模型之前");
+        AssertTrue(
+            indicatorMaterial != null && tokenMaterial != null && indicatorMaterial.RenderPriority > tokenMaterial.RenderPriority,
+            "当前玩家指示环应绘制在棋子主体之后"
+        );
 
         var clickedPlayerId = 0L;
         manager.TokenClicked += playerId => clickedPlayerId = playerId;

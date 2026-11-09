@@ -1,0 +1,182 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/game/ui/QuestCheckOverlay.cs" id="1_script"]
+[ext_resource type="Theme" path="res://assets/theme/client_theme.tres" id="2_theme"]
+
+[node name="QuestCheckOverlay" type="CanvasLayer"]
+layer = 46
+script = ExtResource("1_script")
+
+[node name="OverlayRoot" type="Control" parent="." groups=["blocks_map_input"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+theme = ExtResource("2_theme")
+
+[node name="DimBackground" type="ColorRect" parent="OverlayRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.01, 0.02, 0.025, 0.82)
+
+[node name="Center" type="CenterContainer" parent="OverlayRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="OverlayRoot/Center" groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(1040, 720)
+layout_mode = 2
+
+[node name="ContentMargin" type="MarginContainer" parent="OverlayRoot/Center/Panel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="Content" type="VBoxContainer" parent="OverlayRoot/Center/Panel/ContentMargin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="OverlayRoot/Center/Panel/ContentMargin/Content"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TitleLabel" type="Label" parent="OverlayRoot/Center/Panel/ContentMargin/Content/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+text = "任务判定"
+theme_override_font_sizes/font_size = 26
+
+[node name="CloseButton" type="Button" parent="OverlayRoot/Center/Panel/ContentMargin/Content/Header"]
+custom_minimum_size = Vector2(96, 42)
+layout_mode = 2
+text = "关闭"
+
+[node name="StatusLabel" type="Label" parent="OverlayRoot/Center/Panel/ContentMargin/Content"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+mouse_filter = 2
+text = "正在同步任务判定……"
+autowrap_mode = 3
+
+[node name="TaskScroll" type="ScrollContainer" parent="OverlayRoot/Center/Panel/ContentMargin/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="TaskList" type="VBoxContainer" parent="OverlayRoot/Center/Panel/ContentMargin/Content/TaskScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="EmptyLabel" type="Label" parent="OverlayRoot/Center/Panel/ContentMargin/Content/TaskScroll/TaskList"]
+custom_minimum_size = Vector2(0, 420)
+layout_mode = 2
+mouse_filter = 2
+text = "没有需要判定的任务"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 20
+
+[node name="RetryButton" type="Button" parent="OverlayRoot/Center/Panel/ContentMargin/Content"]
+visible = false
+custom_minimum_size = Vector2(160, 46)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "重试同步"
+
+[node name="AttributeSelectionCenter" type="CenterContainer" parent="OverlayRoot"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="OverlayRoot/AttributeSelectionCenter" groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(620, 420)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="OverlayRoot/AttributeSelectionCenter/Panel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
+
+[node name="Content" type="VBoxContainer" parent="OverlayRoot/AttributeSelectionCenter/Panel/Margin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" type="Label" parent="OverlayRoot/AttributeSelectionCenter/Panel/Margin/Content"]
+layout_mode = 2
+mouse_filter = 2
+text = "请选择本次判定属性"
+horizontal_alignment = 1
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 22
+
+[node name="AttributeGrid" type="GridContainer" parent="OverlayRoot/AttributeSelectionCenter/Panel/Margin/Content"]
+layout_mode = 2
+mouse_filter = 2
+columns = 2
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+
+[node name="StrengthButton" type="Button" parent="OverlayRoot/AttributeSelectionCenter/Panel/Margin/Content/AttributeGrid"]
+custom_minimum_size = Vector2(260, 54)
+layout_mode = 2
+text = "力量"
+
+[node name="SpeedButton" type="Button" parent="OverlayRoot/AttributeSelectionCenter/Panel/Margin/Content/AttributeGrid"]
+custom_minimum_size = Vector2(260, 54)
+layout_mode = 2
+text = "速度"
+
+[node name="SocialButton" type="Button" parent="OverlayRoot/AttributeSelectionCenter/Panel/Margin/Content/AttributeGrid"]
+custom_minimum_size = Vector2(260, 54)
+layout_mode = 2
+text = "社交"
+
+[node name="CharmButton" type="Button" parent="OverlayRoot/AttributeSelectionCenter/Panel/Margin/Content/AttributeGrid"]
+custom_minimum_size = Vector2(260, 54)
+layout_mode = 2
+text = "魅力"
+
+[node name="MagicButton" type="Button" parent="OverlayRoot/AttributeSelectionCenter/Panel/Margin/Content/AttributeGrid"]
+custom_minimum_size = Vector2(260, 54)
+layout_mode = 2
+text = "魔法"
+
+[node name="MindButton" type="Button" parent="OverlayRoot/AttributeSelectionCenter/Panel/Margin/Content/AttributeGrid"]
+custom_minimum_size = Vector2(260, 54)
+layout_mode = 2
+text = "心智"
+
+[node name="BackButton" type="Button" parent="OverlayRoot/AttributeSelectionCenter/Panel/Margin/Content"]
+custom_minimum_size = Vector2(160, 46)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "返回列表"

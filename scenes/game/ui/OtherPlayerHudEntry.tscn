@@ -1,61 +1,97 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/game/ui/OtherPlayerHudEntry.cs" id="1_entry"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/fairytale_hud/turn_order_portrait_frame.svg" id="2_frame"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/fairytale_hud/turn_order_badge.svg" id="3_badge"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_entry"]
-bg_color = Color(0.968627, 0.980392, 0.984314, 0.76)
-border_width_left = 2
-border_color = Color(0.376471, 0.552941, 0.627451, 0.6)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+bg_color = Color(1, 1, 1, 0)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_entry_hover"]
-bg_color = Color(0.882353, 0.933333, 0.94902, 0.96)
-border_width_left = 3
-border_color = Color(0.168627, 0.431373, 0.545098, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+bg_color = Color(1, 0.9, 0.99, 0.58)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.75, 0.44, 0.82, 0.88)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
 
 [node name="OtherPlayerHudEntry" type="PanelContainer" groups=["blocks_map_input"]]
-custom_minimum_size = Vector2(0, 42)
+custom_minimum_size = Vector2(190, 77)
 mouse_default_cursor_shape = 2
 theme_override_styles/panel = SubResource("StyleBox_entry")
 script = ExtResource("1_entry")
 NormalStyle = SubResource("StyleBox_entry")
 HoverStyle = SubResource("StyleBox_entry_hover")
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="Content" type="Control" parent="."]
+custom_minimum_size = Vector2(190, 77)
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 7
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 7
 
-[node name="Row" type="HBoxContainer" parent="Margin"]
-layout_mode = 2
+[node name="Frame" type="TextureRect" parent="Content"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/separation = 10
+texture = ExtResource("2_frame")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="TurnOrderLabel" type="Label" parent="Margin/Row"]
-custom_minimum_size = Vector2(26, 0)
-layout_mode = 2
+[node name="TurnOrderBadge" type="Control" parent="Content"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 15.0
+offset_right = 44.0
+offset_bottom = 61.0
+mouse_filter = 2
+
+[node name="Texture" type="TextureRect" parent="Content/TurnOrderBadge"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_badge")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TurnOrderLabel" type="Label" parent="Content/TurnOrderBadge"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
-theme_override_colors/font_color = Color(0.305882, 0.439216, 0.494118, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.33, 0.14, 0.39, 1)
+theme_override_font_sizes/font_size = 16
 
-[node name="NicknameLabel" type="Label" parent="Margin/Row"]
-layout_mode = 2
-size_flags_horizontal = 3
+[node name="NicknameLabel" type="Label" parent="Content"]
+layout_mode = 0
+offset_left = 49.0
+offset_top = 16.0
+offset_right = 178.0
+offset_bottom = 61.0
 mouse_filter = 2
 text = "玩家昵称"
-text_overrun_behavior = 3
+horizontal_alignment = 1
 vertical_alignment = 1
-theme_override_font_sizes/font_size = 16
+text_overrun_behavior = 3
+theme_override_colors/font_color = Color(0.31, 0.15, 0.37, 1)
+theme_override_font_sizes/font_size = 15

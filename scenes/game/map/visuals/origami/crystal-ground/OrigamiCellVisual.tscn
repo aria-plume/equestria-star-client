@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/art/models/origami/crystal-ground/terrain.glb" id="1_terrain"]
+
+[node name="OrigamiCellVisual" type="Node3D"]
+[node name="Terrain" parent="." instance=ExtResource("1_terrain")]
+

@@ -1,0 +1,34 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/WAT008/part01.glb" id="part01"]
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/WAT008/part02.glb" id="part02"]
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/WAT008/part03.glb" id="part03"]
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/WAT008/part04.glb" id="part04"]
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/WAT008/part05.glb" id="part05"]
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/WAT008/part06.glb" id="part06"]
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/WAT008/part07.glb" id="part07"]
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/WAT008/part08.glb" id="part08"]
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/WAT008/part09.glb" id="part09"]
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/WAT008/part10.glb" id="part10"]
+
+[node name="EnvironmentAsset" type="Node3D"]
+
+[node name="part01" parent="." instance=ExtResource("part01")]
+
+[node name="part02" parent="." instance=ExtResource("part02")]
+
+[node name="part03" parent="." instance=ExtResource("part03")]
+
+[node name="part04" parent="." instance=ExtResource("part04")]
+
+[node name="part05" parent="." instance=ExtResource("part05")]
+
+[node name="part06" parent="." instance=ExtResource("part06")]
+
+[node name="part07" parent="." instance=ExtResource("part07")]
+
+[node name="part08" parent="." instance=ExtResource("part08")]
+
+[node name="part09" parent="." instance=ExtResource("part09")]
+
+[node name="part10" parent="." instance=ExtResource("part10")]

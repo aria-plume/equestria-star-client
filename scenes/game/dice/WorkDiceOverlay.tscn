@@ -1,0 +1,416 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/game/dice/WorkDiceOverlay.cs" id="1_overlay"]
+[ext_resource type="PackedScene" path="res://scenes/game/dice/Dice3D.tscn" id="2_dice"]
+[ext_resource type="PackedScene" path="res://scenes/game/dice/DiceTray.tscn" id="3_tray"]
+[ext_resource type="Script" path="res://scripts/game/dice/DiceRollController.cs" id="4_controller"]
+[ext_resource type="Theme" path="res://assets/theme/client_theme.tres" id="5_theme"]
+
+[sub_resource type="Environment" id="Environment_work"]
+background_mode = 1
+background_color = Color(0.025, 0.04, 0.047, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.58, 0.69, 0.74, 1)
+ambient_light_energy = 0.72
+reflected_light_source = 2
+tonemap_mode = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.035, 0.058, 0.068, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.46, 0.5, 0.85)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_result"]
+bg_color = Color(0.045, 0.073, 0.083, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.78, 0.63, 0.25, 0.95)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button"]
+bg_color = Color(0.1, 0.29, 0.34, 0.98)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button_hover"]
+bg_color = Color(0.14, 0.4, 0.45, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="WorkDiceOverlay" type="CanvasLayer"]
+layer = 60
+script = ExtResource("1_overlay")
+
+[node name="OverlayRoot" type="Control" parent="." groups=["blocks_map_input"]]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+theme = ExtResource("5_theme")
+
+[node name="Backdrop" type="ColorRect" parent="OverlayRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.012, 0.02, 0.024, 1)
+
+[node name="DiceViewportContainer" type="SubViewportContainer" parent="OverlayRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch = true
+
+[node name="DiceViewport" type="SubViewport" parent="OverlayRoot/DiceViewportContainer"]
+own_world_3d = true
+transparent_bg = false
+handle_input_locally = false
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="WorldRoot" type="Node3D" parent="OverlayRoot/DiceViewportContainer/DiceViewport"]
+
+[node name="DiceTray" parent="OverlayRoot/DiceViewportContainer/DiceViewport/WorldRoot" instance=ExtResource("3_tray")]
+
+[node name="Dice3D" parent="OverlayRoot/DiceViewportContainer/DiceViewport/WorldRoot" instance=ExtResource("2_dice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.56, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="OverlayRoot/DiceViewportContainer/DiceViewport/WorldRoot"]
+environment = SubResource("Environment_work")
+
+[node name="KeyLight" type="DirectionalLight3D" parent="OverlayRoot/DiceViewportContainer/DiceViewport/WorldRoot"]
+transform = Transform3D(0.829038, 0.44065, -0.344274, 0, 0.615662, 0.788011, 0.559193, -0.653291, 0.510407, 0, 0, 0)
+light_color = Color(1, 0.96, 0.9, 1)
+light_energy = 1.45
+shadow_enabled = true
+
+[node name="FillLight" type="OmniLight3D" parent="OverlayRoot/DiceViewportContainer/DiceViewport/WorldRoot"]
+position = Vector3(0.6, 3.8, 0.5)
+light_color = Color(0.55, 0.75, 1, 1)
+light_energy = 4.0
+omni_range = 9.0
+
+[node name="CameraRig" type="Node3D" parent="OverlayRoot/DiceViewportContainer/DiceViewport/WorldRoot"]
+script = ExtResource("4_controller")
+
+[node name="Camera3D" type="Camera3D" parent="OverlayRoot/DiceViewportContainer/DiceViewport/WorldRoot/CameraRig"]
+transform = Transform3D(1, 0, 0, 0, 0.764246, 0.644924, 0, -0.644924, 0.764246, 0, 5.4, 6.4)
+current = true
+fov = 42.0
+
+[node name="ThrowInput" type="Control" parent="OverlayRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="AttributeSelectionAnchor" type="CenterContainer" parent="OverlayRoot"]
+visible = false
+z_index = 30
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="AttributePanel" type="PanelContainer" parent="OverlayRoot/AttributeSelectionAnchor" groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(700, 430)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_result")
+
+[node name="AttributeMargin" type="MarginContainer" parent="OverlayRoot/AttributeSelectionAnchor/AttributePanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 28
+
+[node name="Content" type="VBoxContainer" parent="OverlayRoot/AttributeSelectionAnchor/AttributePanel/AttributeMargin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 18
+
+[node name="TitleLabel" type="Label" parent="OverlayRoot/AttributeSelectionAnchor/AttributePanel/AttributeMargin/Content"]
+layout_mode = 2
+mouse_filter = 2
+text = "选择打工属性"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.93, 0.97, 0.98, 1)
+theme_override_font_sizes/font_size = 28
+
+[node name="WorkLabel" type="Label" parent="OverlayRoot/AttributeSelectionAnchor/AttributePanel/AttributeMargin/Content"]
+layout_mode = 2
+mouse_filter = 2
+text = "当前位置\n难度：—　基础社交费用：—　基础成功奖励预览：—"
+horizontal_alignment = 1
+autowrap_mode = 3
+theme_override_colors/font_color = Color(0.75, 0.86, 0.89, 1)
+theme_override_font_sizes/font_size = 17
+
+[node name="AttributeGrid" type="GridContainer" parent="OverlayRoot/AttributeSelectionAnchor/AttributePanel/AttributeMargin/Content"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/h_separation = 14
+theme_override_constants/v_separation = 14
+columns = 3
+
+[node name="StrengthButton" type="Button" parent="OverlayRoot/AttributeSelectionAnchor/AttributePanel/AttributeMargin/Content/AttributeGrid"]
+custom_minimum_size = Vector2(190, 56)
+layout_mode = 2
+text = "力量"
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+
+[node name="SpeedButton" type="Button" parent="OverlayRoot/AttributeSelectionAnchor/AttributePanel/AttributeMargin/Content/AttributeGrid"]
+custom_minimum_size = Vector2(190, 56)
+layout_mode = 2
+text = "速度"
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+
+[node name="SocialButton" type="Button" parent="OverlayRoot/AttributeSelectionAnchor/AttributePanel/AttributeMargin/Content/AttributeGrid"]
+custom_minimum_size = Vector2(190, 56)
+layout_mode = 2
+text = "社交"
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+
+[node name="CharmButton" type="Button" parent="OverlayRoot/AttributeSelectionAnchor/AttributePanel/AttributeMargin/Content/AttributeGrid"]
+custom_minimum_size = Vector2(190, 56)
+layout_mode = 2
+text = "魅力"
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+
+[node name="MagicButton" type="Button" parent="OverlayRoot/AttributeSelectionAnchor/AttributePanel/AttributeMargin/Content/AttributeGrid"]
+custom_minimum_size = Vector2(190, 56)
+layout_mode = 2
+text = "魔法"
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+
+[node name="MindButton" type="Button" parent="OverlayRoot/AttributeSelectionAnchor/AttributePanel/AttributeMargin/Content/AttributeGrid"]
+custom_minimum_size = Vector2(190, 56)
+layout_mode = 2
+text = "心智"
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+
+[node name="StatusLabel" type="Label" parent="OverlayRoot/AttributeSelectionAnchor/AttributePanel/AttributeMargin/Content"]
+layout_mode = 2
+mouse_filter = 2
+text = "请选择本次打工使用的具体属性。"
+horizontal_alignment = 1
+autowrap_mode = 3
+theme_override_colors/font_color = Color(1, 0.82, 0.36, 1)
+
+[node name="CancelButton" type="Button" parent="OverlayRoot/AttributeSelectionAnchor/AttributePanel/AttributeMargin/Content"]
+custom_minimum_size = Vector2(220, 52)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "取消"
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+
+[node name="InfoAnchor" type="MarginContainer" parent="OverlayRoot"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 420.0
+offset_top = 24.0
+offset_right = -420.0
+offset_bottom = 222.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="InfoPanel" type="PanelContainer" parent="OverlayRoot/InfoAnchor"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="InfoMargin" type="MarginContainer" parent="OverlayRoot/InfoAnchor/InfoPanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 14
+
+[node name="Info" type="VBoxContainer" parent="OverlayRoot/InfoAnchor/InfoPanel/InfoMargin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="TitleLabel" type="Label" parent="OverlayRoot/InfoAnchor/InfoPanel/InfoMargin/Info"]
+layout_mode = 2
+mouse_filter = 2
+text = "打工判定"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.9, 0.96, 0.97, 1)
+theme_override_font_sizes/font_size = 26
+
+[node name="StatusLabel" type="Label" parent="OverlayRoot/InfoAnchor/InfoPanel/InfoMargin/Info"]
+layout_mode = 2
+mouse_filter = 2
+text = "按住鼠标拖动，松开后投掷。"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.72, 0.86, 0.89, 1)
+theme_override_font_sizes/font_size = 17
+
+[node name="DetailLabel" type="Label" parent="OverlayRoot/InfoAnchor/InfoPanel/InfoMargin/Info"]
+layout_mode = 2
+mouse_filter = 2
+text = "属性：—　难度：—"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.78, 0.88, 0.9, 1)
+
+[node name="DiceValueLabel" type="Label" parent="OverlayRoot/InfoAnchor/InfoPanel/InfoMargin/Info"]
+layout_mode = 2
+mouse_filter = 2
+text = "点数：—"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(1, 0.82, 0.36, 1)
+theme_override_font_sizes/font_size = 24
+
+[node name="DeadlineLabel" type="Label" parent="OverlayRoot/InfoAnchor/InfoPanel/InfoMargin/Info"]
+layout_mode = 2
+mouse_filter = 2
+text = "服务端期限：同步中"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.68, 0.78, 0.81, 1)
+
+[node name="DecisionAnchor" type="MarginContainer" parent="OverlayRoot"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -260.0
+offset_top = -112.0
+offset_right = 260.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="DecisionPanel" type="PanelContainer" parent="OverlayRoot/DecisionAnchor" groups=["blocks_map_input"]]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="DecisionMargin" type="MarginContainer" parent="OverlayRoot/DecisionAnchor/DecisionPanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="Buttons" type="HBoxContainer" parent="OverlayRoot/DecisionAnchor/DecisionPanel/DecisionMargin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="ConfirmButton" type="Button" parent="OverlayRoot/DecisionAnchor/DecisionPanel/DecisionMargin/Buttons"]
+custom_minimum_size = Vector2(160, 52)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "确认"
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+
+[node name="RerollButton" type="Button" parent="OverlayRoot/DecisionAnchor/DecisionPanel/DecisionMargin/Buttons"]
+custom_minimum_size = Vector2(220, 52)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "重投"
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+
+[node name="RecoveryRetryButton" type="Button" parent="OverlayRoot/DecisionAnchor/DecisionPanel/DecisionMargin/Buttons"]
+visible = false
+custom_minimum_size = Vector2(240, 52)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "重试同步"
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+
+[node name="ResultDismissArea" type="Control" parent="OverlayRoot" groups=["blocks_map_input"]]
+visible = false
+z_index = 10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="ResultAnchor" type="CenterContainer" parent="OverlayRoot"]
+visible = false
+z_index = 20
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ResultPanel" type="PanelContainer" parent="OverlayRoot/ResultAnchor"]
+custom_minimum_size = Vector2(620, 330)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_result")
+
+[node name="ResultMargin" type="MarginContainer" parent="OverlayRoot/ResultAnchor/ResultPanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 28
+
+[node name="ResultLabel" type="Label" parent="OverlayRoot/ResultAnchor/ResultPanel/ResultMargin"]
+layout_mode = 2
+mouse_filter = 2
+text = "打工结果"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+theme_override_colors/font_color = Color(0.92, 0.96, 0.97, 1)
+theme_override_font_sizes/font_size = 21

@@ -1,0 +1,189 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/game/ui/QuestTargetSubmissionOverlay.cs" id="1_script"]
+[ext_resource type="Theme" path="res://assets/theme/client_theme.tres" id="2_theme"]
+
+[node name="QuestTargetSubmissionOverlay" type="CanvasLayer"]
+layer = 47
+script = ExtResource("1_script")
+
+[node name="OverlayRoot" type="Control" parent="." groups=["blocks_map_input"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+theme = ExtResource("2_theme")
+
+[node name="DimBackground" type="ColorRect" parent="OverlayRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.01, 0.02, 0.025, 0.84)
+
+[node name="Center" type="CenterContainer" parent="OverlayRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="OverlayRoot/Center" groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(1080, 740)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="OverlayRoot/Center/Panel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="Content" type="VBoxContainer" parent="OverlayRoot/Center/Panel/Margin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="OverlayRoot/Center/Panel/Margin/Content"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TitleLabel" type="Label" parent="OverlayRoot/Center/Panel/Margin/Content/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+text = "任务目标提交"
+theme_override_font_sizes/font_size = 26
+
+[node name="CloseButton" type="Button" parent="OverlayRoot/Center/Panel/Margin/Content/Header"]
+custom_minimum_size = Vector2(96, 42)
+layout_mode = 2
+text = "关闭"
+
+[node name="StatusLabel" type="Label" parent="OverlayRoot/Center/Panel/Margin/Content"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+mouse_filter = 2
+text = "正在同步可提交任务……"
+autowrap_mode = 3
+
+[node name="TaskScroll" type="ScrollContainer" parent="OverlayRoot/Center/Panel/Margin/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="TaskList" type="VBoxContainer" parent="OverlayRoot/Center/Panel/Margin/Content/TaskScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="EmptyLabel" type="Label" parent="OverlayRoot/Center/Panel/Margin/Content/TaskScroll/TaskList"]
+custom_minimum_size = Vector2(0, 430)
+layout_mode = 2
+mouse_filter = 2
+text = "没有需要提交目标的任务"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 20
+
+[node name="ItemScroll" type="ScrollContainer" parent="OverlayRoot/Center/Panel/Margin/Content"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+vertical_scroll_mode = 0
+
+[node name="ItemList" type="HBoxContainer" parent="OverlayRoot/Center/Panel/Margin/Content/ItemScroll"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 18
+
+[node name="EmptyLabel" type="Label" parent="OverlayRoot/Center/Panel/Margin/Content/ItemScroll/ItemList"]
+custom_minimum_size = Vector2(960, 430)
+layout_mode = 2
+mouse_filter = 2
+text = "没有符合条件的道具"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 20
+
+[node name="Footer" type="HBoxContainer" parent="OverlayRoot/Center/Panel/Margin/Content"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="BackButton" type="Button" parent="OverlayRoot/Center/Panel/Margin/Content/Footer"]
+visible = false
+custom_minimum_size = Vector2(140, 44)
+layout_mode = 2
+text = "返回列表"
+
+[node name="RetryButton" type="Button" parent="OverlayRoot/Center/Panel/Margin/Content/Footer"]
+visible = false
+custom_minimum_size = Vector2(140, 44)
+layout_mode = 2
+text = "重试同步"
+
+[node name="ConfirmCenter" type="CenterContainer" parent="OverlayRoot"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="Panel" type="PanelContainer" parent="OverlayRoot/ConfirmCenter" groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(560, 260)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="OverlayRoot/ConfirmCenter/Panel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
+
+[node name="Content" type="VBoxContainer" parent="OverlayRoot/ConfirmCenter/Panel/Margin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 22
+
+[node name="MessageLabel" type="Label" parent="OverlayRoot/ConfirmCenter/Panel/Margin/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+text = "确认支付任务资源？"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 20
+
+[node name="Buttons" type="HBoxContainer" parent="OverlayRoot/ConfirmCenter/Panel/Margin/Content"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+theme_override_constants/separation = 16
+
+[node name="ConfirmButton" type="Button" parent="OverlayRoot/ConfirmCenter/Panel/Margin/Content/Buttons"]
+custom_minimum_size = Vector2(130, 46)
+layout_mode = 2
+text = "确认"
+
+[node name="CancelButton" type="Button" parent="OverlayRoot/ConfirmCenter/Panel/Margin/Content/Buttons"]
+custom_minimum_size = Vector2(130, 46)
+layout_mode = 2
+text = "取消"

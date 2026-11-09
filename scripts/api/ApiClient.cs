@@ -92,13 +92,17 @@ public partial class ApiClient : Node
         var httpStatus = (int)completed[1];
         var bodyBytes = (byte[])completed[3];
 
-        var parsed = ParseHttpResult<T>(result, httpStatus, bodyBytes);
+        var parsed = ParseHttpResult<T>(result, httpStatus, bodyBytes, path);
         HandleAuthInvalidation(parsed);
 
         return parsed;
     }
 
-    public static ApiResult<T> ParseHttpResult<T>(HttpRequest.Result result, int httpStatus, byte[] body)
+    public static ApiResult<T> ParseHttpResult<T>(
+        HttpRequest.Result result,
+        int httpStatus,
+        byte[] body,
+        string? requestPath = null)
     {
         if (result == HttpRequest.Result.Timeout)
         {
@@ -121,9 +125,26 @@ public partial class ApiClient : Node
         {
             envelope = JsonSerializer.Deserialize<ApiEnvelope<T>>(text, JsonOptions);
         }
-        catch (JsonException)
+        catch (JsonException exception)
         {
-            return ApiResult<T>.Failure("服务器返回格式不是有效 JSON。", "INVALID_JSON", httpStatus);
+            try
+            {
+                // 只有强类型解析失败时才额外验证语法，避免正常响应重复解析。
+                using var _ = JsonDocument.Parse(text);
+            }
+            catch (JsonException syntaxException)
+            {
+                LogJsonDiagnostic("API_JSON_SYNTAX_ERROR", requestPath, httpStatus, syntaxException);
+                return ApiResult<T>.Failure("服务器返回内容不是有效 JSON。", "INVALID_JSON", httpStatus);
+            }
+
+            LogJsonDiagnostic("API_RESPONSE_TYPE_MISMATCH", requestPath, httpStatus, exception);
+            var fieldPath = string.IsNullOrWhiteSpace(exception.Path) ? "$" : exception.Path;
+            return ApiResult<T>.Failure(
+                $"服务器返回 JSON 与接口结构不匹配（字段：{fieldPath}）。",
+                "RESPONSE_TYPE_MISMATCH",
+                httpStatus
+            );
         }
 
         if (envelope == null)
@@ -145,6 +166,23 @@ public partial class ApiClient : Node
         }
 
         return ApiResult<T>.Success(envelope.Data, envelope.Msg, httpStatus);
+    }
+
+    private static void LogJsonDiagnostic(
+        string category,
+        string? requestPath,
+        int httpStatus,
+        JsonException exception)
+    {
+        // 仅记录相对接口路径、HTTP 状态和结构位置，不输出响应正文或认证信息。
+        var safePath = string.IsNullOrWhiteSpace(requestPath)
+            ? "<unknown>"
+            : requestPath.Split('?', 2)[0];
+        var fieldPath = string.IsNullOrWhiteSpace(exception.Path) ? "$" : exception.Path;
+        GD.PushWarning(
+            $"{category} path={safePath} status={httpStatus} field={fieldPath} " +
+            $"line={exception.LineNumber?.ToString() ?? "?"} byte={exception.BytePositionInLine?.ToString() ?? "?"}"
+        );
     }
 
     public Task<ApiResult<LoginResponseDto>> LoginAsync(string username, string password)
@@ -241,6 +279,83 @@ public partial class ApiClient : Node
         return GetJsonAsync<PlayerViewResponseDto>($"/games/{gameId}/player-view");
     }
 
+    public Task<ApiResult<PlayerViewResponseDto>> UpdateGameConnectionAsync(
+        long gameId,
+        long playerId,
+        bool connected,
+        PlayerConnectionRequestDto request)
+    {
+        return PostJsonAsync<PlayerViewResponseDto>(
+            $"/games/{gameId}/players/{playerId}/connection",
+            request,
+            query: new Dictionary<string, string?>
+            {
+                ["connected"] = connected ? "true" : "false"
+            }
+        );
+    }
+
+    public Task<ApiResult<QuestOfferListResponseDto>> GetQuestOffersAsync(long gameId, long playerId)
+    {
+        return GetJsonAsync<QuestOfferListResponseDto>(
+            $"/games/{gameId}/quest-offers",
+            new Dictionary<string, string?> { ["playerId"] = playerId.ToString() }
+        );
+    }
+
+    public Task<ApiResult<PlayerQuestListResponseDto>> GetPlayerQuestsAsync(long gameId, long playerId)
+    {
+        return GetJsonAsync<PlayerQuestListResponseDto>(
+            $"/games/{gameId}/quests",
+            new Dictionary<string, string?> { ["playerId"] = playerId.ToString() }
+        );
+    }
+
+    public Task<ApiResult<PlayerItemsResponseDto>> GetPlayerItemsAsync(long gameId, long playerId)
+    {
+        return GetJsonAsync<PlayerItemsResponseDto>(
+            $"/games/{gameId}/items",
+            new Dictionary<string, string?> { ["playerId"] = playerId.ToString() }
+        );
+    }
+
+    public Task<ApiResult<CurrentShopResponseDto>> GetCurrentShopAsync(long gameId, long playerId)
+    {
+        return GetJsonAsync<CurrentShopResponseDto>(
+            $"/games/{gameId}/shop/current",
+            new Dictionary<string, string?> { ["playerId"] = playerId.ToString() }
+        );
+    }
+
+    public Task<ApiResult<CurrentWorkResponseDto>> GetCurrentWorkAsync(long gameId, long playerId)
+    {
+        return GetJsonAsync<CurrentWorkResponseDto>(
+            $"/games/{gameId}/work/current",
+            new Dictionary<string, string?> { ["playerId"] = playerId.ToString() }
+        );
+    }
+
+    public Task<ApiResult<PendingCheckDto>> GetPendingCheckAsync(long gameId)
+    {
+        return GetJsonAsync<PendingCheckDto>($"/games/{gameId}/checks/pending");
+    }
+
+    public Task<ApiResult<PendingCheckDto>> RerollCheckAsync(
+        long gameId,
+        long checkId,
+        CheckRerollRequestDto request)
+    {
+        return PostJsonAsync<PendingCheckDto>($"/games/{gameId}/checks/{checkId}/reroll", request);
+    }
+
+    public Task<ApiResult<CheckRollResponseDto>> SubmitCheckRollAsync(
+        long gameId,
+        long checkId,
+        CheckRollRequestDto request)
+    {
+        return PostJsonAsync<CheckRollResponseDto>($"/games/{gameId}/checks/{checkId}/roll", request);
+    }
+
     public Task<ApiResult<List<AvailableActionDto>>> GetAvailableActionsAsync(long gameId, long playerId)
     {
         return GetJsonAsync<List<AvailableActionDto>>(
@@ -249,9 +364,18 @@ public partial class ApiClient : Node
         );
     }
 
-    public Task<ApiResult<List<MapCellDto>>> GetMovableCellsAsync(long gameId, long playerId)
+    public Task<ApiResult<List<MapCellDto>>> GetMovableCellsAsync(
+        long gameId,
+        long playerId,
+        string? actionType = null)
     {
-        return GetJsonAsync<List<MapCellDto>>($"/games/{gameId}/players/{playerId}/movable-cells");
+        var query = string.IsNullOrWhiteSpace(actionType)
+            ? null
+            : new Dictionary<string, string?> { ["actionType"] = actionType.Trim() };
+        return GetJsonAsync<List<MapCellDto>>(
+            $"/games/{gameId}/players/{playerId}/movable-cells",
+            query
+        );
     }
 
     public Task<ApiResult<GameActionResponseDto>> SubmitGameActionAsync(long gameId, GameActionRequestDto request)

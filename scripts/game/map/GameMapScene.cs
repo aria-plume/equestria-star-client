@@ -1,67 +1,47 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EquestriaStar.Api;
+using EquestriaStar.Game.Map.VisualRuntime;
 using Godot;
 
 namespace EquestriaStar.Game.Map;
 
 public partial class GameMapScene : Node3D
 {
-    [Signal]
-    public delegate void MapLoadedEventHandler(int cellCount, int edgeCount);
-
-    [Signal]
-    public delegate void MapLoadFailedEventHandler(string message);
-
-    [Signal]
-    public delegate void MapReloadingEventHandler();
-
-    [Signal]
-    public delegate void MapCellClickedEventHandler(long cellId);
-
-    [Signal]
-    public delegate void MapEmptyClickedEventHandler();
-
-    [Signal]
-    public delegate void PlayerTokenClickedEventHandler(long playerId);
+    [Signal] public delegate void MapLoadedEventHandler(int cellCount, int edgeCount);
+    [Signal] public delegate void MapLoadFailedEventHandler(string message);
+    [Signal] public delegate void MapReloadingEventHandler();
+    [Signal] public delegate void MapCellClickedEventHandler(long cellId);
+    [Signal] public delegate void MapEmptyClickedEventHandler();
+    [Signal] public delegate void PlayerTokenClickedEventHandler(long playerId);
 
     [ExportGroup("地图来源")]
-    [Export]
-    public long GameId { get; set; }
+    [Export] public long GameId { get; set; }
+    [Export] public bool AutoLoadOnReady { get; set; } = true;
+    [Export] public bool RequireGameId { get; set; }
+    [Export] public PackedScene? CellScene { get; set; }
 
-    [Export]
-    public bool AutoLoadOnReady { get; set; } = true;
+    [ExportGroup("交互格")]
+    [Export(PropertyHint.Range, "0.2,2.0,0.01")] public float CellRadius { get; set; } = 0.55f;
+    [Export(PropertyHint.Range, "0.02,1.0,0.01")] public float CellHeight { get; set; } = 0.16f;
+    [Export(PropertyHint.Range, "0.0,0.2,0.005")] public float CellBevelWidth { get; set; } = 0.035f;
+    [Export] public bool ShowCellNames { get; set; } = true;
 
-    [Export]
-    public bool RequireGameId { get; set; }
-
-    [Export]
-    public PackedScene? CellScene { get; set; }
-
-    [ExportGroup("格子显示")]
-    [Export(PropertyHint.Range, "0.2,2.0,0.01")]
-    public float CellRadius { get; set; } = 0.55f;
-
-    [Export(PropertyHint.Range, "0.02,1.0,0.01")]
-    public float CellHeight { get; set; } = 0.16f;
-
-    [Export(PropertyHint.Range, "0.0,0.2,0.005")]
-    public float CellBevelWidth { get; set; } = 0.035f;
-
-    [Export]
-    public bool ShowCellNames { get; set; } = true;
-
-    private readonly GameMapBuilder _builder = new();
-    private Node3D _mapRoot = null!;
+    private readonly StaticMapInteractionBuilder _interactionBuilder = new();
+    private Node3D _staticVisualRoot = null!;
+    private Node3D _interactionRoot = null!;
+    private Node3D? _staticMapInstance;
+    private StaticMapVisualContract? _staticContract;
+    private MapVisualRuntime _visualRuntime = null!;
     private MapCameraController _cameraController = null!;
-    private MeshInstance3D _floor = null!;
+    private PlayerTokenManager _tokenManager = null!;
     private Control _loadingState = null!;
     private Control _errorState = null!;
     private Label _loadingLabel = null!;
     private Label _errorLabel = null!;
     private Label _mapInfoLabel = null!;
     private Button _retryButton = null!;
-    private PlayerTokenManager _tokenManager = null!;
     private bool _isLoading;
     private int _loadGeneration;
     private long _contentClickSerial;
@@ -72,19 +52,27 @@ public partial class GameMapScene : Node3D
     public bool IsLoading => _isLoading;
     public bool ErrorVisible => GodotObject.IsInstanceValid(_errorState) && _errorState.Visible;
     public string LastError { get; private set; } = "";
-    public int GeneratedCellCount => _builder.CellsById.Count;
-    public IReadOnlyDictionary<long, HexCell3D> CellsById => _builder.CellsById;
-    public IReadOnlyDictionary<string, HexCell3D> CellsByCode => _builder.CellsByCode;
-    public IReadOnlyList<MapEdgeDto> Edges => _builder.Edges;
+    public int GeneratedCellCount => _interactionBuilder.CellsById.Count;
+    public int StaticVisualCellCount => _staticContract?.StaticVisualCellCount ?? 0;
+    public bool IsUsingStaticVisual => GodotObject.IsInstanceValid(_staticMapInstance);
+    public IReadOnlyDictionary<long, HexCell3D> CellsById => _interactionBuilder.CellsById;
+    public IReadOnlyDictionary<string, HexCell3D> CellsByCode => _interactionBuilder.CellsByCode;
+    public IReadOnlyList<MapEdgeDto> Edges => _interactionBuilder.Edges;
     public MapCameraController CameraController => _cameraController;
     public PlayerTokenManager TokenManager => _tokenManager;
+    public Node3D StaticVisualRoot => _staticVisualRoot;
+    public Node3D InteractionRoot => _interactionRoot;
+    public Node3D? StaticMapInstance => _staticMapInstance;
+    public MapVisualRuntime VisualRuntime => _visualRuntime;
+    public StaticMapVisualContract? StaticContract => _staticContract;
 
     public override void _Ready()
     {
-        _mapRoot = GetNode<Node3D>("MapRoot");
+        _staticVisualRoot = GetNode<Node3D>("StaticVisualRoot");
+        _interactionRoot = GetNode<Node3D>("InteractionRoot");
+        _visualRuntime = GetNode<MapVisualRuntime>("MapVisualRuntime");
         _cameraController = GetNode<MapCameraController>("CameraRig");
         _tokenManager = GetNode<PlayerTokenManager>("PlayerTokenManager");
-        _floor = GetNode<MeshInstance3D>("Floor");
         _loadingState = GetNode<Control>("CanvasLayer/LoadingState");
         _errorState = GetNode<Control>("CanvasLayer/ErrorState");
         _loadingLabel = GetNode<Label>("CanvasLayer/LoadingState/LoadingPanel/LoadingMargin/LoadingLabel");
@@ -96,53 +84,33 @@ public partial class GameMapScene : Node3D
         _cameraController.DragStarted += OnCameraDragStarted;
         _cameraController.MapPointerClicked += OnMapPointerClicked;
         _tokenManager.TokenClicked += OnPlayerTokenClicked;
-        _tokenManager.BindCells(_builder.CellsById);
+        _tokenManager.BindCells(_interactionBuilder.CellsById);
         _errorState.Visible = false;
         _mapInfoLabel.Visible = false;
 
-        if (AutoLoadOnReady)
-        {
-            _ = LoadMapAsync();
-        }
-        else
-        {
-            _loadingState.Visible = false;
-        }
+        if (AutoLoadOnReady) _ = LoadMapAsync();
+        else _loadingState.Visible = false;
     }
 
     public override void _ExitTree()
     {
         _loadGeneration++;
-        if (GodotObject.IsInstanceValid(_retryButton))
-        {
-            _retryButton.Pressed -= OnRetryPressed;
-        }
-
+        if (GodotObject.IsInstanceValid(_retryButton)) _retryButton.Pressed -= OnRetryPressed;
         if (GodotObject.IsInstanceValid(_cameraController))
         {
             _cameraController.DragStarted -= OnCameraDragStarted;
             _cameraController.MapPointerClicked -= OnMapPointerClicked;
         }
-
-        if (GodotObject.IsInstanceValid(_tokenManager))
-        {
-            _tokenManager.TokenClicked -= OnPlayerTokenClicked;
-        }
+        if (GodotObject.IsInstanceValid(_tokenManager)) _tokenManager.TokenClicked -= OnPlayerTokenClicked;
+        ClearLoadedMap();
     }
 
     public async Task LoadMapAsync()
     {
-        if (_isLoading || !IsInsideTree())
-        {
-            return;
-        }
+        if (_isLoading || !IsInsideTree()) return;
 
         _isLoading = true;
         var generation = ++_loadGeneration;
-        if (_builder.CellsById.Count > 0)
-        {
-            EmitSignal(SignalName.MapReloading);
-        }
         LastError = "";
         _loadingLabel.Text = GameId > 0 ? "正在加载对局地图……" : "正在加载正式地图……";
         _loadingState.Visible = true;
@@ -151,9 +119,7 @@ public partial class GameMapScene : Node3D
 
         if (RequireGameId && GameId <= 0)
         {
-            _isLoading = false;
-            _retryButton.Disabled = false;
-            ShowError("缺少有效的 gameId，无法加载对局地图。");
+            CompleteLoadFailure("缺少有效的 gameId，无法加载对局地图。");
             return;
         }
 
@@ -164,68 +130,89 @@ public partial class GameMapScene : Node3D
                 ? await ApiClient.GetGameMapAsync(GameId)
                 : await ApiClient.GetMainMapAsync();
         }
-        catch (System.Exception exception)
+        catch (Exception exception)
         {
             if (IsInsideTree() && generation == _loadGeneration)
-            {
-                _isLoading = false;
-                _retryButton.Disabled = false;
-                ShowError($"地图请求异常：{exception.Message}");
-            }
-
+                CompleteLoadFailure($"地图请求异常：{exception.Message}");
             return;
         }
 
-        if (!IsInsideTree() || generation != _loadGeneration)
+        if (!IsInsideTree() || generation != _loadGeneration) return;
+        if (!result.Ok || result.Data == null)
         {
+            CompleteLoadFailure($"地图请求失败：{result.Message}");
             return;
         }
-
-        _isLoading = false;
-        _retryButton.Disabled = false;
-        if (!result.Ok)
-        {
-            ShowError($"地图请求失败：{result.Message}");
-            return;
-        }
-
         if (CellScene == null)
         {
-            ShowError("地图格子场景未配置。");
+            CompleteLoadFailure("地图交互格场景未配置。");
             return;
         }
 
-        _tokenManager.NotifyMapReloading();
-        var buildResult = _builder.Build(
-            result.Data!,
-            _mapRoot,
-            CellScene,
-            CellRadius,
-            CellHeight,
-            CellBevelWidth,
-            ShowCellNames
+        var visualResult = OfficialMapStaticVisualLoader.Load(result.Data);
+        if (!visualResult.Ok || visualResult.Instance == null || visualResult.Contract == null)
+        {
+            CompleteLoadFailure($"静态地图契约校验失败：{visualResult.Error}");
+            return;
+        }
+
+        if (_interactionBuilder.CellsById.Count > 0) EmitSignal(SignalName.MapReloading);
+        ClearLoadedMap();
+        _staticMapInstance = visualResult.Instance;
+        _staticContract = visualResult.Contract;
+        _staticVisualRoot.AddChild(_staticMapInstance);
+
+        var buildResult = _interactionBuilder.Build(
+            result.Data, _staticContract, _interactionRoot, CellScene,
+            CellRadius, CellHeight, CellBevelWidth, ShowCellNames
         );
         if (!buildResult.Ok)
         {
-            _tokenManager.NotifyMapLoaded();
-            ShowError($"地图数据校验失败：{buildResult.Error}");
+            ClearLoadedMap();
+            CompleteLoadFailure(buildResult.Error);
             return;
         }
 
-        foreach (var cell in _builder.CellsById.Values)
-        {
-            cell.CellClicked += OnCellClicked;
-        }
-
-        UpdateFloor(buildResult.Bounds);
-        _cameraController.InitializeMap(buildResult.Bounds);
-        _tokenManager.BindCells(_builder.CellsById);
+        foreach (var cell in _interactionBuilder.CellsById.Values) cell.CellClicked += OnCellClicked;
+        _cameraController.InitializeMap(_staticContract.VisualBounds);
+        _tokenManager.BindCells(_interactionBuilder.CellsById);
         _tokenManager.NotifyMapLoaded();
+        _visualRuntime.AttachMap(_staticMapInstance);
+
+        _isLoading = false;
+        _retryButton.Disabled = false;
         _loadingState.Visible = false;
         _errorState.Visible = false;
-        _mapInfoLabel.Text = $"{result.Data!.MapName}  ·  {buildResult.CellCount} 格  ·  {buildResult.EdgeCount} 边";
+        _mapInfoLabel.Text = $"{result.Data.MapName}  ·  {buildResult.CellCount} 格  ·  {buildResult.EdgeCount} 边";
         _mapInfoLabel.Visible = true;
         EmitSignal(SignalName.MapLoaded, buildResult.CellCount, buildResult.EdgeCount);
+    }
+
+    public void ClearLoadedMap()
+    {
+        if (GodotObject.IsInstanceValid(_tokenManager)) _tokenManager.NotifyMapReloading();
+        if (GodotObject.IsInstanceValid(_visualRuntime)) _visualRuntime.DetachMap();
+        if (GodotObject.IsInstanceValid(_cameraController)) _cameraController.ClearMap();
+        foreach (var cell in _interactionBuilder.CellsById.Values)
+        {
+            if (GodotObject.IsInstanceValid(cell)) cell.CellClicked -= OnCellClicked;
+        }
+        if (GodotObject.IsInstanceValid(_interactionRoot)) _interactionBuilder.Clear(_interactionRoot);
+        if (GodotObject.IsInstanceValid(_tokenManager)) _tokenManager.BindCells(_interactionBuilder.CellsById);
+        if (GodotObject.IsInstanceValid(_staticMapInstance))
+        {
+            _staticMapInstance!.GetParent()?.RemoveChild(_staticMapInstance);
+            _staticMapInstance.QueueFree();
+        }
+        _staticMapInstance = null;
+        _staticContract = null;
+    }
+
+    private void CompleteLoadFailure(string message)
+    {
+        _isLoading = false;
+        _retryButton.Disabled = false;
+        ShowError(message);
     }
 
     private void ShowError(string message)
@@ -239,49 +226,31 @@ public partial class GameMapScene : Node3D
         EmitSignal(SignalName.MapLoadFailed, message);
     }
 
-    private void UpdateFloor(Aabb bounds)
-    {
-        _floor.Position = new Vector3(bounds.GetCenter().X, -CellHeight - 0.025f, bounds.GetCenter().Z);
-        if (_floor.Mesh is PlaneMesh plane)
-        {
-            plane.Size = new Vector2(bounds.Size.X + CellRadius * 20.0f, bounds.Size.Z + CellRadius * 20.0f);
-        }
-    }
-
     private void OnCellClicked(long cellId)
     {
         _contentClickSerial++;
         _lastContentClickFrame = Engine.GetProcessFrames();
         EmitSignal(SignalName.MapCellClicked, cellId);
-        if (_builder.CellsById.TryGetValue(cellId, out var cell) && cell.Data != null)
-        {
+        if (_interactionBuilder.CellsById.TryGetValue(cellId, out var cell) && cell.Data != null)
             GD.Print($"地图格子点击：{cell.Data.CellCode} / {cell.Data.DisplayName} / ({cell.Data.Q},{cell.Data.R})");
-        }
     }
 
-    private void OnRetryPressed()
-    {
-        _ = LoadMapAsync();
-    }
+    private void OnRetryPressed() => _ = LoadMapAsync();
 
     private void OnCameraDragStarted()
     {
-        foreach (var cell in _builder.CellsById.Values)
-        {
-            cell.CancelPendingClick();
-        }
-
+        foreach (var cell in _interactionBuilder.CellsById.Values) cell.CancelPendingClick();
         _tokenManager.CancelPendingClicks();
+        // 地图拖动是明确的空白操作，正式移动模式应立即退出。
+        EmitSignal(SignalName.MapEmptyClicked);
     }
 
-    public void SyncPlayerTokens(PlayerViewResponseDto playerView, long currentUserId)
-    {
+    public void SyncPlayerTokens(PlayerViewResponseDto playerView, long currentUserId) =>
         _tokenManager.SyncPlayerView(playerView, currentUserId);
-    }
 
     public void SetMovementHighlights(long? currentCellId, IReadOnlySet<long> movableCellIds)
     {
-        foreach (var pair in _builder.CellsById)
+        foreach (var pair in _interactionBuilder.CellsById)
         {
             pair.Value.SetCurrent(currentCellId.HasValue && pair.Key == currentCellId.Value);
             pair.Value.SetMovable(movableCellIds.Contains(pair.Key));
@@ -290,7 +259,7 @@ public partial class GameMapScene : Node3D
 
     public void ClearMovementHighlights()
     {
-        foreach (var cell in _builder.CellsById.Values)
+        foreach (var cell in _interactionBuilder.CellsById.Values)
         {
             cell.SetCurrent(false);
             cell.SetMovable(false);
@@ -301,11 +270,7 @@ public partial class GameMapScene : Node3D
     {
         _contentClickSerial++;
         _lastContentClickFrame = Engine.GetProcessFrames();
-        foreach (var cell in _builder.CellsById.Values)
-        {
-            cell.CancelPendingClick();
-        }
-
+        foreach (var cell in _interactionBuilder.CellsById.Values) cell.CancelPendingClick();
         EmitSignal(SignalName.PlayerTokenClicked, playerId);
     }
 
@@ -318,11 +283,7 @@ public partial class GameMapScene : Node3D
 
     private void EmitEmptyClickIfUnclaimed(long serialAtRelease, ulong releaseFrame)
     {
-        if (IsInsideTree()
-            && serialAtRelease == _contentClickSerial
-            && _lastContentClickFrame != releaseFrame)
-        {
+        if (IsInsideTree() && serialAtRelease == _contentClickSerial && _lastContentClickFrame != releaseFrame)
             EmitSignal(SignalName.MapEmptyClicked);
-        }
     }
 }

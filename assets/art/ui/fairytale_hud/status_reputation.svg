@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="42" height="48" viewBox="0 0 42 48">
+  <defs>
+    <linearGradient id="cream" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff8de"/><stop offset="1" stop-color="#ffeccb"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff2a0"/><stop offset=".38" stop-color="#f9ce67"/><stop offset="1" stop-color="#dfa041"/>
+    </linearGradient>
+    <linearGradient id="lilac" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#e8c5f6"/><stop offset="1" stop-color="#b47bcf"/>
+    </linearGradient>
+  </defs>
+  <path d="m12 26-5 15 7-2 4 5 5-13 3 13 5-5 7 2-7-17Z" fill="url(#lilac)" stroke="#9258aa" stroke-width="1.5" stroke-linejoin="round"/>
+  <circle cx="21" cy="19" r="15.5" fill="#f7bd46" stroke="#c4841e" stroke-width="1.8"/>
+  <circle cx="21" cy="19" r="12.1" fill="#ffc953" stroke="#ffecab" stroke-width="1.8"/>
+  <path d="m21 10 2.8 5.8 6.4.9-4.6 4.5 1.1 6.3-5.7-3-5.7 3 1.1-6.3-4.6-4.5 6.4-.9Z" fill="#ffe8a4" stroke="#d89326" stroke-width="1" stroke-linejoin="round"/>
+</svg>

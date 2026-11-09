@@ -1,55 +1,88 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene format=3 uid="uid://bycdk87hdlk2p"]
 
-[ext_resource type="Script" path="res://scripts/game/ui/GameHud.cs" id="1_hud"]
-[ext_resource type="Theme" path="res://assets/theme/client_theme.tres" id="2_theme"]
+[ext_resource type="Script" uid="uid://22brqfby4fua" path="res://scripts/game/ui/GameHud.cs" id="1_hud"]
+[ext_resource type="Theme" uid="uid://cn82v5pyl54f6" path="res://assets/theme/client_theme.tres" id="2_theme"]
 [ext_resource type="PackedScene" path="res://scenes/game/ui/OtherPlayerHudEntry.tscn" id="3_entry"]
+[ext_resource type="Texture2D" uid="uid://2nbebenn5og0" path="res://assets/art/ui/fairytale_hud/button_public_quests.png" id="4_public_quests"]
+[ext_resource type="Texture2D" uid="uid://d2ptpispvtkbw" path="res://assets/art/ui/fairytale_hud/button_public_shop.png" id="5_public_shop"]
+[ext_resource type="Texture2D" uid="uid://dmr6j0qbj6jtd" path="res://assets/art/ui/fairytale_hud/button_inventory.png" id="6_inventory"]
+[ext_resource type="Texture2D" uid="uid://y8vxioylh4bg" path="res://assets/art/ui/fairytale_hud/button_personal_quests.png" id="7_personal_quests"]
+[ext_resource type="Texture2D" uid="uid://dtvjuodmd7vti" path="res://assets/art/ui/fairytale_hud/button_equipment.png" id="8_equipment"]
+[ext_resource type="Texture2D" uid="uid://ckiro37h4nhhd" path="res://assets/art/ui/fairytale_hud/button_companions.png" id="9_companions"]
+[ext_resource type="Texture2D" uid="uid://ccx5fgw5tux41" path="res://assets/art/ui/fairytale_hud/button_action_menu.png" id="10_action_menu"]
+[ext_resource type="Texture2D" uid="uid://bdclj6p5rpch" path="res://assets/art/ui/fairytale_hud/turn_banner.svg" id="11_turn_banner"]
+[ext_resource type="Texture2D" uid="uid://wbb8ryq3uogg" path="res://assets/art/ui/fairytale_hud/map_indicator.svg" id="12_map_indicator"]
+[ext_resource type="Texture2D" uid="uid://cdrycjyy865dl" path="res://assets/art/ui/fairytale_hud/turn_order_heading.svg" id="13_turn_heading"]
+[ext_resource type="Texture2D" uid="uid://bjyn1lomn3sbo" path="res://assets/art/ui/fairytale_hud/turn_order_line.svg" id="14_turn_line"]
+[ext_resource type="Texture2D" uid="uid://nknke4v0qt1g" path="res://assets/art/ui/fairytale_hud/turn_order_arrow.svg" id="15_turn_arrow"]
+[ext_resource type="Texture2D" uid="uid://cq7y0pq73ok3k" path="res://assets/art/ui/fairytale_hud/self_status_bar.svg" id="16_self_status"]
+[ext_resource type="Texture2D" uid="uid://cis6ylg7rjodt" path="res://assets/art/ui/fairytale_hud/self_avatar_frame.svg" id="17_self_avatar"]
+[ext_resource type="Texture2D" uid="uid://c246mucpkgt6" path="res://assets/art/ui/fairytale_hud/self_name_ribbon.svg" id="18_self_name"]
+[ext_resource type="Texture2D" uid="uid://cc226rexqyf5r" path="res://assets/art/ui/fairytale_hud/status_divider.svg" id="19_status_divider"]
+[ext_resource type="Texture2D" uid="uid://banl82bbs76i2" path="res://assets/art/ui/fairytale_hud/status_coin.svg" id="20_status_coin"]
+[ext_resource type="Texture2D" uid="uid://c5bdur4cgr8kj" path="res://assets/art/ui/fairytale_hud/status_reputation.svg" id="21_status_reputation"]
+[ext_resource type="Texture2D" uid="uid://basht6oe0wj3g" path="res://assets/art/ui/fairytale_hud/decoration_sparkle.svg" id="22_sparkle"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBox_hud_panel"]
-bg_color = Color(0.94902, 0.964706, 0.968627, 0.93)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.631373, 0.721569, 0.756863, 0.9)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-shadow_color = Color(0.0352941, 0.0705882, 0.0862745, 0.18)
+[sub_resource type="StyleBoxFlat" id="StyleBox_connection"]
+bg_color = Color(0.991, 0.965, 0.89, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.82, 0.6, 0.2, 0.9)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0.18, 0.08, 0.2, 0.22)
 shadow_size = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBox_detail_panel"]
-bg_color = Color(0.972549, 0.980392, 0.984314, 0.98)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.435294, 0.596078, 0.658824, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-shadow_color = Color(0.0352941, 0.0705882, 0.0862745, 0.28)
+[sub_resource type="StyleBoxFlat" id="StyleBox_action_panel"]
+bg_color = Color(0.988, 0.952, 0.982, 0.97)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.63, 0.37, 0.72, 0.9)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.17, 0.07, 0.21, 0.28)
 shadow_size = 12
 
-[sub_resource type="StyleBoxFlat" id="StyleBox_placeholder"]
-bg_color = Color(0.854902, 0.890196, 0.905882, 0.92)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.682353, 0.756863, 0.784314, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+[sub_resource type="StyleBoxFlat" id="StyleBox_avatar_placeholder"]
+bg_color = Color(0.39, 0.23, 0.5, 0.76)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.85, 0.38, 0.85)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
 
-[node name="GameHud" type="CanvasLayer"]
+[sub_resource type="StyleBoxFlat" id="StyleBox_detail_panel"]
+bg_color = Color(0.992, 0.968, 0.925, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.62, 0.39, 0.7, 0.95)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0.16, 0.07, 0.2, 0.3)
+shadow_size = 12
+
+[node name="GameHud" type="CanvasLayer" unique_id=2130158455]
 layer = 20
 script = ExtResource("1_hud")
 OtherPlayerEntryScene = ExtResource("3_entry")
 
-[node name="HudRoot" type="Control" parent="."]
+[node name="HudRoot" type="Control" parent="." unique_id=358828643]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -59,317 +92,634 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("2_theme")
 
-[node name="TurnNoticeAnchor" type="CenterContainer" parent="HudRoot"]
+[node name="TurnNoticeAnchor" type="CenterContainer" parent="HudRoot" unique_id=797876054]
 visible = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 18.0
-offset_bottom = 70.0
+offset_top = 10.0
+offset_bottom = 96.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="TurnNoticePanel" type="PanelContainer" parent="HudRoot/TurnNoticeAnchor"]
-custom_minimum_size = Vector2(430, 48)
+[node name="TurnNoticePanel" type="Control" parent="HudRoot/TurnNoticeAnchor" unique_id=19094996]
+custom_minimum_size = Vector2(480, 86)
 layout_mode = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBox_hud_panel")
 
-[node name="TurnNoticeMargin" type="MarginContainer" parent="HudRoot/TurnNoticeAnchor/TurnNoticePanel"]
-layout_mode = 2
+[node name="BannerTexture" type="TextureRect" parent="HudRoot/TurnNoticeAnchor/TurnNoticePanel" unique_id=1795385202]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 10
+texture = ExtResource("11_turn_banner")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="TurnNoticeLabel" type="Label" parent="HudRoot/TurnNoticeAnchor/TurnNoticePanel/TurnNoticeMargin"]
-layout_mode = 2
-mouse_filter = 2
+[node name="TurnNoticeLabel" type="Label" parent="HudRoot/TurnNoticeAnchor/TurnNoticePanel" unique_id=1276930770]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 46.0
+offset_top = 12.0
+offset_right = -46.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.29, 0.13, 0.37, 1)
+theme_override_colors/font_shadow_color = Color(1, 0.92, 0.72, 0.75)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 21
 text = "正在同步回合信息……"
 horizontal_alignment = 1
 vertical_alignment = 1
-theme_override_colors/font_color = Color(0.117647, 0.25098, 0.298039, 1)
-theme_override_font_sizes/font_size = 18
+text_overrun_behavior = 3
 
-[node name="EndTurnAnchor" type="CenterContainer" parent="HudRoot"]
+[node name="ConnectionNoticeAnchor" type="CenterContainer" parent="HudRoot" unique_id=569692190]
 visible = false
 layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 94.0
+offset_bottom = 132.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="ConnectionNoticePanel" type="PanelContainer" parent="HudRoot/ConnectionNoticeAnchor" unique_id=832666675]
+custom_minimum_size = Vector2(410, 34)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_connection")
+
+[node name="ConnectionNoticeLabel" type="Label" parent="HudRoot/ConnectionNoticeAnchor/ConnectionNoticePanel" unique_id=1927345882]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.34, 0.17, 0.38, 1)
+theme_override_font_sizes/font_size = 14
+text = "正在建立对局连接……"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="TopRightAnchor" type="MarginContainer" parent="HudRoot" unique_id=61345578]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -214.0
+offset_top = 12.0
+offset_right = -18.0
+offset_bottom = 128.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="TopRight" type="VBoxContainer" parent="HudRoot/TopRightAnchor" unique_id=266394292]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="MapIndicator" type="Control" parent="HudRoot/TopRightAnchor/TopRight" unique_id=552248634]
+custom_minimum_size = Vector2(138, 32)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Texture" type="TextureRect" parent="HudRoot/TopRightAnchor/TopRight/MapIndicator" unique_id=882917629]
+layout_mode = 1
+anchor_top = 0.25
+anchor_right = 1.0
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("12_map_indicator")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="HudRoot/TopRightAnchor/TopRight/MapIndicator" unique_id=337782713]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.31, 0.14, 0.37, 1)
+theme_override_font_sizes/font_size = 7
+text = "正式地图"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PublicButtons" type="HBoxContainer" parent="HudRoot/TopRightAnchor/TopRight" unique_id=1753254340]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="QuestBoardButton" type="Button" parent="HudRoot/TopRightAnchor/TopRight/PublicButtons" unique_id=1743688611 groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(78, 78)
+layout_mode = 2
+tooltip_text = "查看本局公共任务板"
+icon = ExtResource("4_public_quests")
+flat = true
+expand_icon = true
+
+[node name="ShopShelfButton" type="Button" parent="HudRoot/TopRightAnchor/TopRight/PublicButtons" unique_id=507947111 groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(78, 78)
+layout_mode = 2
+tooltip_text = "查看本局公共货架"
+icon = ExtResource("5_public_shop")
+flat = true
+expand_icon = true
+
+[node name="ActionMenuAnchor" type="MarginContainer" parent="HudRoot" unique_id=1611149442]
+layout_mode = 1
+anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -218.0
-offset_top = -38.0
+offset_left = -226.0
+offset_top = -180.0
 offset_right = -18.0
-offset_bottom = 38.0
+offset_bottom = 190.0
 grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="EndTurnPanel" type="PanelContainer" parent="HudRoot/EndTurnAnchor" groups=["blocks_map_input"]]
-custom_minimum_size = Vector2(180, 64)
+[node name="ActionMenu" type="VBoxContainer" parent="HudRoot/ActionMenuAnchor" unique_id=570591468]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBox_hud_panel")
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 2
 
-[node name="EndTurnMargin" type="MarginContainer" parent="HudRoot/EndTurnAnchor/EndTurnPanel"]
+[node name="MenuPanel" type="PanelContainer" parent="HudRoot/ActionMenuAnchor/ActionMenu" unique_id=647084757 groups=["blocks_map_input"]]
+visible = false
+custom_minimum_size = Vector2(200, 260)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_action_panel")
+
+[node name="MenuMargin" type="MarginContainer" parent="HudRoot/ActionMenuAnchor/ActionMenu/MenuPanel" unique_id=679993219]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 8
+theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_bottom = 10
 
-[node name="EndTurnButton" type="Button" parent="HudRoot/EndTurnAnchor/EndTurnPanel/EndTurnMargin"]
-custom_minimum_size = Vector2(160, 46)
+[node name="Menu" type="VBoxContainer" parent="HudRoot/ActionMenuAnchor/ActionMenu/MenuPanel/MenuMargin" unique_id=61199544]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="WorkButton" type="Button" parent="HudRoot/ActionMenuAnchor/ActionMenu/MenuPanel/MenuMargin/Menu" unique_id=1931237532]
+custom_minimum_size = Vector2(180, 42)
+layout_mode = 2
+tooltip_text = "正在同步打工资格……"
+disabled = true
+text = "打工"
+
+[node name="RailwayButton" type="Button" parent="HudRoot/ActionMenuAnchor/ActionMenu/MenuPanel/MenuMargin/Menu" unique_id=1576497388]
+custom_minimum_size = Vector2(180, 42)
+layout_mode = 2
+tooltip_text = "正在同步铁路资格……"
+disabled = true
+text = "铁路"
+
+[node name="QuestCheckButton" type="Button" parent="HudRoot/ActionMenuAnchor/ActionMenu/MenuPanel/MenuMargin/Menu" unique_id=1807372190]
+custom_minimum_size = Vector2(180, 42)
+layout_mode = 2
+tooltip_text = "查看当前已接任务中的主动判定。"
+text = "判定"
+
+[node name="QuestSubmissionButton" type="Button" parent="HudRoot/ActionMenuAnchor/ActionMenu/MenuPanel/MenuMargin/Menu"]
+custom_minimum_size = Vector2(180, 42)
+layout_mode = 2
+tooltip_text = "查看当前已接任务中的道具交付与资源支付。"
+text = "提交"
+
+[node name="EndTurnSlot" type="MarginContainer" parent="HudRoot/ActionMenuAnchor/ActionMenu/MenuPanel/MenuMargin/Menu" unique_id=906747095]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+
+[node name="EndTurnButton" type="Button" parent="HudRoot/ActionMenuAnchor/ActionMenu/MenuPanel/MenuMargin/Menu/EndTurnSlot" unique_id=1174714997]
+custom_minimum_size = Vector2(180, 42)
 layout_mode = 2
 text = "结束回合"
 
-[node name="LeftMargin" type="MarginContainer" parent="HudRoot"]
+[node name="ActionMenuButton" type="Button" parent="HudRoot/ActionMenuAnchor/ActionMenu" unique_id=2021573701 groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(84, 84)
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "展开行为菜单"
+icon = ExtResource("10_action_menu")
+flat = true
+expand_icon = true
+
+[node name="LeftMargin" type="MarginContainer" parent="HudRoot" unique_id=514764667]
 layout_mode = 1
+anchors_preset = 9
 anchor_bottom = 1.0
-offset_left = 18.0
-offset_top = 18.0
-offset_right = 388.0
-offset_bottom = -18.0
+offset_left = 38.0
+offset_top = 14.0
+offset_right = 588.0
+offset_bottom = -14.0
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="LeftRail" type="VBoxContainer" parent="HudRoot/LeftMargin"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 10
-
-[node name="OtherPlayersPanel" type="PanelContainer" parent="HudRoot/LeftMargin/LeftRail" groups=["blocks_map_input"]]
-custom_minimum_size = Vector2(370, 168)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBox_hud_panel")
-
-[node name="ContentMargin" type="MarginContainer" parent="HudRoot/LeftMargin/LeftRail/OtherPlayersPanel"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 10
-
-[node name="Content" type="VBoxContainer" parent="HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/ContentMargin"]
+[node name="LeftRail" type="VBoxContainer" parent="HudRoot/LeftMargin" unique_id=49303199]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="Header" type="HBoxContainer" parent="HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/ContentMargin/Content"]
+[node name="OtherPlayersPanel" type="Control" parent="HudRoot/LeftMargin/LeftRail" unique_id=775774885]
+custom_minimum_size = Vector2(230, 306)
 layout_mode = 2
+size_flags_horizontal = 0
 mouse_filter = 2
 
-[node name="TitleLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/ContentMargin/Content/Header"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "其他玩家"
-theme_override_font_sizes/font_size = 18
+[node name="HeadingTexture" type="TextureRect" parent="HudRoot/LeftMargin/LeftRail/OtherPlayersPanel" unique_id=716824272]
+layout_mode = 0
+offset_right = 168.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("13_turn_heading")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="OrderHintLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/ContentMargin/Content/Header"]
-layout_mode = 2
+[node name="TitleLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/OtherPlayersPanel" unique_id=202601277]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 2.0
+offset_right = 154.0
+offset_bottom = 38.0
+theme_override_colors/font_color = Color(0.31, 0.14, 0.37, 1)
+theme_override_font_sizes/font_size = 17
 text = "回合顺序"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-theme_override_font_sizes/font_size = 13
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Divider" type="HSeparator" parent="HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/ContentMargin/Content"]
-layout_mode = 2
+[node name="TurnLine" type="TextureRect" parent="HudRoot/LeftMargin/LeftRail/OtherPlayersPanel" unique_id=1229766872]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 42.0
+offset_right = 24.0
+offset_bottom = 278.0
+mouse_filter = 2
+texture = ExtResource("14_turn_line")
+expand_mode = 1
 
-[node name="OtherPlayersScroll" type="ScrollContainer" parent="HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/ContentMargin/Content"]
-custom_minimum_size = Vector2(0, 105)
-layout_mode = 2
-size_flags_vertical = 3
+[node name="TurnArrow" type="TextureRect" parent="HudRoot/LeftMargin/LeftRail/OtherPlayersPanel" unique_id=1105920613]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 276.0
+offset_right = 30.0
+offset_bottom = 302.0
+mouse_filter = 2
+texture = ExtResource("15_turn_arrow")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="OtherPlayersScroll" type="ScrollContainer" parent="HudRoot/LeftMargin/LeftRail/OtherPlayersPanel" unique_id=1737839925 groups=["blocks_map_input"]]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 45.0
+offset_right = 234.0
+offset_bottom = 300.0
 horizontal_scroll_mode = 0
 
-[node name="OtherPlayersList" type="VBoxContainer" parent="HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/ContentMargin/Content/OtherPlayersScroll"]
+[node name="OtherPlayersList" type="VBoxContainer" parent="HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/OtherPlayersScroll" unique_id=120394395]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
-theme_override_constants/separation = 4
+theme_override_constants/separation = 5
 
-[node name="EmptyLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/ContentMargin/Content/OtherPlayersScroll/OtherPlayersList"]
+[node name="EmptyLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/OtherPlayersScroll/OtherPlayersList" unique_id=1678231208]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 48)
+custom_minimum_size = Vector2(190, 66)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.39, 0.25, 0.43, 1)
+theme_override_font_sizes/font_size = 14
 text = "暂无其他玩家"
 horizontal_alignment = 1
 vertical_alignment = 1
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-theme_override_font_sizes/font_size = 14
 
-[node name="FlexibleSpace" type="Control" parent="HudRoot/LeftMargin/LeftRail"]
+[node name="FlexibleSpace" type="Control" parent="HudRoot/LeftMargin/LeftRail" unique_id=63809593]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="CurrentPlayerPanel" type="PanelContainer" parent="HudRoot/LeftMargin/LeftRail" groups=["blocks_map_input"]]
-custom_minimum_size = Vector2(370, 220)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBox_hud_panel")
-
-[node name="ContentMargin" type="MarginContainer" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel"]
+[node name="CurrentPlayerPanel" type="Control" parent="HudRoot/LeftMargin/LeftRail" unique_id=1798364458]
+custom_minimum_size = Vector2(550, 158)
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 14
-theme_override_constants/margin_top = 12
-theme_override_constants/margin_right = 14
-theme_override_constants/margin_bottom = 12
 
-[node name="Content" type="VBoxContainer" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin"]
-layout_mode = 2
+[node name="StatusBarTexture" type="TextureRect" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel" unique_id=1640601324]
+layout_mode = 0
+offset_left = 147.0
+offset_top = 39.0
+offset_right = 625.0
+offset_bottom = 97.0
 mouse_filter = 2
-theme_override_constants/separation = 6
+texture = ExtResource("16_self_status")
+expand_mode = 1
 
-[node name="SectionLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content"]
+[node name="AvatarPlaceholder" type="PanelContainer" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel" unique_id=506343729]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 12.0
+offset_right = 110.0
+offset_bottom = 116.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_avatar_placeholder")
+
+[node name="AvatarNameLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/AvatarPlaceholder" unique_id=4215298]
 layout_mode = 2
-text = "我的状态"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
+theme_override_colors/font_color = Color(1, 0.95, 0.79, 1)
 theme_override_font_sizes/font_size = 13
-
-[node name="NicknameLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "尚未绑定玩家"
+text = "玩家"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 text_overrun_behavior = 3
-theme_override_font_sizes/font_size = 21
 
-[node name="ResourceRow" type="GridContainer" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content"]
+[node name="AvatarFrame" type="TextureRect" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel" unique_id=204162540]
+layout_mode = 0
+offset_left = -3.0
+offset_top = -6.0
+offset_right = 119.0
+offset_bottom = 138.0
+mouse_filter = 2
+texture = ExtResource("17_self_avatar")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Sparkle" type="TextureRect" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel" unique_id=168033306]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 13.0
+offset_right = 127.0
+offset_bottom = 35.0
+mouse_filter = 2
+texture = ExtResource("22_sparkle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameRibbon" type="Control" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel" unique_id=1177811557]
+anchors_preset = 0
+offset_left = -30.0
+offset_top = 101.0
+offset_right = 155.0
+offset_bottom = 156.0
+mouse_filter = 2
+
+[node name="Texture" type="TextureRect" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/NameRibbon" unique_id=1790967751]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("18_self_name")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NicknameLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/NameRibbon" unique_id=1413823932]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 5.0
+offset_right = -18.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.32, 0.14, 0.37, 1)
+theme_override_font_sizes/font_size = 15
+text = "尚未绑定玩家"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="StatusContent" type="HBoxContainer" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel" unique_id=750954049]
+layout_mode = 0
+offset_left = 171.0
+offset_top = 44.0
+offset_right = 584.0
+offset_bottom = 90.0
+mouse_filter = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="CoinsBox" type="HBoxContainer" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent" unique_id=1029265940]
+custom_minimum_size = Vector2(50, 42)
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/h_separation = 8
-columns = 4
+theme_override_constants/separation = 2
 
-[node name="CoinsLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/ResourceRow"]
+[node name="Icon" type="TextureRect" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/CoinsBox" unique_id=423367849]
+custom_minimum_size = Vector2(27, 27)
 layout_mode = 2
-text = "金币"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-
-[node name="CoinsValue" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/ResourceRow"]
-custom_minimum_size = Vector2(62, 0)
-layout_mode = 2
-text = "-"
-theme_override_colors/font_color = Color(0.54902, 0.356863, 0.0392157, 1)
-theme_override_font_sizes/font_size = 18
-
-[node name="PrestigeLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/ResourceRow"]
-layout_mode = 2
-text = "声望"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-
-[node name="PrestigeValue" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/ResourceRow"]
-custom_minimum_size = Vector2(62, 0)
-layout_mode = 2
-text = "-"
-theme_override_colors/font_color = Color(0.54902, 0.356863, 0.0392157, 1)
-theme_override_font_sizes/font_size = 18
-
-[node name="Divider" type="HSeparator" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content"]
-layout_mode = 2
-
-[node name="AttributesGrid" type="GridContainer" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content"]
-layout_mode = 2
-size_flags_vertical = 3
 mouse_filter = 2
-theme_override_constants/h_separation = 8
-theme_override_constants/v_separation = 4
-columns = 4
+texture = ExtResource("20_status_coin")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="StrengthLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/AttributesGrid"]
+[node name="CoinsValue" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/CoinsBox" unique_id=2078343044]
+custom_minimum_size = Vector2(22, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.04, 1)
+theme_override_font_sizes/font_size = 16
+text = "-"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="DividerOne" type="TextureRect" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent" unique_id=1462840448]
+custom_minimum_size = Vector2(4, 38)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("19_status_divider")
+expand_mode = 1
+
+[node name="PrestigeBox" type="HBoxContainer" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent" unique_id=1131433653]
+custom_minimum_size = Vector2(50, 42)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Icon" type="TextureRect" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/PrestigeBox" unique_id=974684867]
+custom_minimum_size = Vector2(27, 31)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("21_status_reputation")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PrestigeValue" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/PrestigeBox" unique_id=1184369478]
+custom_minimum_size = Vector2(22, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.48, 0.19, 0.5, 1)
+theme_override_font_sizes/font_size = 16
+text = "-"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="DividerTwo" type="TextureRect" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent" unique_id=1166680792]
+custom_minimum_size = Vector2(4, 38)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("19_status_divider")
+expand_mode = 1
+
+[node name="AttributesGrid" type="GridContainer" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent" unique_id=1783701316]
+custom_minimum_size = Vector2(270, 42)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/h_separation = 7
+theme_override_constants/v_separation = 0
+columns = 6
+
+[node name="StrengthLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/AttributesGrid" unique_id=1008262947]
 layout_mode = 2
 text = "力量"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-[node name="StrengthValue" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/AttributesGrid"]
-custom_minimum_size = Vector2(62, 0)
-layout_mode = 2
-text = "-"
-[node name="SpeedLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/AttributesGrid"]
+
+[node name="SpeedLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/AttributesGrid" unique_id=496941772]
 layout_mode = 2
 text = "速度"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-[node name="SpeedValue" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/AttributesGrid"]
-custom_minimum_size = Vector2(62, 0)
-layout_mode = 2
-text = "-"
-[node name="SocialLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/AttributesGrid"]
+
+[node name="SocialLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/AttributesGrid" unique_id=392902587]
 layout_mode = 2
 text = "社交"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-[node name="SocialValue" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/AttributesGrid"]
-custom_minimum_size = Vector2(62, 0)
-layout_mode = 2
-text = "-"
-[node name="CharmLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/AttributesGrid"]
+
+[node name="CharmLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/AttributesGrid" unique_id=1247151901]
 layout_mode = 2
 text = "魅力"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-[node name="CharmValue" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/AttributesGrid"]
-custom_minimum_size = Vector2(62, 0)
-layout_mode = 2
-text = "-"
-[node name="MagicLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/AttributesGrid"]
+
+[node name="MagicLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/AttributesGrid" unique_id=193489790]
 layout_mode = 2
 text = "魔法"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-[node name="MagicValue" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/AttributesGrid"]
-custom_minimum_size = Vector2(62, 0)
-layout_mode = 2
-text = "-"
-[node name="MindLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/AttributesGrid"]
+
+[node name="MindLabel" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/AttributesGrid" unique_id=202249331]
 layout_mode = 2
 text = "心智"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-[node name="MindValue" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/AttributesGrid"]
-custom_minimum_size = Vector2(62, 0)
+
+[node name="StrengthValue" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/AttributesGrid" unique_id=1763083586]
 layout_mode = 2
 text = "-"
+horizontal_alignment = 1
 
-[node name="PlaceholderActions" type="HBoxContainer" parent="HudRoot/LeftMargin/LeftRail" groups=["blocks_map_input"]]
-custom_minimum_size = Vector2(370, 40)
+[node name="SpeedValue" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/AttributesGrid" unique_id=1116217455]
 layout_mode = 2
-theme_override_constants/separation = 8
+text = "-"
+horizontal_alignment = 1
 
-[node name="ItemsButton" type="Button" parent="HudRoot/LeftMargin/LeftRail/PlaceholderActions"]
+[node name="SocialValue" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/AttributesGrid" unique_id=167816324]
 layout_mode = 2
-size_flags_horizontal = 3
+text = "-"
+horizontal_alignment = 1
+
+[node name="CharmValue" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/AttributesGrid" unique_id=1986042001]
+layout_mode = 2
+text = "-"
+horizontal_alignment = 1
+
+[node name="MagicValue" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/AttributesGrid" unique_id=2103490133]
+layout_mode = 2
+text = "-"
+horizontal_alignment = 1
+
+[node name="MindValue" type="Label" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/AttributesGrid" unique_id=833088446]
+layout_mode = 2
+text = "-"
+horizontal_alignment = 1
+
+[node name="AvatarInputBlocker" type="Control" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel" unique_id=1829475088 groups=["blocks_map_input"]]
+anchors_preset = 0
+offset_top = 8.0
+offset_right = 132.0
+offset_bottom = 148.0
+
+[node name="StatusInputBlocker" type="Control" parent="HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel" unique_id=756377722 groups=["blocks_map_input"]]
+anchors_preset = 0
+offset_left = 145.0
+offset_top = 17.0
+offset_right = 623.0
+offset_bottom = 123.0
+
+[node name="BottomActionsAnchor" type="MarginContainer" parent="HudRoot" unique_id=87905303]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -358.0
+offset_top = -104.0
+offset_right = -18.0
+offset_bottom = -18.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Buttons" type="HBoxContainer" parent="HudRoot/BottomActionsAnchor" unique_id=735818587]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="ItemsButton" type="Button" parent="HudRoot/BottomActionsAnchor/Buttons" unique_id=918494891 groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(78, 78)
+layout_mode = 2
+tooltip_text = "查看背包中的道具"
+icon = ExtResource("6_inventory")
+flat = true
+expand_icon = true
+
+[node name="QuestsButton" type="Button" parent="HudRoot/BottomActionsAnchor/Buttons" unique_id=1900379183 groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(78, 78)
+layout_mode = 2
+tooltip_text = "查看当前已接任务"
+icon = ExtResource("7_personal_quests")
+flat = true
+expand_icon = true
+
+[node name="EquipmentButton" type="Button" parent="HudRoot/BottomActionsAnchor/Buttons" unique_id=367861805 groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(78, 78)
+layout_mode = 2
+tooltip_text = "查看当前装备"
+icon = ExtResource("8_equipment")
+flat = true
+expand_icon = true
+
+[node name="PartnersButton" type="Button" parent="HudRoot/BottomActionsAnchor/Buttons" unique_id=2085688007 groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(78, 78)
+layout_mode = 2
+tooltip_text = "伙伴功能开发中"
+theme_override_colors/icon_disabled_color = Color(0.65, 0.65, 0.65, 0.7)
 disabled = true
-text = "道具"
-tooltip_text = "功能开发中"
-theme_override_colors/font_disabled_color = Color(0.290196, 0.384314, 0.423529, 1)
-theme_override_styles/disabled = SubResource("StyleBox_placeholder")
+icon = ExtResource("9_companions")
+flat = true
+expand_icon = true
 
-[node name="QuestsButton" type="Button" parent="HudRoot/LeftMargin/LeftRail/PlaceholderActions"]
-layout_mode = 2
-size_flags_horizontal = 3
-disabled = true
-text = "任务"
-tooltip_text = "功能开发中"
-theme_override_colors/font_disabled_color = Color(0.290196, 0.384314, 0.423529, 1)
-theme_override_styles/disabled = SubResource("StyleBox_placeholder")
-
-[node name="PartnersButton" type="Button" parent="HudRoot/LeftMargin/LeftRail/PlaceholderActions"]
-layout_mode = 2
-size_flags_horizontal = 3
-disabled = true
-text = "伙伴"
-tooltip_text = "功能开发中"
-theme_override_colors/font_disabled_color = Color(0.290196, 0.384314, 0.423529, 1)
-theme_override_styles/disabled = SubResource("StyleBox_placeholder")
-
-[node name="PlayerDetailPanel" type="PanelContainer" parent="HudRoot" groups=["blocks_map_input"]]
+[node name="PlayerDetailPanel" type="PanelContainer" parent="HudRoot" unique_id=1271871989 groups=["blocks_map_input"]]
 visible = false
+z_index = 50
 custom_minimum_size = Vector2(320, 238)
 layout_mode = 0
-offset_left = 402.0
-offset_top = 18.0
-offset_right = 722.0
-offset_bottom = 256.0
-mouse_filter = 0
-z_index = 50
+offset_left = 268.0
+offset_top = 64.0
+offset_right = 588.0
+offset_bottom = 302.0
 theme_override_styles/panel = SubResource("StyleBox_detail_panel")
 
-[node name="ContentMargin" type="MarginContainer" parent="HudRoot/PlayerDetailPanel"]
+[node name="ContentMargin" type="MarginContainer" parent="HudRoot/PlayerDetailPanel" unique_id=1295388134]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 16
@@ -377,123 +727,108 @@ theme_override_constants/margin_top = 14
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 14
 
-[node name="Content" type="VBoxContainer" parent="HudRoot/PlayerDetailPanel/ContentMargin"]
+[node name="Content" type="VBoxContainer" parent="HudRoot/PlayerDetailPanel/ContentMargin" unique_id=1234382366]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 7
 
-[node name="SectionLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content"]
+[node name="SectionLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content" unique_id=1099540919]
 layout_mode = 2
-mouse_filter = 2
-text = "玩家详情"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
+theme_override_colors/font_color = Color(0.42, 0.25, 0.47, 1)
 theme_override_font_sizes/font_size = 13
+text = "玩家详情"
 
-[node name="NicknameLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content"]
+[node name="NicknameLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content" unique_id=1546362980]
 layout_mode = 2
-mouse_filter = 2
+theme_override_font_sizes/font_size = 20
 text = "玩家昵称"
 text_overrun_behavior = 3
-theme_override_font_sizes/font_size = 20
 
-[node name="ResourceRow" type="GridContainer" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content"]
+[node name="ResourceRow" type="GridContainer" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content" unique_id=375295182]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/h_separation = 8
 columns = 4
 
-[node name="CoinsLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/ResourceRow"]
+[node name="CoinsLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/ResourceRow" unique_id=1726120275]
 layout_mode = 2
-mouse_filter = 2
 text = "金币"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-[node name="CoinsValue" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/ResourceRow"]
-custom_minimum_size = Vector2(54, 0)
+
+[node name="CoinsValue" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/ResourceRow" unique_id=90493873]
+custom_minimum_size = Vector2(62, 0)
 layout_mode = 2
-mouse_filter = 2
 text = "-"
-theme_override_colors/font_color = Color(0.54902, 0.356863, 0.0392157, 1)
-[node name="PrestigeLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/ResourceRow"]
+
+[node name="PrestigeLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/ResourceRow" unique_id=380327540]
 layout_mode = 2
-mouse_filter = 2
 text = "声望"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-[node name="PrestigeValue" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/ResourceRow"]
-custom_minimum_size = Vector2(54, 0)
+
+[node name="PrestigeValue" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/ResourceRow" unique_id=123867383]
+custom_minimum_size = Vector2(62, 0)
 layout_mode = 2
-mouse_filter = 2
 text = "-"
-theme_override_colors/font_color = Color(0.54902, 0.356863, 0.0392157, 1)
 
-[node name="Divider" type="HSeparator" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content"]
+[node name="Divider" type="HSeparator" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content" unique_id=1571927318]
 layout_mode = 2
-mouse_filter = 2
 
-[node name="AttributesGrid" type="GridContainer" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content"]
+[node name="AttributesGrid" type="GridContainer" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content" unique_id=1817361915]
 layout_mode = 2
-mouse_filter = 2
 size_flags_vertical = 3
+mouse_filter = 2
 theme_override_constants/h_separation = 8
-theme_override_constants/v_separation = 5
+theme_override_constants/v_separation = 4
 columns = 4
 
-[node name="StrengthLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid"]
+[node name="StrengthLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid" unique_id=2028907196]
 layout_mode = 2
-mouse_filter = 2
 text = "力量"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-[node name="StrengthValue" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid"]
-custom_minimum_size = Vector2(54, 0)
+
+[node name="StrengthValue" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid" unique_id=1032592026]
+custom_minimum_size = Vector2(62, 0)
 layout_mode = 2
-mouse_filter = 2
 text = "-"
-[node name="SpeedLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid"]
+
+[node name="SpeedLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid" unique_id=1186787933]
 layout_mode = 2
-mouse_filter = 2
 text = "速度"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-[node name="SpeedValue" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid"]
-custom_minimum_size = Vector2(54, 0)
+
+[node name="SpeedValue" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid" unique_id=743218426]
+custom_minimum_size = Vector2(62, 0)
 layout_mode = 2
-mouse_filter = 2
 text = "-"
-[node name="SocialLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid"]
+
+[node name="SocialLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid" unique_id=1814527440]
 layout_mode = 2
-mouse_filter = 2
 text = "社交"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-[node name="SocialValue" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid"]
-custom_minimum_size = Vector2(54, 0)
+
+[node name="SocialValue" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid" unique_id=318324706]
+custom_minimum_size = Vector2(62, 0)
 layout_mode = 2
-mouse_filter = 2
 text = "-"
-[node name="CharmLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid"]
+
+[node name="CharmLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid" unique_id=459951524]
 layout_mode = 2
-mouse_filter = 2
 text = "魅力"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-[node name="CharmValue" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid"]
-custom_minimum_size = Vector2(54, 0)
+
+[node name="CharmValue" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid" unique_id=1898790693]
+custom_minimum_size = Vector2(62, 0)
 layout_mode = 2
-mouse_filter = 2
 text = "-"
-[node name="MagicLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid"]
+
+[node name="MagicLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid" unique_id=213002992]
 layout_mode = 2
-mouse_filter = 2
 text = "魔法"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-[node name="MagicValue" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid"]
-custom_minimum_size = Vector2(54, 0)
+
+[node name="MagicValue" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid" unique_id=1988813309]
+custom_minimum_size = Vector2(62, 0)
 layout_mode = 2
-mouse_filter = 2
 text = "-"
-[node name="MindLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid"]
+
+[node name="MindLabel" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid" unique_id=1654425028]
 layout_mode = 2
-mouse_filter = 2
 text = "心智"
-theme_override_colors/font_color = Color(0.352941, 0.439216, 0.478431, 1)
-[node name="MindValue" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid"]
-custom_minimum_size = Vector2(54, 0)
+
+[node name="MindValue" type="Label" parent="HudRoot/PlayerDetailPanel/ContentMargin/Content/AttributesGrid" unique_id=975587867]
+custom_minimum_size = Vector2(62, 0)
 layout_mode = 2
-mouse_filter = 2
 text = "-"

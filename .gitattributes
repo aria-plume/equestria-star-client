@@ -1,0 +1,1 @@
+artifacts/static-map/official-map-visual.pck filter=lfs diff=lfs merge=lfs -text

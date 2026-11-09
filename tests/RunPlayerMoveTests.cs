@@ -43,6 +43,9 @@ public partial class RunPlayerMoveTests : SceneTree
         screen.Start();
         await WaitUntilAsync(() => screen.MapScene.GeneratedCellCount == 138
             && screen.MapScene.TokenManager.TokenCount == 2
+            && screen.IsGameConnectionReady
+            && screen.Hud.EndTurnVisible
+            && !screen.Hud.EndTurnDisabled
             && !screen.IsAvailableActionsRequestInProgress);
         screen.GetNode<Timer>("PlayerViewTimer").Stop();
         GD.Print("移动测试：初始化完成");
@@ -71,7 +74,7 @@ public partial class RunPlayerMoveTests : SceneTree
             return;
         }
 
-        VerifyCameraGesturesDoNotExit(screen);
+        await VerifyCameraGesturesAsync(screen, playerToken);
         GD.Print("移动测试：首次进入与摄像机交互完成");
 
         var actionCount = transport.ActionRequestCount;
@@ -116,6 +119,7 @@ public partial class RunPlayerMoveTests : SceneTree
         AssertEqual(transport.ActionRequestCount, actionCount + 1, "连续点击只能产生一次 MOVE_ONE_STEP 请求");
         AssertTrue(playerToken.GetParent() == oldParent, "服务端成功前不得预测移动棋子");
         VerifyMoveRequest(transport.LastActionRequest, transport.FirstTargetCellId, 1);
+        var firstMoveRequestId = transport.LastActionRequest?.RequestId;
         AssertEqual(transport.LastActionMethod, HttpClient.Method.Post, "统一行动接口必须使用 POST");
         AssertTrue(transport.LastActionAuthorized, "统一行动请求必须携带认证");
         GD.Print("移动测试：首次提交已挂起");
@@ -150,6 +154,10 @@ public partial class RunPlayerMoveTests : SceneTree
         await exhaustedSubmit;
         await WaitUntilAsync(() => screen.MoveState == PlayerMoveState.Idle);
         AssertEqual(transport.ActionRequestCount, secondActionCount + 1, "第二次移动应只提交一次请求");
+        AssertTrue(
+            !string.Equals(firstMoveRequestId, transport.LastActionRequest?.RequestId, StringComparison.Ordinal),
+            "两次不同的移动逻辑行动必须使用不同 requestId"
+        );
         AssertFalse(screen.MapScene.TokenManager.TokensByPlayerId[1001].IsLifted, "速度耗尽后必须退出并落下棋子");
         GD.Print("移动测试：速度耗尽完成");
 
@@ -174,6 +182,11 @@ public partial class RunPlayerMoveTests : SceneTree
         AssertEqual(transport.ActionRequestCount, callsBeforeNetworkFailure + 1, "网络错误不得自动重发 MOVE_ONE_STEP");
         AssertTrue(transport.PlayerViewRequestCount > viewsBeforeNetworkFailure, "网络错误后必须刷新 player-view 确认位置");
         AssertTrue(screen.PlayerViewErrorVisible, "移动失败必须显示玩家可读提示");
+        AssertEqual(
+            transport.ActionRequestIds.Distinct(StringComparer.Ordinal).Count(),
+            transport.ActionRequestIds.Count,
+            "每次新的移动逻辑行动必须使用不同 requestId"
+        );
         transport.ActionFailureCode = null;
         GD.Print("移动测试：网络失败完成");
 
@@ -227,7 +240,7 @@ public partial class RunPlayerMoveTests : SceneTree
         GD.Print("移动测试：业务错误恢复完成");
     }
 
-    private void VerifyCameraGesturesDoNotExit(GameScreen screen)
+    private async Task VerifyCameraGesturesAsync(GameScreen screen, PlayerToken3D playerToken)
     {
         var camera = screen.MapScene.CameraController;
         var rotation = camera.Camera.Rotation;
@@ -236,8 +249,10 @@ public partial class RunPlayerMoveTests : SceneTree
         camera.BeginPointerGesture(new Vector2(100, 100), Vector3.Zero);
         camera.UpdatePointerGesture(new Vector2(150, 140), new Vector3(0.4f, 0.0f, 0.2f));
         camera.EndPointerGesture();
-        AssertEqual(screen.MoveState, PlayerMoveState.SelectingTarget, "拖动地图不得退出移动模式");
+        AssertEqual(screen.MoveState, PlayerMoveState.Idle, "拖动地图必须退出移动模式");
         AssertEqual(camera.Camera.Rotation, rotation, "拖动不得改变摄像机旋转");
+        AssertTrue(playerToken.TryActivate(), "拖动退出后应能重新进入移动模式");
+        await WaitUntilAsync(() => screen.MoveState == PlayerMoveState.SelectingTarget);
     }
 
     private void VerifyHighlights(GameScreen screen, long currentCellId, long movableCellId)
@@ -257,6 +272,8 @@ public partial class RunPlayerMoveTests : SceneTree
         }
 
         AssertEqual(request.PlayerId, 1001L, "移动请求必须使用 game playerId");
+        AssertTrue(Guid.TryParseExact(request.RequestId, "D", out _), "移动请求必须携带标准 UUID requestId");
+        AssertTrue(request.RequestId.Length <= 64, "移动 requestId 不得超过服务端 64 字符上限");
         AssertEqual(request.StateVersion, stateVersion, "移动请求必须使用最新 stateVersion");
         AssertEqual(request.ActionType, "MOVE_ONE_STEP", "移动行动类型必须正确");
         AssertTrue(request.Payload.TryGetPropertyValue("targetCellId", out var targetNode), "移动 payload 必须包含 targetCellId");
@@ -327,6 +344,7 @@ public partial class RunPlayerMoveTests : SceneTree
         public int PlayerViewRequestCount { get; private set; }
         public int MovableRequestCount { get; private set; }
         public int ActionRequestCount { get; private set; }
+        public List<string> ActionRequestIds { get; } = [];
         public HttpClient.Method LastMovableMethod { get; private set; }
         public bool LastMovableAuthorized { get; private set; }
         public HttpClient.Method LastActionMethod { get; private set; }
@@ -353,6 +371,7 @@ public partial class RunPlayerMoveTests : SceneTree
                 GameStatusText = "进行中",
                 CurrentTurnUserId = 1,
                 StateVersion = 1,
+                EngineState = new EngineStateDto { ConnectionPolicy = CreateConnectionPolicy() },
                 Players =
                 [
                     CreatePlayer(1001, 1, "GPT1", 1, StartCellId, 3),
@@ -378,6 +397,17 @@ public partial class RunPlayerMoveTests : SceneTree
             {
                 PlayerViewRequestCount++;
                 return (ApiResult<T>)(object)ApiResult<PlayerViewResponseDto>.Success(CloneView(View), "success", 200);
+            }
+
+            if (path == "/games/77/players/1001/connection"
+                && typeof(T) == typeof(PlayerViewResponseDto)
+                && body is PlayerConnectionRequestDto connectionRequest)
+            {
+                var response = CloneView(View);
+                response.EngineState ??= new EngineStateDto();
+                response.EngineState.ConnectionPolicy = CreateConnectionPolicy();
+                response.EngineState.Connection = CreateConnectionInfo(connectionRequest);
+                return (ApiResult<T>)(object)ApiResult<PlayerViewResponseDto>.Success(response, "success", 200);
             }
 
             if (path == "/games/77/available-actions" && typeof(T) == typeof(List<AvailableActionDto>))
@@ -408,6 +438,14 @@ public partial class RunPlayerMoveTests : SceneTree
                 LastActionMethod = method;
                 LastActionAuthorized = authorized;
                 LastActionRequest = body as GameActionRequestDto;
+                if (LastActionRequest == null
+                    || !Guid.TryParseExact(LastActionRequest.RequestId, "D", out _)
+                    || LastActionRequest.RequestId.Length > 64)
+                {
+                    return ApiResult<T>.Failure("测试移动请求缺少有效 requestId。", "PARAM_INVALID");
+                }
+
+                ActionRequestIds.Add(LastActionRequest.RequestId);
                 if (ActionGate != null)
                 {
                     var gate = ActionGate;
@@ -516,6 +554,7 @@ public partial class RunPlayerMoveTests : SceneTree
                 CurrentCellId = cellId,
                 CurrentSpeedPoints = speed,
                 CurrentSocialPoints = 3,
+                IsConnected = 1,
                 EffectiveAttributes = new EffectiveAttributesDto()
             };
         }
@@ -534,6 +573,14 @@ public partial class RunPlayerMoveTests : SceneTree
                 CurrentTurnSeq = source.CurrentTurnSeq,
                 StateVersion = source.StateVersion,
                 WinnerUserId = source.WinnerUserId,
+                EngineState = source.EngineState == null
+                    ? null
+                    : new EngineStateDto
+                    {
+                        BatchId = source.EngineState.BatchId,
+                        PausedReason = source.EngineState.PausedReason,
+                        ConnectionPolicy = CreateConnectionPolicy()
+                    },
                 Players = source.Players?.Select(player => new PlayerViewPlayerDto
                 {
                     PlayerId = player.PlayerId,
@@ -543,6 +590,7 @@ public partial class RunPlayerMoveTests : SceneTree
                     CurrentCellId = player.CurrentCellId,
                     CurrentSpeedPoints = player.CurrentSpeedPoints,
                     CurrentSocialPoints = player.CurrentSocialPoints,
+                    IsConnected = player.IsConnected,
                     EffectiveAttributes = player.EffectiveAttributes
                 }).ToList()
             };
@@ -557,6 +605,37 @@ public partial class RunPlayerMoveTests : SceneTree
                 Available = source.Available,
                 Reason = source.Reason,
                 ReasonText = source.ReasonText
+            };
+        }
+
+        private static GameConnectionPolicyDto CreateConnectionPolicy()
+        {
+            return new GameConnectionPolicyDto
+            {
+                HeartbeatSeconds = 5,
+                TimeoutSeconds = 15,
+                ReconnectWaitSeconds = 10,
+                InitialGraceSeconds = 45
+            };
+        }
+
+        private static GameConnectionInfoDto CreateConnectionInfo(PlayerConnectionRequestDto request)
+        {
+            return new GameConnectionInfoDto
+            {
+                ClientInstanceId = request.ClientInstanceId,
+                ConnectionId = request.ConnectionId ?? "player-move-connection",
+                ServerTime = "2026-11-01T12:00:00.000000",
+                LastHeartbeatAt = "2026-11-01T12:00:00.000000",
+                ExpiresAt = "2026-11-01T12:00:15.000000",
+                ServerTimeZone = "Asia/Shanghai",
+                ServerUtcOffset = "+08:00",
+                ConnectionActive = true,
+                PlayerConnected = true,
+                HeartbeatSeconds = 5,
+                TimeoutSeconds = 15,
+                ReconnectWaitSeconds = 10,
+                InitialGraceSeconds = 45
             };
         }
 

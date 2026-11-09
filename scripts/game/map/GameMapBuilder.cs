@@ -15,6 +15,7 @@ public sealed record MapBuildResult(bool Ok, string Error, int CellCount, int Ed
 
 public sealed class GameMapBuilder
 {
+    private readonly OrigamiVisualCatalog _visualCatalog = new();
     private Node3D? _generatedRoot;
     private Dictionary<long, HexCell3D> _cellsById = new();
     private Dictionary<string, HexCell3D> _cellsByCode = new(StringComparer.Ordinal);
@@ -23,6 +24,11 @@ public sealed class GameMapBuilder
     public IReadOnlyDictionary<long, HexCell3D> CellsById => _cellsById;
     public IReadOnlyDictionary<string, HexCell3D> CellsByCode => _cellsByCode;
     public IReadOnlyList<MapEdgeDto> Edges => _edges;
+    public int AppliedVisualCellCount { get; private set; }
+    public int DedicatedVisualCellCount { get; private set; }
+    public int GenericTerrainCellCount { get; private set; }
+    public int FallbackVisualCellCount { get; private set; }
+    public int CachedVisualSceneCount => _visualCatalog.CachedSceneCount;
 
     public MapBuildResult Build(
         GameMapDto map,
@@ -49,6 +55,10 @@ public sealed class GameMapBuilder
         var maxX = float.MinValue;
         var minZ = float.MaxValue;
         var maxZ = float.MinValue;
+        var appliedVisualCellCount = 0;
+        var dedicatedVisualCellCount = 0;
+        var genericTerrainCellCount = 0;
+        var fallbackVisualCellCount = 0;
 
         try
         {
@@ -91,6 +101,44 @@ public sealed class GameMapBuilder
                     InteractionTags = tags
                 });
 
+                if (_visualCatalog.TryResolveForCell(
+                        dto.CellName,
+                        dto.CellNameText,
+                        dto.BoardCode,
+                        out var visualEntry,
+                        out var matchKind
+                    ))
+                {
+                    var visualScene = _visualCatalog.LoadScene(visualEntry);
+                    if (visualScene != null)
+                    {
+                        cell.CustomVisualScale = visualEntry.Scale;
+                        cell.CustomVisualRotationYDegrees = visualEntry.RotationYDegrees;
+                        cell.CustomVisualMaterialOverride = matchKind == OrigamiVisualMatchKind.GenericTerrain
+                            ? MapLayoutConfig.GetGenericTerrainMaterial(dto.BoardCode)
+                            : null;
+                        cell.CustomVisualScene = visualScene;
+                        cell.TokenRoot.Position = visualEntry.TokenOffset * safeRadius;
+                        appliedVisualCellCount++;
+                        if (matchKind == OrigamiVisualMatchKind.Dedicated)
+                        {
+                            dedicatedVisualCellCount++;
+                        }
+                        else
+                        {
+                            genericTerrainCellCount++;
+                        }
+                    }
+                    else
+                    {
+                        fallbackVisualCellCount++;
+                    }
+                }
+                else
+                {
+                    fallbackVisualCellCount++;
+                }
+
                 var cellNameLabel = cell.GetNode<Label3D>("CellNameLabel");
                 cellNameLabel.FontSize = 34;
                 cellNameLabel.OutlineSize = 8;
@@ -117,6 +165,10 @@ public sealed class GameMapBuilder
         _cellsById = newCellsById;
         _cellsByCode = newCellsByCode;
         _edges = map.Edges!.AsReadOnly();
+        AppliedVisualCellCount = appliedVisualCellCount;
+        DedicatedVisualCellCount = dedicatedVisualCellCount;
+        GenericTerrainCellCount = genericTerrainCellCount;
+        FallbackVisualCellCount = fallbackVisualCellCount;
         var bounds = new Aabb(
             new Vector3(minX, -safeHeight, minZ),
             new Vector3(maxX - minX, safeHeight, maxZ - minZ)
@@ -136,5 +188,9 @@ public sealed class GameMapBuilder
         _cellsById = new Dictionary<long, HexCell3D>();
         _cellsByCode = new Dictionary<string, HexCell3D>(StringComparer.Ordinal);
         _edges = Array.Empty<MapEdgeDto>();
+        AppliedVisualCellCount = 0;
+        DedicatedVisualCellCount = 0;
+        GenericTerrainCellCount = 0;
+        FallbackVisualCellCount = 0;
     }
 }

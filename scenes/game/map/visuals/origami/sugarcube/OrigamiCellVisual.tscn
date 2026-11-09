@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/art/models/origami/sugarcube/terrain.glb" id="1_terrain"]
+[ext_resource type="PackedScene" path="res://assets/art/models/origami/sugarcube/building.glb" id="2_building"]
+
+[node name="OrigamiCellVisual" type="Node3D"]
+[node name="Terrain" parent="." instance=ExtResource("1_terrain")]
+
+[node name="Building" parent="." instance=ExtResource("2_building")]
+

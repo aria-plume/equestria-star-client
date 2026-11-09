@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/internal/map_baking/StaticMapPckLoader.cs" id="1_loader"]
+[ext_resource type="PackedScene" path="res://scenes/game/map/visual_runtime/MapVisualRuntime.tscn" id="2_runtime"]
+
+[node name="StaticMapPreview" type="Node3D"]
+script = ExtResource("1_loader")
+LoadFromPack = false
+
+[node name="MapRoot" type="Node3D" parent="."]
+
+[node name="CameraRig" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig"]
+projection = 1
+size = 24.0
+current = true
+
+[node name="MapVisualRuntime" parent="." instance=ExtResource("2_runtime")]
+
+[node name="Overlay" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="StatusPanel" type="PanelContainer" parent="Overlay"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 560.0
+offset_bottom = 108.0
+mouse_filter = 2
+
+[node name="Margin" type="MarginContainer" parent="Overlay/StatusPanel"]
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 10
+
+[node name="StatusLabel" type="Label" parent="Overlay/StatusPanel/Margin"]
+text = "正在加载静态烘焙地图……"
+
+[node name="UiInputTestButton" type="Button" parent="Overlay" groups=["blocks_map_input"]]
+offset_left = 24.0
+offset_top = 122.0
+offset_right = 176.0
+offset_bottom = 166.0
+text = "UI 输入测试"

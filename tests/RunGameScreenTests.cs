@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Godot;
 using EquestriaStar.Api;
 using EquestriaStar.Game.Map;
+using EquestriaStar.Game.UI;
 using EquestriaStar.State;
 using EquestriaStar.UI;
 
@@ -24,6 +27,7 @@ public partial class RunGameScreenTests : SceneTree
 
     private async Task RunTestsAsync()
     {
+        VerifyGameActionRequestSerialization();
         var session = Root.GetNode<Session>("Session");
         var apiClient = Root.GetNode<ApiClient>("ApiClient");
         var transport = new GameScreenTransport();
@@ -47,7 +51,11 @@ public partial class RunGameScreenTests : SceneTree
             && !screen.IsAvailableActionsRequestInProgress
             && screen.Hud.EndTurnVisible
             && !screen.Hud.EndTurnDisabled);
-        screen.GetNode<Timer>("PlayerViewTimer").Stop();
+        var visualCheck = OS.GetCmdlineUserArgs().Contains("--visual-check");
+        if (!visualCheck)
+        {
+            screen.GetNode<Timer>("PlayerViewTimer").Stop();
+        }
 
         AssertEqual(screen.GameId, 77L, "GameScreen 必须使用 Session.CurrentGameId");
         AssertEqual(screen.MapScene.GameId, 77L, "地图场景必须先取得 gameId");
@@ -55,10 +63,17 @@ public partial class RunGameScreenTests : SceneTree
         AssertTrue(screen.MapScene.RequireGameId, "正式地图必须禁止主地图回退");
         AssertEqual(screen.MapScene.GeneratedCellCount, 138, "正式场景应生成全部地图格子");
         AssertEqual(screen.MapScene.Edges.Count, 385, "正式场景应保留全部地图边");
+        AssertTrue(screen.MapScene.IsUsingStaticVisual, "正式场景必须挂载静态 PCK 视觉");
+        AssertEqual(screen.MapScene.StaticVisualCellCount, 138, "静态视觉必须包含 138 个格子");
+        AssertEqual(screen.MapScene.StaticVisualRoot.GetChildCount(), 1, "正式场景只能保留一个静态地图实例");
+        AssertEqual(screen.MapScene.InteractionRoot.GetChildCount(), 1, "正式场景只能保留一个交互层实例");
+        AssertTrue(screen.MapScene.VisualRuntime.Diagnostics != null, "正式场景必须附加 P9 视觉运行层");
+        AssertFalse(screen.MapScene.HasNode("MapEnvironmentRoot"), "正式场景不得保留旧环境根");
         AssertEqual(screen.Hud.BoundCurrentUserId, 1L, "HUD 应按当前登录 userId 识别自己");
         AssertEqual(screen.Hud.OtherPlayerCount, 1, "HUD 应仅显示另一名玩家");
         AssertEqual(transport.MapRequestCount, 1, "重复 Start 不得重复加载地图");
-        AssertEqual(transport.PlayerViewRequestCount, 1, "重复 Start 不得重复加载玩家视图");
+        AssertEqual(transport.PlayerViewRequestCount, 2, "首次建连后应额外同步一次玩家视图，重复 Start 不得新增流程");
+        AssertEqual(transport.ConnectionRequestCount, 1, "重复 Start 不得创建第二套连接租约");
         AssertEqual(transport.AvailableActionsRequestCount, 1, "当前用户回合时应查询一次可用行动");
         AssertTrue(transport.Paths.Contains("/games/77/map"), "必须请求对局绑定地图");
         AssertTrue(transport.Paths.Contains("/games/77/player-view"), "必须请求完整玩家视图");
@@ -69,11 +84,27 @@ public partial class RunGameScreenTests : SceneTree
         AssertTrue(transport.LastAvailableActionsAuthorized, "可用行动请求必须携带认证");
         AssertEqual(screen.Hud.TurnNoticeText, "当前是你的回合", "自己回合时应显示明确提示");
         VerifyMapInputRoutingMetadata(screen);
+        VerifyFairytaleHudLayout(screen);
         VerifyTurnHudStates(screen, transport);
 
         // 可视检查模式保留正式组合场景，便于人工验证地图与 HUD。
-        if (OS.GetCmdlineUserArgs().Contains("--visual-check"))
+        if (visualCheck)
         {
+            transport.AdvanceOtherPlayerStatsOnPoll = true;
+            transport.ActionRequestCallback = () =>
+            {
+                transport.View.StateVersion++;
+                transport.View.CurrentTurnUserId = 2;
+                transport.SetEndTurnAvailability(false, "当前不是你的回合");
+                GD.Print($"VISUAL_END_TURN_REQUEST count={transport.GameActionRequestCount}");
+            };
+            var camera = screen.MapScene.CameraController.Camera;
+            var townHallCell = screen.MapScene.CellsById.Values.Single(cell => cell.Data?.CellCode == "A10");
+            GD.Print($"VISUAL_A10_SCREEN={camera.UnprojectPosition(townHallCell.GlobalPosition)}");
+            foreach (var token in screen.MapScene.TokenManager.TokensByPlayerId.Values.OrderBy(token => token.PlayerId))
+            {
+                GD.Print($"VISUAL_TOKEN_{token.PlayerId}_SCREEN={camera.UnprojectPosition(token.GlobalPosition)}");
+            }
             GD.Print("正式游戏场景可视检查已就绪。");
             return;
         }
@@ -81,6 +112,7 @@ public partial class RunGameScreenTests : SceneTree
         await VerifyPollingAndRefreshAsync(screen, transport);
         await VerifyEndTurnSuccessAndVersionGuardAsync(screen, transport);
         await VerifyEndTurnErrorsAsync(screen, transport);
+        await VerifyAllOfflineAndHeartbeatVersionGuardAsync(screen, transport);
         await VerifyFailureAndRetryAsync(screen, transport);
         await VerifyFreedScreenIgnoresResponseAsync(screen, transport);
 
@@ -89,29 +121,93 @@ public partial class RunGameScreenTests : SceneTree
         Finish();
     }
 
+    private void VerifyGameActionRequestSerialization()
+    {
+        var requestId = Guid.NewGuid().ToString("D");
+        var json = JsonSerializer.Serialize(new GameActionRequestDto
+        {
+            RequestId = requestId,
+            PlayerId = 1001,
+            StateVersion = 9,
+            ActionType = "END_TURN",
+            Payload = new JsonObject()
+        });
+        using var document = JsonDocument.Parse(json);
+        AssertEqual(
+            document.RootElement.GetProperty("requestId").GetString(),
+            requestId,
+            "GameActionRequestDto 必须把 requestId 序列化到请求体顶层"
+        );
+    }
+
     private void VerifyTurnHudStates(GameScreen screen, GameScreenTransport transport)
     {
-        var otherTurnView = GameScreenTransport.CloneView(transport.View);
-        otherTurnView.CurrentTurnUserId = 2;
-        screen.Hud.RefreshPlayerView(otherTurnView, 1);
-        AssertEqual(screen.Hud.TurnNoticeText, "当前是 GPT2 的回合", "他人回合时应显示对应昵称");
-        AssertFalse(screen.Hud.EndTurnVisible, "他人回合不得显示结束回合按钮");
-
         var ownTurnView = GameScreenTransport.CloneView(transport.View);
+        ownTurnView.EngineState ??= new EngineStateDto();
+        ownTurnView.EngineState.Phase = "MIDDLE";
         screen.Hud.RefreshPlayerView(ownTurnView, 1);
-        screen.Hud.SetAvailableActions(
-            [new AvailableActionDto { ActionType = "END_TURN", Available = false, ReasonText = "仍有必须处理的效果" }],
-            ownTurnView.StateVersion
-        );
-        AssertTrue(screen.Hud.EndTurnVisible, "自己回合应显示结束回合按钮");
-        AssertTrue(screen.Hud.EndTurnDisabled, "END_TURN 不可用时按钮必须禁用");
-        AssertEqual(screen.Hud.EndTurnTooltip, "仍有必须处理的效果", "禁用按钮应展示 reasonText");
-
         screen.Hud.SetAvailableActions(
             [new AvailableActionDto { ActionType = "END_TURN", Available = true }],
             ownTurnView.StateVersion
         );
+        AssertTrue(screen.Hud.EndTurnVisible, "自己回合应显示结束回合按钮");
         AssertFalse(screen.Hud.EndTurnDisabled, "END_TURN 可用时按钮应恢复可点击");
+
+        screen.Hud.ActionMenuButton.EmitSignal(Button.SignalName.Pressed);
+        AssertTrue(screen.Hud.IsActionMenuOpen, "回合状态切换测试期间行为菜单应保持展开");
+
+        var restrictedPhaseView = GameScreenTransport.CloneView(ownTurnView);
+        restrictedPhaseView.StateVersion = ownTurnView.StateVersion + 1;
+        restrictedPhaseView.EngineState!.Phase = "TURN_START";
+        screen.Hud.RefreshPlayerView(restrictedPhaseView, 1);
+        AssertEqual(screen.Hud.TurnNoticeText, "当前是你的回合", "阶段受限时仍必须刷新回合横幅");
+        AssertTrue(screen.Hud.EndTurnVisible && screen.Hud.EndTurnDisabled,
+            "阶段受限时不得沿用上一帧可点击的结束回合状态");
+        AssertTrue(screen.Hud.EndTurnTooltip.Contains("阶段", System.StringComparison.Ordinal),
+            "阶段受限时应提供明确原因");
+        AssertTrue(screen.Hud.IsActionMenuOpen, "阶段更新不应收起已展开的行为菜单");
+
+        var pendingRewardView = GameScreenTransport.CloneView(ownTurnView);
+        pendingRewardView.StateVersion = ownTurnView.StateVersion + 2;
+        pendingRewardView.EngineState!.PendingReward = new PendingRewardDto
+        {
+            RewardId = 9001,
+            Kind = "ITEM",
+            PlayerId = 1001
+        };
+        screen.Hud.RefreshPlayerView(pendingRewardView, 1);
+        AssertEqual(screen.Hud.TurnNoticeText, "当前是你的回合", "出现奖励队首时仍必须刷新回合横幅");
+        AssertTrue(screen.Hud.EndTurnVisible && screen.Hud.EndTurnDisabled,
+            "奖励队首存在时不得沿用旧的结束回合资格");
+        AssertTrue(screen.Hud.EndTurnTooltip.Contains("奖励", System.StringComparison.Ordinal),
+            "奖励队首应显示对应禁用原因");
+
+        var otherTurnView = GameScreenTransport.CloneView(ownTurnView);
+        otherTurnView.StateVersion = ownTurnView.StateVersion + 3;
+        otherTurnView.CurrentTurnUserId = 2;
+        screen.Hud.RefreshPlayerView(otherTurnView, 1);
+        AssertEqual(screen.Hud.TurnNoticeText, "当前是 GPT2 的回合", "他人回合时应显示对应昵称");
+        AssertFalse(screen.Hud.EndTurnVisible, "他人回合不得显示结束回合按钮");
+        AssertTrue(screen.Hud.IsActionMenuOpen, "他人回合更新不应收起行为菜单");
+
+        var restoredView = GameScreenTransport.CloneView(ownTurnView);
+        restoredView.StateVersion = ownTurnView.StateVersion + 4;
+        restoredView.EngineState!.Phase = "MIDDLE";
+        restoredView.EngineState.PendingReward = null;
+        screen.Hud.RefreshPlayerView(restoredView, 1);
+        screen.Hud.SetAvailableActions(
+            [new AvailableActionDto { ActionType = "END_TURN", Available = true }],
+            restoredView.StateVersion
+        );
+        AssertEqual(screen.Hud.TurnNoticeText, "当前是你的回合", "恢复可行动时应恢复本人回合提示");
+        AssertTrue(screen.Hud.EndTurnVisible && !screen.Hud.EndTurnDisabled,
+            "恢复可行动且最新 END_TURN 可用时应恢复按钮");
+        AssertTrue(screen.Hud.IsActionMenuOpen, "恢复资格时行为菜单应保持展开");
+        screen.Hud.CloseActionMenu();
+
+        // 状态转换用例只检查 HUD，结束时恢复 GameScreen 当前的权威版本。
+        screen.Hud.RefreshPlayerView(GameScreenTransport.CloneView(transport.View), 1);
+        screen.Hud.SetAvailableActions(transport.AvailableActions, transport.View.StateVersion);
     }
 
     private void VerifyMapInputRoutingMetadata(GameScreen screen)
@@ -122,27 +218,43 @@ public partial class RunGameScreenTests : SceneTree
 
         var otherPlayersPanel = screen.Hud.GetNode<Control>("HudRoot/LeftMargin/LeftRail/OtherPlayersPanel");
         var currentPlayerPanel = screen.Hud.GetNode<Control>("HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel");
-        var placeholderActions = screen.Hud.GetNode<Control>("HudRoot/LeftMargin/LeftRail/PlaceholderActions");
-        var endTurnPanel = screen.Hud.GetNode<Control>("HudRoot/EndTurnAnchor/EndTurnPanel");
+        var inventoryButton = screen.Hud.GetNode<Control>("HudRoot/BottomActionsAnchor/Buttons/ItemsButton");
+        var actionMenuPanel = screen.Hud.GetNode<Control>("HudRoot/ActionMenuAnchor/ActionMenu/MenuPanel");
         var turnNoticeLabel = screen.Hud.GetNode<Label>(
-            "HudRoot/TurnNoticeAnchor/TurnNoticePanel/TurnNoticeMargin/TurnNoticeLabel"
+            "HudRoot/TurnNoticeAnchor/TurnNoticePanel/TurnNoticeLabel"
         );
-        AssertTrue(otherPlayersPanel.IsInGroup(MapCameraController.MapInputBlockerGroup), "其他玩家面板必须标记为地图输入拦截区");
-        AssertTrue(currentPlayerPanel.IsInGroup(MapCameraController.MapInputBlockerGroup), "当前玩家面板必须标记为地图输入拦截区");
-        AssertTrue(placeholderActions.IsInGroup(MapCameraController.MapInputBlockerGroup), "HUD 操作区必须标记为地图输入拦截区");
-        AssertTrue(endTurnPanel.IsInGroup(MapCameraController.MapInputBlockerGroup), "结束回合按钮区域必须拦截地图输入");
+        var otherPlayersScroll = screen.Hud.GetNode<ScrollContainer>(
+            "HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/OtherPlayersScroll");
+        var avatarBlocker = screen.Hud.GetNode<Control>(
+            "HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/AvatarInputBlocker");
+        var statusBlocker = screen.Hud.GetNode<Control>(
+            "HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusInputBlocker");
+        AssertFalse(MapCameraController.IsMapInputBlocked(otherPlayersPanel),
+            "其他玩家的大矩形布局父节点不得整体拦截地图输入");
+        AssertTrue(otherPlayersScroll.IsInGroup(MapCameraController.MapInputBlockerGroup),
+            "实际可滚动的玩家列表区必须拦截地图输入");
+        AssertTrue(otherPlayersScroll.Size.Y <= 77.0f + 0.5f,
+            "单个其他玩家时滚动拦截区不得延伸到未填满空白");
+        AssertFalse(MapCameraController.IsMapInputBlocked(currentPlayerPanel),
+            "当前玩家的大矩形布局父节点不得整体拦截地图输入");
+        AssertTrue(avatarBlocker.IsInGroup(MapCameraController.MapInputBlockerGroup),
+            "当前玩家头像的实际可见区必须拦截地图输入");
+        AssertTrue(statusBlocker.IsInGroup(MapCameraController.MapInputBlockerGroup),
+            "当前玩家状态条的实际可见区必须拦截地图输入");
+        AssertTrue(inventoryButton.IsInGroup(MapCameraController.MapInputBlockerGroup), "右下图标按钮必须标记为地图输入拦截区");
+        AssertTrue(actionMenuPanel.IsInGroup(MapCameraController.MapInputBlockerGroup), "行为菜单必须拦截地图输入");
         AssertFalse(MapCameraController.IsMapInputBlocked(turnNoticeLabel), "顶部回合提示不得阻止地图输入");
         AssertTrue(MapCameraController.IsMapInputBlocked(
-            screen.Hud.GetNode<Button>("HudRoot/EndTurnAnchor/EndTurnPanel/EndTurnMargin/EndTurnButton")
+            screen.Hud.GetNode<Button>("HudRoot/ActionMenuAnchor/ActionMenu/MenuPanel/MenuMargin/Menu/EndTurnSlot/EndTurnButton")
         ), "结束回合按钮必须通过父节点标记阻止地图输入");
         AssertFalse(MapCameraController.IsMapInputBlocked(hudRoot), "HUD 透明根节点不得拦截地图输入");
 
         var playerEntry = screen.Hud
-            .GetNode<VBoxContainer>("HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/ContentMargin/Content/OtherPlayersScroll/OtherPlayersList")
+            .GetNode<VBoxContainer>("HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/OtherPlayersScroll/OtherPlayersList")
             .GetChildren()
             .OfType<Control>()
             .First(child => child != screen.Hud.GetNode<Label>(
-                "HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/ContentMargin/Content/OtherPlayersScroll/OtherPlayersList/EmptyLabel"
+                "HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/OtherPlayersScroll/OtherPlayersList/EmptyLabel"
             ));
         AssertTrue(playerEntry.IsInGroup(MapCameraController.MapInputBlockerGroup), "其他玩家条目必须标记为地图输入拦截区");
 
@@ -152,10 +264,45 @@ public partial class RunGameScreenTests : SceneTree
         AssertTrue(fatalState.IsInGroup(MapCameraController.MapInputBlockerGroup), "致命错误遮罩必须拦截地图输入");
     }
 
+    private void VerifyFairytaleHudLayout(GameScreen screen)
+    {
+        var iconButtons = new[]
+        {
+            screen.Hud.QuestBoardButton,
+            screen.Hud.ShopShelfButton,
+            screen.Hud.InventoryButton,
+            screen.Hud.PersonalQuestsButton,
+            screen.Hud.EquipmentButton,
+            screen.Hud.PartnersButton,
+            screen.Hud.ActionMenuButton
+        };
+        AssertTrue(iconButtons.All(button => button.Icon != null), "七个童话风入口必须绑定独立图标资源");
+        AssertTrue(iconButtons.All(button => button.IsInGroup(MapCameraController.MapInputBlockerGroup)),
+            "七个实际入口必须全部阻止地图输入");
+        AssertTrue(screen.Hud.PartnersButton.Disabled, "伙伴入口必须保持禁用占位");
+        AssertTrue(screen.Hud.GetNode<TextureRect>("HudRoot/TurnNoticeAnchor/TurnNoticePanel/BannerTexture").Texture != null,
+            "顶部回合横幅必须使用独立童话风素材");
+        AssertTrue(screen.Hud.GetNode<TextureRect>("HudRoot/TopRightAnchor/TopRight/MapIndicator/Texture").Texture != null,
+            "右上正式地图标识必须使用独立底板素材");
+        AssertFalse(screen.MapScene.GetNode<Control>("CanvasLayer/MapInfoMargin").Visible,
+            "GameScreen 组合时必须隐藏地图场景旧标识，避免与童话 HUD 重叠");
+        AssertTrue(screen.Hud.GetNode("HudRoot/ActionMenuAnchor/ActionMenu/MenuPanel").IsAncestorOf(screen.Hud.EndTurnButton),
+            "结束回合必须只保留在行为菜单内");
+        AssertFalse(screen.Hud.HasNode("HudRoot/EndTurnAnchor"), "旧的独立结束回合入口不得残留");
+    }
+
     private async Task VerifyPollingAndRefreshAsync(GameScreen screen, GameScreenTransport transport)
     {
+        var otherPlayersList = screen.Hud.GetNode<VBoxContainer>(
+            "HudRoot/LeftMargin/LeftRail/OtherPlayersPanel/OtherPlayersScroll/OtherPlayersList");
+        var entryBeforeRefresh = otherPlayersList.GetChildren().OfType<OtherPlayerHudEntry>().Single();
+        await DispatchViewportMoveAsync(entryBeforeRefresh.GetGlobalRect().GetCenter());
+        var detailPanel = screen.Hud.GetNode<PanelContainer>("HudRoot/PlayerDetailPanel");
+        AssertTrue(detailPanel.Visible, "鼠标停在其他玩家条目时应显示详情");
+
         transport.DelayMilliseconds = 30;
         transport.View.Players![0].Coins = 17;
+        transport.View.Players[1].Coins = 29;
         var before = transport.PlayerViewRequestCount;
         var first = screen.RefreshPlayerViewAsync();
         var second = screen.RefreshPlayerViewAsync();
@@ -164,10 +311,50 @@ public partial class RunGameScreenTests : SceneTree
         AssertEqual(transport.PlayerViewRequestCount, before + 1, "轮询进行中必须跳过重入请求");
         AssertEqual(transport.MaxConcurrentPlayerViews, 1, "玩家视图请求不得重叠");
         var coinsLabel = screen.Hud.GetNode<Label>(
-            "HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/ContentMargin/Content/ResourceRow/CoinsValue"
+            "HudRoot/LeftMargin/LeftRail/CurrentPlayerPanel/StatusContent/CoinsBox/CoinsValue"
         );
         AssertEqual(coinsLabel.Text, "17", "刷新后应更新当前玩家数据");
+        var entryAfterRefresh = otherPlayersList.GetChildren().OfType<OtherPlayerHudEntry>().Single();
+        AssertTrue(ReferenceEquals(entryBeforeRefresh, entryAfterRefresh),
+            "玩家视图轮询必须复用同一其他玩家条目");
+        AssertTrue(detailPanel.Visible, "鼠标持续停留时详情不得因轮询消失");
+        AssertEqual(
+            screen.Hud.GetNode<Label>("HudRoot/PlayerDetailPanel/ContentMargin/Content/ResourceRow/CoinsValue").Text,
+            "29",
+            "轮询应在不重建条目的前提下更新悬停详情数值"
+        );
+
+        transport.View.Players[1].Coins = 31;
+        await screen.RefreshPlayerViewAsync();
+        AssertTrue(ReferenceEquals(entryBeforeRefresh,
+                otherPlayersList.GetChildren().OfType<OtherPlayerHudEntry>().Single()),
+            "多次轮询不得替换鼠标所在的玩家条目");
+        AssertEqual(
+            screen.Hud.GetNode<Label>("HudRoot/PlayerDetailPanel/ContentMargin/Content/ResourceRow/CoinsValue").Text,
+            "31",
+            "多次轮询后悬停详情应保持最新数值"
+        );
+
+        var withoutOtherPlayer = GameScreenTransport.CloneView(transport.View);
+        withoutOtherPlayer.Players = withoutOtherPlayer.Players!
+            .Where(player => player.UserId == 1)
+            .ToList();
+        screen.Hud.RefreshPlayerView(withoutOtherPlayer, 1);
+        AssertFalse(detailPanel.Visible, "悬停玩家被移除时必须清理详情");
+        screen.Hud.RefreshPlayerView(GameScreenTransport.CloneView(transport.View), 1);
+        await DispatchViewportMoveAsync(new Vector2(960, 540));
+        AssertFalse(detailPanel.Visible, "鼠标移出玩家条目后必须清理详情");
         transport.DelayMilliseconds = 2;
+    }
+
+    private async Task DispatchViewportMoveAsync(Vector2 position)
+    {
+        Root.PushInput(new InputEventMouseMotion
+        {
+            Position = position,
+            GlobalPosition = position
+        }, true);
+        await ToSignal(this, SignalName.ProcessFrame);
     }
 
     private async Task VerifyEndTurnSuccessAndVersionGuardAsync(GameScreen screen, GameScreenTransport transport)
@@ -185,10 +372,16 @@ public partial class RunGameScreenTests : SceneTree
         );
         transport.ActionGate = actionGate;
         var endTurnButton = screen.Hud.GetNode<Button>(
-            "HudRoot/EndTurnAnchor/EndTurnPanel/EndTurnMargin/EndTurnButton"
+            "HudRoot/ActionMenuAnchor/ActionMenu/MenuPanel/MenuMargin/Menu/EndTurnSlot/EndTurnButton"
         );
-        endTurnButton.EmitSignal(Button.SignalName.Pressed);
-        endTurnButton.EmitSignal(Button.SignalName.Pressed);
+        AssertTrue(screen.Hud.EndTurnVisible, "提交前结束回合入口必须可见");
+        AssertFalse(screen.Hud.EndTurnDisabled,
+            $"提交前结束回合必须可点击，当前原因：{screen.Hud.EndTurnTooltip}");
+        await DispatchViewportClickAsync(screen.Hud.ActionMenuButton);
+        AssertTrue(screen.Hud.IsActionMenuOpen, "真实 GUI 点击后行为菜单必须展开");
+        AssertTrue(endTurnButton.IsVisibleInTree(), "行为菜单展开后结束回合按钮必须在场景树中可见");
+        await DispatchViewportClickAsync(endTurnButton);
+        await DispatchViewportClickAsync(endTurnButton);
         await WaitUntilAsync(() => transport.GameActionInFlight == 1);
 
         AssertEqual(transport.GameActionRequestCount, 1, "连续点击结束回合只能产生一次请求");
@@ -206,6 +399,8 @@ public partial class RunGameScreenTests : SceneTree
         AssertTrue(request != null, "统一行动接口必须收到强类型请求体");
         if (request != null)
         {
+            AssertTrue(Guid.TryParseExact(request.RequestId, "D", out _), "结束回合必须携带标准 UUID requestId");
+            AssertTrue(request.RequestId.Length <= 64, "结束回合 requestId 不得超过服务端 64 字符上限");
             AssertEqual(request.PlayerId, 1001L, "结束回合请求必须使用 playerId，不能使用 userId");
             AssertEqual(request.StateVersion, 1L, "结束回合请求必须使用最新 stateVersion");
             AssertEqual(request.ActionType, "END_TURN", "结束回合 actionType 必须正确");
@@ -299,11 +494,19 @@ public partial class RunGameScreenTests : SceneTree
         transport.ActionFailureMessage = "无法连接服务器，请检查网络。";
         transport.ActionRequestCallback = null;
         var beforeNetworkRefresh = transport.PlayerViewRequestCount;
+        var beforeNetworkActions = transport.GameActionRequestCount;
         await screen.SubmitEndTurnAsync();
-        AssertEqual(transport.PlayerViewRequestCount, beforeNetworkRefresh, "网络错误不应擅自切换或重发行动");
+        await WaitUntilAsync(() => !screen.IsAvailableActionsRequestInProgress);
+        AssertTrue(transport.PlayerViewRequestCount > beforeNetworkRefresh, "网络错误后必须只读刷新权威玩家视图");
+        AssertEqual(transport.GameActionRequestCount, beforeNetworkActions + 1, "网络错误不得自动生成新 requestId 并重发 END_TURN");
         AssertFalse(screen.IsEndTurnSubmitting, "网络错误后必须恢复按钮状态");
-        AssertTrue(screen.Hud.EndTurnVisible && !screen.Hud.EndTurnDisabled, "网络错误后应允许玩家重试");
+        AssertTrue(screen.Hud.EndTurnVisible && !screen.Hud.EndTurnDisabled, "刷新确认仍是本人回合后才允许发起新行动");
         AssertTrue(screen.LastPlayerViewError.Contains("无法连接服务器", StringComparison.Ordinal), "网络错误应保留可读提示");
+        AssertEqual(
+            transport.ActionRequestIds.Distinct(StringComparer.Ordinal).Count(),
+            transport.ActionRequestIds.Count,
+            "每次新的结束回合逻辑行动必须使用不同 requestId"
+        );
 
         transport.ActionFailureCode = null;
         transport.ActionFailureMessage = "";
@@ -341,6 +544,42 @@ public partial class RunGameScreenTests : SceneTree
         AssertFalse(screen.PlayerViewErrorVisible, "重试成功后应隐藏错误状态");
     }
 
+    private async Task VerifyAllOfflineAndHeartbeatVersionGuardAsync(
+        GameScreen screen,
+        GameScreenTransport transport)
+    {
+        transport.View.StateVersion = 20;
+        transport.View.CurrentTurnUserId = 1;
+        transport.View.EngineState ??= new EngineStateDto { ConnectionPolicy = GameScreenTransport.CreateConnectionPolicy() };
+        transport.View.EngineState.PausedReason = "ALL_OFFLINE";
+        foreach (var player in transport.View.Players ?? [])
+        {
+            player.IsConnected = 0;
+        }
+
+        await screen.ConnectionLease.RenewNowAsync();
+        AssertEqual(screen.LatestStateVersion, 20L, "心跳响应中的较新玩家视图应更新界面");
+        AssertEqual(screen.Hud.TurnNoticeText, "全员离线暂停，正在等待服务端恢复……", "必须按 pausedReason 识别 ALL_OFFLINE");
+        AssertFalse(screen.Hud.EndTurnVisible, "全员离线暂停时不得开放结束回合");
+
+        transport.View.StateVersion = 21;
+        transport.View.EngineState.PausedReason = null;
+        foreach (var player in transport.View.Players ?? [])
+        {
+            player.IsConnected = 1;
+        }
+
+        await screen.ConnectionLease.RenewNowAsync();
+        await WaitUntilAsync(() => screen.LatestStateVersion == 21 && !screen.IsAvailableActionsRequestInProgress);
+        AssertEqual(screen.Hud.TurnNoticeText, "当前是你的回合", "服务端解除暂停后应恢复回合提示");
+        AssertTrue(screen.Hud.EndTurnVisible && !screen.Hud.EndTurnDisabled, "恢复后应重新取得可用行动");
+
+        transport.View.StateVersion = 20;
+        await screen.RefreshPlayerViewAsync();
+        AssertEqual(screen.LatestStateVersion, 21L, "较旧 player-view 轮询不得覆盖较新的心跳响应");
+        transport.View.StateVersion = 21;
+    }
+
     private async Task VerifyFreedScreenIgnoresResponseAsync(GameScreen screen, GameScreenTransport transport)
     {
         var gate = new TaskCompletionSource<ApiResult<PlayerViewResponseDto>>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -354,6 +593,31 @@ public partial class RunGameScreenTests : SceneTree
         await WaitUntilAsync(() => transport.PlayerViewInFlight == 0);
         await WaitFramesAsync(2);
         AssertFalse(GodotObject.IsInstanceValid(screen), "页面退出后旧响应不得重新激活场景");
+    }
+
+    private async Task DispatchViewportClickAsync(Control control)
+    {
+        await ToSignal(this, SignalName.ProcessFrame);
+        var position = control.GetGlobalRect().GetCenter();
+        Root.PushInput(new InputEventMouseMotion { Position = position, GlobalPosition = position }, true);
+        await ToSignal(this, SignalName.ProcessFrame);
+        Root.PushInput(new InputEventMouseButton
+        {
+            ButtonIndex = MouseButton.Left,
+            ButtonMask = MouseButtonMask.Left,
+            Pressed = true,
+            Position = position,
+            GlobalPosition = position
+        }, true);
+        await ToSignal(this, SignalName.ProcessFrame);
+        Root.PushInput(new InputEventMouseButton
+        {
+            ButtonIndex = MouseButton.Left,
+            Pressed = false,
+            Position = position,
+            GlobalPosition = position
+        }, true);
+        await ToSignal(this, SignalName.ProcessFrame);
     }
 
     private async Task WaitUntilAsync(Func<bool> condition)
@@ -428,23 +692,40 @@ public partial class RunGameScreenTests : SceneTree
         public int MapRequestCount { get; private set; }
         public int PlayerViewRequestCount { get; private set; }
         public int AvailableActionsRequestCount { get; private set; }
+        public int ConnectionRequestCount { get; private set; }
         public int GameActionRequestCount { get; private set; }
         public int PlayerViewInFlight { get; private set; }
         public int GameActionInFlight { get; private set; }
         public int MaxConcurrentPlayerViews { get; private set; }
         public int DelayMilliseconds { get; set; } = 2;
         public bool FailPlayerView { get; set; }
+        public bool AdvanceOtherPlayerStatsOnPoll { get; set; }
         public string? LastAvailableActionsPlayerId { get; private set; }
         public HttpClient.Method LastAvailableActionsMethod { get; private set; }
         public bool LastAvailableActionsAuthorized { get; private set; }
         public HttpClient.Method LastGameActionMethod { get; private set; }
         public bool LastGameActionAuthorized { get; private set; }
         public GameActionRequestDto? LastActionRequest { get; private set; }
+        public List<string> ActionRequestIds { get; } = [];
         public string? ActionFailureCode { get; set; }
         public string ActionFailureMessage { get; set; } = "";
         public Action? ActionRequestCallback { get; set; }
         public TaskCompletionSource<ApiResult<PlayerViewResponseDto>>? PlayerViewGate { get; set; }
         public TaskCompletionSource<ApiResult<GameActionResponseDto>>? ActionGate { get; set; }
+
+        public GameScreenTransport()
+        {
+            // 视觉检查使用真实静态锚点，确保两枚棋子实际落在市政厅格并验证置顶与居中。
+            var townHall = Map.Cells?.FirstOrDefault(cell => cell.CellCode == "A10")
+                ?? throw new InvalidOperationException("测试地图缺少 A10 市政厅格。" );
+            foreach (var player in View.Players ?? [])
+            {
+                player.CurrentCellId = townHall.CellId;
+                player.CurrentCellCode = townHall.CellCode;
+                player.CurrentCellName = townHall.CellName;
+                player.CurrentCellNameText = townHall.CellNameText;
+            }
+        }
 
         public async Task<ApiResult<T>> RequestJsonAsync<T>(
             HttpClient.Method method,
@@ -466,6 +747,12 @@ public partial class RunGameScreenTests : SceneTree
                 PlayerViewRequestCount++;
                 PlayerViewInFlight++;
                 MaxConcurrentPlayerViews = Math.Max(MaxConcurrentPlayerViews, PlayerViewInFlight);
+                if (AdvanceOtherPlayerStatsOnPoll
+                    && View.Players?.FirstOrDefault(player => player.UserId == 2) is { } otherPlayer)
+                {
+                    otherPlayer.Coins++;
+                    otherPlayer.Prestige++;
+                }
                 ApiResult<PlayerViewResponseDto> result;
                 if (PlayerViewGate != null)
                 {
@@ -485,6 +772,33 @@ public partial class RunGameScreenTests : SceneTree
                 return (ApiResult<T>)(object)result;
             }
 
+            if (path == "/games/77/players/1001/connection"
+                && typeof(T) == typeof(PlayerViewResponseDto)
+                && body is PlayerConnectionRequestDto connectionRequest)
+            {
+                ConnectionRequestCount++;
+                var response = CloneView(View);
+                response.EngineState ??= new EngineStateDto();
+                response.EngineState.ConnectionPolicy = CreateConnectionPolicy();
+                response.EngineState.Connection = new GameConnectionInfoDto
+                {
+                    ClientInstanceId = connectionRequest.ClientInstanceId,
+                    ConnectionId = connectionRequest.ConnectionId ?? "game-screen-connection",
+                    ServerTime = "2026-11-01T12:00:00.000000",
+                    LastHeartbeatAt = "2026-11-01T12:00:00.000000",
+                    ExpiresAt = "2026-11-01T12:00:15.000000",
+                    ServerTimeZone = "Asia/Shanghai",
+                    ServerUtcOffset = "+08:00",
+                    ConnectionActive = true,
+                    PlayerConnected = true,
+                    HeartbeatSeconds = 5,
+                    TimeoutSeconds = 15,
+                    ReconnectWaitSeconds = 10,
+                    InitialGraceSeconds = 45
+                };
+                return (ApiResult<T>)(object)ApiResult<PlayerViewResponseDto>.Success(response, "success", 200);
+            }
+
             if (path == "/games/77/available-actions" && typeof(T) == typeof(List<AvailableActionDto>))
             {
                 AvailableActionsRequestCount++;
@@ -501,6 +815,17 @@ public partial class RunGameScreenTests : SceneTree
                 );
             }
 
+            if (path == "/games/77/players/1001/movable-cells" && typeof(T) == typeof(List<MapCellDto>))
+            {
+                var target = Map.Cells?.FirstOrDefault(cell => cell.CellCode != "A10")
+                    ?? throw new InvalidOperationException("测试地图缺少可移动目标格。" );
+                return (ApiResult<T>)(object)ApiResult<List<MapCellDto>>.Success(
+                    [target],
+                    "success",
+                    200
+                );
+            }
+
             if (path == "/games/77/actions" && typeof(T) == typeof(GameActionResponseDto))
             {
                 GameActionRequestCount++;
@@ -508,6 +833,15 @@ public partial class RunGameScreenTests : SceneTree
                 LastGameActionAuthorized = authorized;
                 GameActionInFlight++;
                 LastActionRequest = body as GameActionRequestDto;
+                if (LastActionRequest == null
+                    || !Guid.TryParseExact(LastActionRequest.RequestId, "D", out _)
+                    || LastActionRequest.RequestId.Length > 64)
+                {
+                    GameActionInFlight--;
+                    return ApiResult<T>.Failure("测试行动缺少有效 requestId。", "PARAM_INVALID");
+                }
+
+                ActionRequestIds.Add(LastActionRequest.RequestId);
                 ActionRequestCallback?.Invoke();
                 ApiResult<GameActionResponseDto> result;
                 if (ActionGate != null)
@@ -575,6 +909,22 @@ public partial class RunGameScreenTests : SceneTree
                 CurrentTurnSeq = source.CurrentTurnSeq,
                 StateVersion = source.StateVersion,
                 WinnerUserId = source.WinnerUserId,
+                EngineState = source.EngineState == null
+                    ? null
+                    : new EngineStateDto
+                    {
+                        BatchId = source.EngineState.BatchId,
+                        PausedReason = source.EngineState.PausedReason,
+                        Phase = source.EngineState.Phase,
+                        CurrentPlayerId = source.EngineState.CurrentPlayerId,
+                        PendingReward = source.EngineState.PendingReward,
+                        PendingCheck = source.EngineState.PendingCheck,
+                        MovementRulesVersion = source.EngineState.MovementRulesVersion,
+                        QuestSubmissionVersion = source.EngineState.QuestSubmissionVersion,
+                        ConnectionPolicy = source.EngineState.ConnectionPolicy == null
+                            ? null
+                            : CreateConnectionPolicy()
+                    },
                 Players = source.Players?.Select(ClonePlayer).ToList()
             };
         }
@@ -607,6 +957,7 @@ public partial class RunGameScreenTests : SceneTree
                 Prestige = source.Prestige,
                 CurrentSpeedPoints = source.CurrentSpeedPoints,
                 CurrentSocialPoints = source.CurrentSocialPoints,
+                IsConnected = source.IsConnected,
                 EffectiveAttributes = source.EffectiveAttributes == null
                     ? null
                     : new EffectiveAttributesDto
@@ -633,11 +984,23 @@ public partial class RunGameScreenTests : SceneTree
                 CurrentTurnUserId = 1,
                 CurrentTurnSeq = 1,
                 StateVersion = 1,
+                EngineState = new EngineStateDto { ConnectionPolicy = CreateConnectionPolicy() },
                 Players =
                 [
                     CreatePlayer(1001, 1, "GPT1", 1, 5, 3),
                     CreatePlayer(1002, 2, "GPT2", 2, 4, 6)
                 ]
+            };
+        }
+
+        public static GameConnectionPolicyDto CreateConnectionPolicy()
+        {
+            return new GameConnectionPolicyDto
+            {
+                HeartbeatSeconds = 5,
+                TimeoutSeconds = 15,
+                ReconnectWaitSeconds = 10,
+                InitialGraceSeconds = 45
             };
         }
 

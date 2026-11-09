@@ -211,7 +211,11 @@ public partial class PlayerToken3D : Node3D
         {
             AlbedoColor = color,
             Metallic = 0.08f,
-            Roughness = 0.58f
+            Roughness = 0.58f,
+            // 棋子保持真实坐标与立体光照，但不被静态建筑或环境深度遮挡。
+            Transparency = BaseMaterial3D.TransparencyEnum.Alpha,
+            NoDepthTest = true,
+            RenderPriority = 2
         };
         MaterialsBySlot[colorSlot] = material;
         return material;

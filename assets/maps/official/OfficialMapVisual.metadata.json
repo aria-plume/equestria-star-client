@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 2,
+  "mapId": 1,
+  "mapName": "\u6B63\u5F0F\u5730\u56FE",
+  "resourceVersion": "pr1-static-v2-forward-plus",
+  "cellCount": 138,
+  "edgeCount": 385,
+  "fixture": "res://tests/fixtures/main-map-20261024.json",
+  "fixtureSha256": "b021d8cc38d2ba04a136113e0e48dc5abe8df30b8395a2a5ad0a7e0a8644b26a",
+  "visualHash": "3fd4a930653abeebb8e65075a926341efefb4308e2a719bfd6c1954ea22c5bd9",
+  "bakedUtc": "2026-10-29T08:14:40.8086599Z",
+  "tool": "EquestriaStar.Internal.MapBaking.StaticMapBaker",
+  "railStatus": "reference_draft_not_topology_verified",
+  "renderingMethod": "forward_plus",
+  "paperPreset": 9,
+  "cellDiameter": 1.1,
+  "motionSchemaVersion": 1,
+  "driftTargetCount": 15,
+  "hingeTargetCount": 77,
+  "flagHingeCount": 3,
+  "tokenAnchorCount": 138,
+  "explicitDefaultMaterialSurfaces": 180,
+  "clearedConflictingSurfaceOverrides": 311,
+  "visualBoundsPosition": [
+    -6.163023,
+    -0.495,
+    -3.5192935
+  ],
+  "visualBoundsSize": [
+    19.1085,
+    3.025,
+    16.980362
+  ],
+  "nodeCount": 6115,
+  "meshCount": 1953,
+  "materialCount": 1930,
+  "elapsedMilliseconds": 3805
+}

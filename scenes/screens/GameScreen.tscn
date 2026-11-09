@@ -1,9 +1,15 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/GameScreen.cs" id="1_game"]
 [ext_resource type="PackedScene" path="res://scenes/game/map/GameMapScene.tscn" id="2_map"]
 [ext_resource type="PackedScene" path="res://scenes/game/ui/GameHud.tscn" id="3_hud"]
 [ext_resource type="Theme" path="res://assets/theme/client_theme.tres" id="4_theme"]
+[ext_resource type="PackedScene" path="res://scenes/game/ui/CardViewerOverlay.tscn" id="5_cards"]
+[ext_resource type="Script" path="res://scripts/game/connection/GameConnectionLease.cs" id="6_connection"]
+[ext_resource type="PackedScene" path="res://scenes/game/dice/WorkDiceOverlay.tscn" id="7_work_dice"]
+[ext_resource type="PackedScene" path="res://scenes/game/ui/QuestJournalOverlay.tscn" id="8_quest_journal"]
+[ext_resource type="PackedScene" path="res://scenes/game/ui/QuestCheckOverlay.tscn" id="9_quest_check"]
+[ext_resource type="PackedScene" path="res://scenes/game/ui/QuestTargetSubmissionOverlay.tscn" id="10_quest_target_submit"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_status"]
 bg_color = Color(0.035, 0.058, 0.068, 0.94)
@@ -47,24 +53,39 @@ RequireGameId = true
 
 [node name="GameHud" parent="." instance=ExtResource("3_hud")]
 
+[node name="CardViewerOverlay" parent="." instance=ExtResource("5_cards")]
+
+[node name="WorkDiceOverlay" parent="." instance=ExtResource("7_work_dice")]
+
+[node name="QuestJournalOverlay" parent="." instance=ExtResource("8_quest_journal")]
+
+[node name="QuestCheckOverlay" parent="." instance=ExtResource("9_quest_check")]
+
+[node name="QuestTargetSubmissionOverlay" parent="." instance=ExtResource("10_quest_target_submit")]
+
+[node name="GameConnectionLease" type="Node" parent="."]
+script = ExtResource("6_connection")
+
+[node name="HeartbeatTimer" type="Timer" parent="GameConnectionLease"]
+one_shot = true
+
 [node name="PlayerViewTimer" type="Timer" parent="."]
 wait_time = 2.0
 
 [node name="StatusLayer" type="CanvasLayer" parent="."]
 layer = 30
 
-[node name="HudLoadingState" type="MarginContainer" parent="StatusLayer"]
+[node name="HudLoadingState" type="CenterContainer" parent="StatusLayer"]
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 18.0
-offset_bottom = 68.0
+offset_top = 134.0
+offset_bottom = 182.0
 grow_horizontal = 2
 mouse_filter = 2
 theme = ExtResource("4_theme")
-theme_override_constants/margin_left = 720
-theme_override_constants/margin_right = 720
 
 [node name="LoadingPanel" type="PanelContainer" parent="StatusLayer/HudLoadingState"]
+custom_minimum_size = Vector2(410, 0)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBox_status")
@@ -88,8 +109,8 @@ theme_override_colors/font_color = Color(0.82, 0.9, 0.92, 1)
 visible = false
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 18.0
-offset_bottom = 136.0
+offset_top = 134.0
+offset_bottom = 254.0
 grow_horizontal = 2
 mouse_filter = 2
 theme = ExtResource("4_theme")

@@ -40,6 +40,7 @@ public static class MapLayoutConfig
 
     private static readonly Dictionary<string, StandardMaterial3D> TopMaterials = new(StringComparer.Ordinal);
     private static readonly Dictionary<string, StandardMaterial3D> SideMaterials = new(StringComparer.Ordinal);
+    private static readonly Dictionary<string, StandardMaterial3D> GenericTerrainMaterials = new(StringComparer.Ordinal);
 
     public static IReadOnlyDictionary<string, Vector2> BoardOffsets => Offsets;
     public static IReadOnlyDictionary<string, Color> BoardColors => Palette;
@@ -97,6 +98,23 @@ public static class MapLayoutConfig
             Metallic = 0.04f
         };
         SideMaterials.Add(boardCode, material);
+        return material;
+    }
+
+    public static StandardMaterial3D GetGenericTerrainMaterial(string boardCode)
+    {
+        if (GenericTerrainMaterials.TryGetValue(boardCode, out var material))
+        {
+            return material;
+        }
+
+        material = new StandardMaterial3D
+        {
+            AlbedoColor = GetBoardColor(boardCode).Lightened(0.08f),
+            Roughness = 0.94f,
+            Metallic = 0.0f
+        };
+        GenericTerrainMaterials.Add(boardCode, material);
         return material;
     }
 }

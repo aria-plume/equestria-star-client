@@ -48,8 +48,13 @@ public partial class HexCell3D : Node3D
     private uint _inputCollisionLayer = 128;
     private Mesh? _customMesh;
     private PackedScene? _customVisualScene;
+    private float _customVisualScale = 1.0f;
+    private float _customVisualRotationYDegrees;
+    private Vector3 _customVisualOffset = Vector3.Zero;
+    private Material? _customVisualMaterialOverride;
     private bool _warnedAboutMultipleVisualSources;
     private bool _pendingPointerClick;
+    private bool _logicVisualOnly;
 
     [ExportGroup("初始数据")]
     [Export]
@@ -85,6 +90,55 @@ public partial class HexCell3D : Node3D
 
             _customVisualScene = value;
             RefreshVisualSourceIfReady();
+        }
+    }
+
+    [Export(PropertyHint.Range, "0.01,10.0,0.01")]
+    public float CustomVisualScale
+    {
+        get => _customVisualScale;
+        set
+        {
+            _customVisualScale = Mathf.Max(0.01f, value);
+            ApplyCustomVisualTransformIfReady();
+        }
+    }
+
+    [Export(PropertyHint.Range, "-360.0,360.0,0.1")]
+    public float CustomVisualRotationYDegrees
+    {
+        get => _customVisualRotationYDegrees;
+        set
+        {
+            _customVisualRotationYDegrees = value;
+            ApplyCustomVisualTransformIfReady();
+        }
+    }
+
+    [Export]
+    public Vector3 CustomVisualOffset
+    {
+        get => _customVisualOffset;
+        set
+        {
+            _customVisualOffset = value;
+            ApplyCustomVisualTransformIfReady();
+        }
+    }
+
+    [Export]
+    public Material? CustomVisualMaterialOverride
+    {
+        get => _customVisualMaterialOverride;
+        set
+        {
+            if (ReferenceEquals(_customVisualMaterialOverride, value))
+            {
+                return;
+            }
+
+            _customVisualMaterialOverride = value;
+            ApplyCustomVisualMaterialOverrideIfReady();
         }
     }
 
@@ -187,6 +241,17 @@ public partial class HexCell3D : Node3D
     public bool UsesCustomVisual => CustomVisualScene != null || CustomMesh != null;
     public Node3D TokenRoot => GetNode<Node3D>("TokenRoot");
 
+    /// <summary>正式静态地图使用时隐藏全部格子本体，仅保留交互、高亮、名称和棋子挂点。</summary>
+    public bool LogicVisualOnly
+    {
+        get => _logicVisualOnly;
+        set
+        {
+            _logicVisualOnly = value;
+            ApplyLogicVisualModeIfReady();
+        }
+    }
+
     public override void _Ready()
     {
         _baseMesh = GetNodeOrNull<MeshInstance3D>("VisualRoot/BaseMesh");
@@ -206,7 +271,9 @@ public partial class HexCell3D : Node3D
         _interactionArea.InputEvent += OnInputEvent;
 
         ApplyGeometry();
+        ApplyCustomVisualTransform();
         RefreshVisualSource();
+        ApplyLogicVisualModeIfReady();
         BindData(InitialData ?? new HexCellData());
         _cellNameLabel.Visible = ShowCellNames;
         RefreshVisualState();
@@ -255,6 +322,7 @@ public partial class HexCell3D : Node3D
         }
 
         ClearCustomVisualInstance();
+        ApplyCustomVisualTransform();
 
         if (CustomVisualScene != null)
         {
@@ -268,6 +336,7 @@ public partial class HexCell3D : Node3D
             _customMeshInstance.Visible = false;
             _customVisualInstance = CustomVisualScene.Instantiate();
             _customVisualRoot.AddChild(_customVisualInstance);
+            ApplyCustomVisualMaterialOverride();
             return;
         }
 
@@ -284,14 +353,30 @@ public partial class HexCell3D : Node3D
         _customMeshInstance.Visible = false;
         ApplyDefaultBaseMesh();
         SetDefaultMeshVisible(true);
+        ApplyLogicVisualModeIfReady();
     }
 
     public void ClearCustomVisual()
     {
         _customMesh = null;
         _customVisualScene = null;
+        _customVisualMaterialOverride = null;
         _warnedAboutMultipleVisualSources = false;
         RefreshVisualSourceIfReady();
+    }
+
+    private void ApplyLogicVisualModeIfReady()
+    {
+        if (!IsNodeReady())
+        {
+            return;
+        }
+
+        var visualRoot = GetNodeOrNull<Node3D>("VisualRoot");
+        if (GodotObject.IsInstanceValid(visualRoot))
+        {
+            visualRoot.Visible = !_logicVisualOnly;
+        }
     }
 
     public void SetHovered(bool hovered)
@@ -388,6 +473,7 @@ public partial class HexCell3D : Node3D
         _highlightMesh.Mesh = resources.HighlightMesh;
         _highlightMesh.Position = new Vector3(0.0f, HighlightOffset, 0.0f);
         _collisionShape.Shape = resources.CollisionShape;
+        ApplyCustomVisualTransform();
     }
 
     private void ApplyDefaultBaseMesh(HexCellGeometryResources? resources = null)
@@ -434,6 +520,66 @@ public partial class HexCell3D : Node3D
         {
             RefreshVisualSource();
         }
+    }
+
+    private void ApplyCustomVisualTransformIfReady()
+    {
+        if (IsNodeReady())
+        {
+            ApplyCustomVisualTransform();
+        }
+    }
+
+    private void ApplyCustomVisualMaterialOverrideIfReady()
+    {
+        if (IsNodeReady())
+        {
+            ApplyCustomVisualMaterialOverride();
+        }
+    }
+
+    private void ApplyCustomVisualMaterialOverride()
+    {
+        if (!GodotObject.IsInstanceValid(_customVisualInstance))
+        {
+            return;
+        }
+
+        ApplyMaterialOverrideRecursively(_customVisualInstance!, CustomVisualMaterialOverride);
+    }
+
+    private static void ApplyMaterialOverrideRecursively(Node node, Material? material)
+    {
+        if (node is MeshInstance3D meshInstance)
+        {
+            meshInstance.MaterialOverride = material;
+        }
+
+        foreach (var child in node.GetChildren())
+        {
+            ApplyMaterialOverrideRecursively(child, material);
+        }
+    }
+
+    private void ApplyCustomVisualTransform()
+    {
+        if (!GodotObject.IsInstanceValid(_customMeshInstance)
+            || !GodotObject.IsInstanceValid(_customVisualRoot))
+        {
+            return;
+        }
+
+        // 美术源以半径 1 为基准；逻辑根节点、碰撞和地图间距保持不缩放。
+        var visualScale = Mathf.Max(0.01f, CustomVisualScale) * Radius;
+        var scale = Vector3.One * visualScale;
+        var rotation = new Vector3(0.0f, Mathf.DegToRad(CustomVisualRotationYDegrees), 0.0f);
+        var offset = CustomVisualOffset * Radius;
+        _customMeshInstance.Scale = scale;
+        _customMeshInstance.Rotation = rotation;
+        _customMeshInstance.Position = offset;
+        _customVisualRoot.Scale = scale;
+        _customVisualRoot.Rotation = rotation;
+        _customVisualRoot.Position = offset;
     }
 
     private void RefreshVisualState()

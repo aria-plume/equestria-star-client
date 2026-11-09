@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "groundColor": "d8dfd2",
+  "waterColor": "78aeb8",
+  "groundPadding": 2.8,
+  "waterPadding": 8.5,
+  "assets": [
+    {
+      "assetId": "BG003",
+      "category": "BG",
+      "scenePaths": [
+        "res://assets/art/models/environment/BG003/part01.glb",
+        "res://assets/art/models/environment/BG003/part02.glb",
+        "res://assets/art/models/environment/BG003/part03.glb"
+      ]
+    },
+    {
+      "assetId": "BG004",
+      "category": "BG",
+      "scenePaths": [
+        "res://assets/art/models/environment/BG004/part01.glb",
+        "res://assets/art/models/environment/BG004/part02.glb",
+        "res://assets/art/models/environment/BG004/part03.glb",
+        "res://assets/art/models/environment/BG004/part04.glb"
+      ]
+    },
+    {
+      "assetId": "TER001",
+      "category": "TER",
+      "scenePaths": ["res://assets/art/models/environment/TER001/part01.glb"]
+    },
+    {
+      "assetId": "TER003",
+      "category": "TER",
+      "scenePaths": ["res://assets/art/models/environment/TER003/part01.glb"]
+    },
+    {
+      "assetId": "WAT001",
+      "category": "WAT",
+      "scenePaths": ["res://assets/art/models/environment/WAT001/part01.glb"]
+    },
+    {
+      "assetId": "VEG001",
+      "category": "VEG",
+      "scenePaths": ["res://assets/art/models/environment/VEG001/part01.glb"]
+    },
+    {
+      "assetId": "VEG003",
+      "category": "VEG",
+      "scenePaths": ["res://assets/art/models/environment/VEG003/part01.glb"]
+    },
+    {
+      "assetId": "VEG005",
+      "category": "VEG",
+      "scenePaths": ["res://assets/art/models/environment/VEG005/part01.glb"]
+    },
+    {
+      "assetId": "DEC001",
+      "category": "DEC",
+      "scenePaths": ["res://assets/art/models/environment/DEC001/part01.glb"]
+    },
+    {
+      "assetId": "DEC003",
+      "category": "DEC",
+      "scenePaths": ["res://assets/art/models/environment/DEC003/part01.glb"]
+    },
+    {
+      "assetId": "DEC005",
+      "category": "DEC",
+      "scenePaths": ["res://assets/art/models/environment/DEC005/part01.glb"]
+    }
+  ],
+  "placements": [
+    { "assetId": "BG003", "normalizedX": -0.60, "normalizedZ": -0.55, "yOffset": 0.0, "scale": 0.72, "rotationYDegrees": 18 },
+    { "assetId": "BG004", "normalizedX": 0.60, "normalizedZ": -0.55, "yOffset": 0.0, "scale": 0.68, "rotationYDegrees": -20 },
+    { "assetId": "TER001", "normalizedX": -0.61, "normalizedZ": 0.10, "yOffset": 0.0, "scale": 0.70, "rotationYDegrees": 28 },
+    { "assetId": "TER003", "normalizedX": 0.61, "normalizedZ": 0.16, "yOffset": 0.0, "scale": 0.70, "rotationYDegrees": -32 },
+    { "assetId": "WAT001", "normalizedX": 0.00, "normalizedZ": 0.61, "yOffset": -0.01, "scale": 1.10, "rotationYDegrees": 0 },
+    { "assetId": "VEG001", "normalizedX": -0.56, "normalizedZ": -0.05, "yOffset": 0.0, "scale": 0.62, "rotationYDegrees": 12 },
+    { "assetId": "VEG003", "normalizedX": 0.56, "normalizedZ": -0.08, "yOffset": 0.0, "scale": 0.62, "rotationYDegrees": -10 },
+    { "assetId": "VEG005", "normalizedX": -0.47, "normalizedZ": 0.57, "yOffset": 0.0, "scale": 0.54, "rotationYDegrees": 34 },
+    { "assetId": "VEG003", "normalizedX": 0.44, "normalizedZ": 0.58, "yOffset": 0.0, "scale": 0.50, "rotationYDegrees": -28 },
+    { "assetId": "DEC001", "normalizedX": -0.32, "normalizedZ": -0.58, "yOffset": 0.0, "scale": 0.62, "rotationYDegrees": 15 },
+    { "assetId": "DEC003", "normalizedX": 0.28, "normalizedZ": -0.58, "yOffset": 0.0, "scale": 0.62, "rotationYDegrees": -12 },
+    { "assetId": "DEC005", "normalizedX": 0.00, "normalizedZ": 0.60, "yOffset": 0.0, "scale": 0.60, "rotationYDegrees": 0 }
+  ]
+}

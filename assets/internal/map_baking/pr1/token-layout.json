@@ -1,0 +1,1011 @@
+{
+  "schemaVersion": 1,
+  "status": "provisional-token-envelope-review",
+  "bodyHalfWidthRatio": 0.22,
+  "bodyHeightRatio": 0.72,
+  "assets": {
+    "twilight-castle": {
+      "fingerprint": "07746bc77b591e72f7b38d43d15ada8ebc62bab7d5f34ed30afff6288fe76775:9b74c40264e8221f8852dc1b1a72602305579909417a6d71e3d24782c33ecaf9:6a6887b6377f3c1a009948c6d081cbda817b83e1221066c116584e7157f3010f",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        -0.24,
+        0,
+        0.41569218
+      ]
+    },
+    "sweet-apple-acres": {
+      "fingerprint": "bd1c63075cf1a85cff9f467e2e82dd795dbed0c489dbf86cc9687fe5b0ba7ad0:06eb5b874877c44baa7cae45d0433e13a8e1f8dd69bd4501303614d802c7ca66:116a5c2d45698e131e090aa23bf546f8de2ff02687711e60ae419fd317df65f2",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        -5.6563128e-09,
+        0,
+        0.54
+      ]
+    },
+    "friendship-school": {
+      "fingerprint": "edcd60caae338d0c58574ac354f330b7a07b15cbd28cb81b9fcaa4405e8526bf:ade3d9422a439816f696116171c765b33e20e4280c7a9ece3d47dfd8ce1fc45d:52e006147dd765e70da5428dbcae80a5a566e2dc88f0451ac66029f169a8d482",
+      "contentScale": 0.76,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        -5.6563128e-09,
+        0,
+        0.54
+      ]
+    },
+    "rainbow-house": {
+      "fingerprint": "e4179a793180fd1264e04b4d1563d2502413cb80e5ba696219787ba713f60dc3:7c6c8f70d1bf9552cb0df2ac328411d5f9b9bda25d7aa9b8de019065203cb5d1:72401fb8b031b83ebfbb903f8ad46de3de48ec01633dab370d0e2cdfa7ad83f2",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        -0.18368807,
+        0,
+        0.4434621
+      ]
+    },
+    "ponyville-market": {
+      "fingerprint": "f51f1d9d4c3f1fe6dc127bea1e5e1ae876ee631ff5b804efee9ff8fdcd1491e9:254e3de40afac30713fecee6c20aafd452c4a7857eea27e131c98a19cc01b967:481335ac67b3d16d9be5c33594165694ef62471107301375cfadc1143c764fa0",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        -0.13976207,
+        0,
+        0.5216
+      ]
+    },
+    "sugarcube": {
+      "fingerprint": "bbe08aeeb89623334cf45dd495d44cb0f92e7ed65e1ad2b4dabd1890e058bc16:e9ab81eb6bf6f07b8788eb4d9583d3582af1a2b6f219ecacd0f49a7b6b30d0e2",
+      "contentScale": 0.6,
+      "contentOffsetArt": [
+        -0.05000001,
+        0,
+        -0.086602546
+      ],
+      "anchorArt": [
+        0.07048419,
+        0,
+        0.5353803
+      ]
+    },
+    "ponyville-station": {
+      "fingerprint": "fcaaf6fe56bfb7eefde48893447035c498db1c27815e11b3ed44de78f6f8ee43:0d7abcbe286ce2375bda3c8cf38527f33595a193209bfb6237c54d8926a2eef2:cdb11e6aef8d2bd1cf23a028b07057cbcb8f478b26f9db0749cfae380e8bf596",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        -0.24,
+        0,
+        0.41569218
+      ]
+    },
+    "fashion-shop": {
+      "fingerprint": "26e847a7018e4b87ab8d52cb2974f90303c63bd2ec55feab1f0d838f0cdbb1f3:2445ad8922eb671c592657ba5d2263e0214ba8710158167801089404a0efd05a:85d6c2b5c416c1d9f4f60050c4cbd6819e0e6bee481a476867b0280020b70aba",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        0.24000002,
+        0,
+        0.41569218
+      ]
+    },
+    "fluttershy": {
+      "fingerprint": "8a805eb31cd1eefaf548a5098838fd1043d9396707bc659a286be70cc2375654:3c3acba1d667971ba55513aa9917d9b8a23de34776ecc15ec3fb5835e443282b:1d620e62df9bba5a79b18e8cdaba97e288f753a8c83d7d9fadd488d8e81e7ccc",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        -0.13776605,
+        0,
+        0.33259663
+      ]
+    },
+    "old-castle": {
+      "fingerprint": "990edf57887532e3eda17b636b6da2576f8063356ce301c51a5040174bb982ff:3395155736beb6aeeef7c8f8d5a62f3c220236bd46ef8093e5f241d04571f0fc:1a6bbb2f470624d92c8223b5c983eb95cce85ed1aef8b793763e14461686694a",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        1.5214018e-08,
+        0,
+        -0.36
+      ]
+    },
+    "zecora": {
+      "fingerprint": "7bdc80ab36636ac85025884b5ce73612c040a3729c539735780b6759c8c4fc4e:7560c589be0c80c25bedcaf688d556ebe5db0e8a8ae8e5f99b901ce6e690c56f:ab29b9f2316e9c4bde2c088e9815650a8e52544930e47f884ebe5cf7c417d302",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        0.18000004,
+        0,
+        0.31176916
+      ]
+    },
+    "harmony-tree": {
+      "fingerprint": "f4f5b3e192f61f3315dbe1a6ac1fe66cf94240b737a5f8842cd94d349cb96275:0f3b556dc35ae548ef6219a8f0e138d1eab4e0b06bdfc2d4b4394d367aa0a8d8:e080ddecffe61b21ef0e5d9e5f3bf93a702780646bf8f344171311dd9c70b5f5",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        0.028715797,
+        0,
+        0.21811788
+      ]
+    },
+    "yakyakistan": {
+      "fingerprint": "8d43a35dc2b0d203438eda9394ea6f9e1d3ed88856e3f67bfa4092b82c999b16:ce9eff2135059302d232513b0d1642bb756a5d434ab18f72a8530a608a87174e:1af38c8f1782da3d4bfd3981bd314f6d603caa9993faaeb17999e5de1172dde6",
+      "contentScale": 0.7,
+      "contentOffsetArt": [
+        -0.05000001,
+        0,
+        -0.086602546
+      ],
+      "anchorArt": [
+        -0.12423293,
+        0,
+        0.46364442
+      ]
+    },
+    "crystal-castle": {
+      "fingerprint": "a47bf0e05c72599d2072dd3a674f6c398d8a21c03e4414d4923cd765c3a5feab:1d5a29cb797dfd0557d5d1297f9750ee639f004e8e43365b81278b0d5c4ac802:3eb12051d81f45394b810135d0ad38b217d0b7d5ba8ca11a4887940077b7bd00",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        -5.0278324e-09,
+        0,
+        0.48
+      ]
+    },
+    "crystal-empire": {
+      "fingerprint": "c4065ce81d1a6f274a5a228fd1ae4fa2915957689a9a1476ce7643dee71b856d:eb1e8b81c9706410413f1a8964cb347a566d1b7120b3cd422d28bc1e5d2a59a6:8a17c109849444445fdaa544b34305288c3429f76714577dedf8893e5fae36cf",
+      "contentScale": 0.52,
+      "contentOffsetArt": [
+        -0.05000001,
+        0,
+        -0.086602546
+      ],
+      "anchorArt": [
+        0.27000004,
+        0,
+        0.46765375
+      ]
+    },
+    "crystal-stadium": {
+      "fingerprint": "aa3383b08ccf0aba9f421008a588f5bf89664726c35417045ee012f968fc1c4c:8bc6aee45d1eb0d7a2c72a3e0154502180d7fe69dc8f38791247ecca641baba9:1466b677db82bd2fe9a2a771a808487a402dda0e37e4b7a44f16271a861144a1",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        0,
+        0,
+        0
+      ]
+    },
+    "griffonstone": {
+      "fingerprint": "43cebef81217dcf718f63a690d567f67ca93e3f76d24916caf04e37d756a038d:e29ea693e3f2451c0ccf2072b0368699e3a66537eb3914fdb42fc0a107ca51f9:d2d55108fecc63a8596939ed4e7ab96347eba54f5d6234044b8cb4f084d09e9b",
+      "contentScale": 0.64,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        -5.6563128e-09,
+        0,
+        0.54
+      ]
+    },
+    "liberty-statue": {
+      "fingerprint": "22eaeb784fee575a9d111a5416a2966eb935587a2041b15d4d55140d002dec9a:14ab10bc64cdf8d3cb96e85845381797a5d165e33d98aed8aeec7106e3b21d43:d414d5473fc6725d6f5bc3382fcc7fb5326bbe741ae167fb8e7328d81434836c",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        0.24000002,
+        0,
+        0.41569218
+      ]
+    },
+    "manehattan-district": {
+      "fingerprint": "73387af2efe170572d30d33ef25a379e2d3586446815b801e3ee1eef023d1bdb:6df66deed902ae72ffcf42460d2bb86cda18eba7f1095130962e2d51e974c561:bd2d379fa155be9ee7a047b76d3ec9bfea8133a3a86d83be3a7b4ce71867980e",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        -0.0704841,
+        0,
+        0.53538024
+      ]
+    },
+    "canterlot-station": {
+      "fingerprint": "db9e5f4ef3faec7233b0130013cd28a63d088ad65cb36d1f8fcb7f91b72bce83:c3fbd74fa0656c4e70607192d23160073c4aab77c6223cfae372b0835db243fe:b41910ae4806116ab4e4e6b19be400c63ff811fd16feb5645f491efaf300a2de",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        0.1397623,
+        0,
+        0.5216
+      ]
+    },
+    "canterlot": {
+      "fingerprint": "653377b7ae41c95caca5ac0803e6327cb6f525bf2d41fc9149c0e54d03b71f63:f678662a5589399ffe6217957bb55ed78d43e659b0d72d58b34bcccbd9ff14e2:cb348e335a25a3f0d3e1700be2bf711566e9f9b58cccebeb580b13a127e8de33",
+      "contentScale": 0.88,
+      "contentOffsetArt": [
+        -0.05000001,
+        0,
+        -0.086602546
+      ],
+      "anchorArt": [
+        -0.13976207,
+        0,
+        0.5216
+      ]
+    },
+    "canterlot-market": {
+      "fingerprint": "cbacfe7db09f50d1b776fbe0123fbb9d1d5a19450e8a82a21dc902f6a5ae7891:58ddf40b24386db9195c11823d072129e28e0446c6d9a4c53da8e296bf3ec4d2:c8def88f724d18371214de00441e0a01b5535db4eb67c7698f293f4524d5da07",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        -0.18368807,
+        0,
+        0.4434621
+      ]
+    },
+    "tartarus": {
+      "fingerprint": "da552dca428f51a65268b68e5bcdeac41be79d1cd80806fe7e9f52ee6fd28db6:c0535006bac802ac397b8144313baeab5fccd0c12f3c95bac4e682e492e58a93:f96cb7fd9e33abc29cf705559b39f5a2dc2e3909fa167c3772eda80c38e0f083",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        -0.05000001,
+        0,
+        -0.086602546
+      ],
+      "anchorArt": [
+        0.27000004,
+        0,
+        0.46765375
+      ]
+    },
+    "baltimare": {
+      "fingerprint": "f746364904de8a01bf2718fd192c14b8a4b40c8d995d4f238b9e728bf39fbd9b:cb2fef425b315149c6c8f1ab511a0a7b6ac49b5e2ddc754e5c02c1bfa34df5e3:95408daa62d18617494e34cd4d0289f8e4874ef37801bc9b00a6f6873d92ed80",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        0.06265259,
+        0,
+        0.47589356
+      ]
+    },
+    "dragon-lands": {
+      "fingerprint": "91034434ecda669b5cb8812dcc00db354ba7fa39c93d0004f1327b659f2d8850:6b0e2aa55c04a79d37b5f2155b53ad5f73ca8d2d01d398aed5669d923fa68be2:2c2a3cf575e259affd354714a1d8f415108dba93bde6b03a045ff21018dd199a",
+      "contentScale": 0.76,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        -0.13976231,
+        0,
+        0.5216
+      ]
+    },
+    "hippogriff": {
+      "fingerprint": "7b0d301b24417b1f1769ab946f06ba18f738a91b851f2918215d891966911763:21e1a3d81277c9a715573f7b7bec4351913a2b85720b9b590d7776fb48299026:79064e25f2314758f312aafb3addaa1ba84f9d029767a7febd315d3de6781d59",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        0.07048419,
+        0,
+        0.5353803
+      ]
+    },
+    "appleloosa": {
+      "fingerprint": "87022a49986f16ca6af9bd4a0389ae596b39c257cfcfd20431d68aba7bd3e6ab:f5523e7c0da0558d9352a25c9633ed9d9bf4bf6832fd1afbad97d67bc04d11f1:056f671d5456e883103cccf6ad6919ad699afab06cb270f1f4d7e3a6bebad56f",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        -3.770875e-09,
+        0,
+        0.36
+      ]
+    },
+    "equality-town": {
+      "fingerprint": "6d31d7664a5084e4af27df6558adc4430478029606b911c7d1fba9660b7a28b2:943b3dc13221d0a5060c3b1167acf3ffaa6886db81f57538f987a86273472a3b:7c6b4939b8951e8bf483acdc3c832be178e0d83e89b82d1b0caeabe418156553",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        0,
+        0,
+        0
+      ]
+    },
+    "rainbow-market": {
+      "fingerprint": "d762284b98165d013e2e96408886d58168b529f37939a235403a6477275abb7e:8d43b52fd415aab6d78d6f53680b8e639078ac55f5502469a04656e954fa3666:8d889ebbd59ba26a350016956ff814e694fe44edc6738091f56bf26fb2670f06",
+      "contentScale": 0.52,
+      "contentOffsetArt": [
+        -0.05000001,
+        0,
+        -0.086602546
+      ],
+      "anchorArt": [
+        0.27000004,
+        0,
+        0.46765375
+      ]
+    },
+    "rainbow-falls": {
+      "fingerprint": "3d4f343a77e81b5de42bcbc9d8d002a088668437d64ad692b7bd1ec9976dea6a:b0e9a5fc5dd68539319da0b4f1bcbe6232656fb8f5b17e1155a243a1a26f3022:9e63ea70dd9bd361b834a927619f5548e2c882167e6434e644ba36e5ff2c93df",
+      "contentScale": 0.52,
+      "contentOffsetArt": [
+        0.1,
+        0,
+        5.4186042e-09
+      ],
+      "anchorArt": [
+        -0.54,
+        0,
+        -2.9260462e-08
+      ]
+    },
+    "las-pegasus": {
+      "fingerprint": "ed3a79a942b5ecbeacb969f32406f980a0d210e0c97405c1eec8b2832d5e12c5:5cac76853b8c7531670cb46cf212955cf6e7b56fc1c879a6ff3742b4d2512924:f6ca74057e61b8ef796c68719b318e1dc59072d3504eda8c9deeafda08fa4092",
+      "contentScale": 0.52,
+      "contentOffsetArt": [
+        -0.05000001,
+        0,
+        -0.086602546
+      ],
+      "anchorArt": [
+        -0.12423293,
+        0,
+        0.46364442
+      ]
+    },
+    "weather-factory": {
+      "fingerprint": "49f9a13bf645ee65f638c01515c224d9e732a9f1596b02ee218c861e41058fcf:a8096093a9c83ccbb6b8b7b4ce53db65bcc34ba147d400da36256f334e21baa7:1cb03665eeb0392967a934a299ec0f12ce78a1440dd03213e439ee8288432bd2",
+      "contentScale": 0.76,
+      "contentOffsetArt": [
+        -0.05000001,
+        0,
+        -0.086602546
+      ],
+      "anchorArt": [
+        0.07048419,
+        0,
+        0.5353803
+      ]
+    },
+    "cloudsdale": {
+      "fingerprint": "a76497564cc3c3c13fe13c0a7a1774c21623bd141b90a43be324b05bc034d334:cbfab36e458b5d47cffbf979428921786de09ad7a86bb0c985ba3aec7a44d8af:23db1844aaa146828493369b851740be63196f983e6bbc9ed405deb60a65d1b9",
+      "contentScale": 0.94,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        -5.6563128e-09,
+        0,
+        0.54
+      ]
+    },
+    "town-hall": {
+      "fingerprint": "52a899b690eb286078465c2029c60ae31510a9229703c5edfa2582761b15f797:e9ab81eb6bf6f07b8788eb4d9583d3582af1a2b6f219ecacd0f49a7b6b30d0e2",
+      "contentScale": 1,
+      "contentOffsetArt": [
+        0,
+        0,
+        0
+      ],
+      "anchorArt": [
+        0.7,
+        0,
+        0
+      ]
+    }
+  },
+  "cellAnchors": {
+    "A1": [
+      0,
+      0,
+      0
+    ],
+    "A3": [
+      0,
+      0,
+      0
+    ],
+    "A5": [
+      0,
+      0,
+      0
+    ],
+    "A8": [
+      0,
+      0,
+      0
+    ],
+    "A10": [
+      0,
+      0,
+      0
+    ],
+    "A11": [
+      0,
+      0,
+      0
+    ],
+    "A12": [
+      0,
+      0,
+      0
+    ],
+    "A14": [
+      0,
+      0,
+      0
+    ],
+    "A17": [
+      0,
+      0,
+      0
+    ],
+    "A19": [
+      0,
+      0,
+      0
+    ],
+    "B1": [
+      0,
+      0,
+      0
+    ],
+    "B2": [
+      0,
+      0,
+      0
+    ],
+    "B3": [
+      0,
+      0,
+      0
+    ],
+    "B4": [
+      0,
+      0,
+      0
+    ],
+    "B5": [
+      0,
+      0,
+      0
+    ],
+    "B6": [
+      0,
+      0,
+      0
+    ],
+    "B7": [
+      0,
+      0,
+      0
+    ],
+    "B8": [
+      0,
+      0,
+      0
+    ],
+    "B9": [
+      0,
+      0,
+      0
+    ],
+    "B10": [
+      0,
+      0,
+      0
+    ],
+    "B11": [
+      0,
+      0,
+      0
+    ],
+    "B12": [
+      0,
+      0,
+      0
+    ],
+    "B13": [
+      0,
+      0,
+      0
+    ],
+    "B14": [
+      0,
+      0,
+      0
+    ],
+    "B15": [
+      0,
+      0,
+      0
+    ],
+    "B17": [
+      0,
+      0,
+      0
+    ],
+    "B18": [
+      0,
+      0,
+      0
+    ],
+    "B20": [
+      0,
+      0,
+      0
+    ],
+    "B21": [
+      0,
+      0,
+      0
+    ],
+    "B23": [
+      0,
+      0,
+      0
+    ],
+    "B24": [
+      0,
+      0,
+      0
+    ],
+    "B25": [
+      0,
+      0,
+      0
+    ],
+    "B26": [
+      0,
+      0,
+      0
+    ],
+    "B27": [
+      0,
+      0,
+      0
+    ],
+    "B28": [
+      0,
+      0,
+      0
+    ],
+    "B29": [
+      0,
+      0,
+      0
+    ],
+    "B30": [
+      0,
+      0,
+      0
+    ],
+    "B31": [
+      0,
+      0,
+      0
+    ],
+    "B32": [
+      0,
+      0,
+      0
+    ],
+    "B33": [
+      0,
+      0,
+      0
+    ],
+    "C2": [
+      0,
+      0,
+      0
+    ],
+    "C3": [
+      0,
+      0,
+      0
+    ],
+    "C4": [
+      0,
+      0,
+      0
+    ],
+    "C6": [
+      0,
+      0,
+      0
+    ],
+    "C7": [
+      0,
+      0,
+      0
+    ],
+    "C8": [
+      0,
+      0,
+      0
+    ],
+    "C9": [
+      0,
+      0,
+      0
+    ],
+    "C11": [
+      0,
+      0,
+      0
+    ],
+    "C12": [
+      0,
+      0,
+      0
+    ],
+    "D1": [
+      0,
+      0,
+      0
+    ],
+    "D2": [
+      0,
+      0,
+      0
+    ],
+    "D3": [
+      0,
+      0,
+      0
+    ],
+    "D4": [
+      0,
+      0,
+      0
+    ],
+    "D5": [
+      0,
+      0,
+      0
+    ],
+    "E1": [
+      0,
+      0,
+      0
+    ],
+    "E2": [
+      0,
+      0,
+      0
+    ],
+    "E3": [
+      0,
+      0,
+      0
+    ],
+    "E4": [
+      0,
+      0,
+      0
+    ],
+    "E5": [
+      0,
+      0,
+      0
+    ],
+    "E6": [
+      0,
+      0,
+      0
+    ],
+    "E9": [
+      0,
+      0,
+      0
+    ],
+    "E10": [
+      0,
+      0,
+      0
+    ],
+    "F1": [
+      0,
+      0,
+      0
+    ],
+    "F2": [
+      0,
+      0,
+      0
+    ],
+    "F3": [
+      0,
+      0,
+      0
+    ],
+    "F6": [
+      0,
+      0,
+      0
+    ],
+    "F7": [
+      0,
+      0,
+      0
+    ],
+    "F8": [
+      0,
+      0,
+      0
+    ],
+    "F10": [
+      0,
+      0,
+      0
+    ],
+    "G2": [
+      0,
+      0,
+      0
+    ],
+    "G3": [
+      0,
+      0,
+      0
+    ],
+    "G4": [
+      0,
+      0,
+      0
+    ],
+    "G6": [
+      0,
+      0,
+      0
+    ],
+    "H1": [
+      0,
+      0,
+      0
+    ],
+    "H2": [
+      0,
+      0,
+      0
+    ],
+    "H3": [
+      0,
+      0,
+      0
+    ],
+    "H4": [
+      0,
+      0,
+      0
+    ],
+    "H5": [
+      0,
+      0,
+      0
+    ],
+    "H7": [
+      0,
+      0,
+      0
+    ],
+    "H8": [
+      0,
+      0,
+      0
+    ],
+    "I1": [
+      0,
+      0,
+      0
+    ],
+    "I2": [
+      0,
+      0,
+      0
+    ],
+    "I3": [
+      0,
+      0,
+      0
+    ],
+    "I4": [
+      0,
+      0,
+      0
+    ],
+    "I5": [
+      0,
+      0,
+      0
+    ],
+    "I6": [
+      0,
+      0,
+      0
+    ],
+    "J1": [
+      0,
+      0,
+      0
+    ],
+    "J2": [
+      0,
+      0,
+      0
+    ],
+    "J3": [
+      0,
+      0,
+      0
+    ],
+    "J5": [
+      0,
+      0,
+      0
+    ],
+    "J6": [
+      0,
+      0,
+      0
+    ],
+    "K2": [
+      0,
+      0,
+      0
+    ],
+    "K3": [
+      0,
+      0,
+      0
+    ],
+    "K4": [
+      0,
+      0,
+      0
+    ],
+    "K5": [
+      0,
+      0,
+      0
+    ],
+    "K6": [
+      0,
+      0,
+      0
+    ],
+    "K7": [
+      0,
+      0,
+      0
+    ],
+    "K10": [
+      0,
+      0,
+      0
+    ],
+    "L1": [
+      0,
+      0,
+      0
+    ],
+    "L3": [
+      0,
+      0,
+      0
+    ],
+    "L4": [
+      0,
+      0,
+      0
+    ],
+    "L5": [
+      0,
+      0,
+      0
+    ],
+    "L6": [
+      0,
+      0,
+      0
+    ],
+    "L9": [
+      0,
+      0,
+      0
+    ],
+    "L10": [
+      0,
+      0,
+      0
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/BG006/part01.glb" id="part01"]
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/BG006/part02.glb" id="part02"]
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/BG006/part03.glb" id="part03"]
+
+[node name="EnvironmentAsset" type="Node3D"]
+
+[node name="part01" parent="." instance=ExtResource("part01")]
+
+[node name="part02" parent="." instance=ExtResource("part02")]
+
+[node name="part03" parent="." instance=ExtResource("part03")]

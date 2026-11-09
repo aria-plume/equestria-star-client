@@ -1,0 +1,603 @@
+{
+  "version": 1,
+  "boardTerrainMappings": {
+    "A": "grass-light",
+    "B": "grass-dark",
+    "C": "crystal-ground",
+    "D": "snow",
+    "E": "grass-light",
+    "F": "stone",
+    "G": "snow",
+    "H": "stone",
+    "I": "sand",
+    "J": "sand",
+    "K": "grass-light",
+    "L": "grass-dark"
+  },
+  "entries": [
+    {
+      "assetId": "appleloosa",
+      "displayName": "苹果鲁萨",
+      "aliases": [
+        "阿普鲁萨"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/appleloosa/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "baltimare",
+      "displayName": "巴尔的马",
+      "aliases": [
+        "巴尔的摩"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/baltimare/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "canterlot",
+      "displayName": "皇城",
+      "aliases": [
+        "坎特洛特",
+        "中心城"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/canterlot/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "canterlot-market",
+      "displayName": "商业街",
+      "aliases": [
+        "中心城商业街"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/canterlot-market/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "canterlot-station",
+      "displayName": "中心城火车站",
+      "aliases": [
+        "坎特洛特火车站"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/canterlot-station/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "cloudsdale",
+      "displayName": "云中城",
+      "aliases": [
+        "克劳兹代尔"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/cloudsdale/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "crystal-castle",
+      "displayName": "水晶城堡",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/crystal-castle/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "crystal-empire",
+      "displayName": "水晶帝国",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/crystal-empire/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "crystal-stadium",
+      "displayName": "运动场",
+      "aliases": [
+        "水晶运动场"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/crystal-stadium/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "dragon-lands",
+      "displayName": "巨龙之地",
+      "aliases": [
+        "龙之地"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/dragon-lands/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "equality-town",
+      "displayName": "平等镇",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/equality-town/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "everfree",
+      "displayName": "无尽之森",
+      "aliases": [
+        "永恒自由森林"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/everfree/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "fashion-shop",
+      "displayName": "时装店",
+      "aliases": [
+        "旋转木马精品屋"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/fashion-shop/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "fluttershy",
+      "displayName": "小蝶家",
+      "aliases": [
+        "柔柔家"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/fluttershy/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "friendship-school",
+      "displayName": "友谊学院",
+      "aliases": [
+        "友谊学校"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/friendship-school/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "griffonstone",
+      "displayName": "狮鹫岩",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/griffonstone/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "harmony-tree",
+      "displayName": "韵律之树",
+      "aliases": [
+        "和谐之树"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/harmony-tree/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "hippogriff",
+      "displayName": "骏鹰王国",
+      "aliases": [
+        "鹰马王国"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/hippogriff/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "las-pegasus",
+      "displayName": "天马维加斯",
+      "aliases": [
+        "拉斯天马斯"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/las-pegasus/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "liberty-statue",
+      "displayName": "马哈顿火车站",
+      "aliases": [
+        "曼哈顿火车站"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/liberty-statue/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "manehattan-district",
+      "displayName": "马哈顿",
+      "aliases": [
+        "曼哈顿"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/manehattan-district/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "old-castle",
+      "displayName": "旧城堡",
+      "aliases": [
+        "双公主旧城堡"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/old-castle/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "ponyville-market",
+      "displayName": "集市",
+      "aliases": [
+        "小马谷集市"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/ponyville-market/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "ponyville-station",
+      "displayName": "小马谷火车站",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/ponyville-station/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "rainbow-falls",
+      "displayName": "彩虹瀑布",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/rainbow-falls/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "rainbow-house",
+      "displayName": "云宝家",
+      "aliases": [
+        "彩虹黛西家"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/rainbow-house/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "rainbow-market",
+      "displayName": "彩虹瀑布镇",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/rainbow-market/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "sugarcube",
+      "displayName": "方糖屋",
+      "aliases": [
+        "糖块屋"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/sugarcube/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "sweet-apple-acres",
+      "displayName": "甜苹果园",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/sweet-apple-acres/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "tartarus",
+      "displayName": "地狱",
+      "aliases": [
+        "塔尔塔罗斯"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/tartarus/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "town-hall",
+      "displayName": "市政厅",
+      "aliases": [
+        "小马谷市政厅"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/town-hall/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "twilight-castle",
+      "displayName": "暮光城堡",
+      "aliases": [
+        "友谊城堡"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/twilight-castle/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "weather-factory",
+      "displayName": "天气工厂",
+      "aliases": [
+        "彩虹工厂"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/weather-factory/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "yakyakistan",
+      "displayName": "耗耗斯坦",
+      "aliases": [
+        "牦牦斯坦"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/yakyakistan/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "zecora",
+      "displayName": "泽可拉小屋",
+      "aliases": [
+        "可拉小屋"
+      ],
+      "scenePath": "res://scenes/game/map/visuals/origami/zecora/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "crystal-market",
+      "displayName": "水晶集市",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/crystal-market/OrigamiCellVisual.tscn",
+      "enabled": false,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "hotel-candidate",
+      "displayName": "高档场所",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/hotel-candidate/OrigamiCellVisual.tscn",
+      "enabled": false,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "banquet-candidate",
+      "displayName": "宴会厅",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/banquet-candidate/OrigamiCellVisual.tscn",
+      "enabled": false,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "crystal-ground",
+      "displayName": "水晶地面",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/crystal-ground/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "grass-dark",
+      "displayName": "深色草地",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/grass-dark/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "grass-light",
+      "displayName": "浅色草地",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/grass-light/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "sand",
+      "displayName": "沙地",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/sand/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "snow",
+      "displayName": "雪地",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/snow/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    },
+    {
+      "assetId": "stone",
+      "displayName": "石地",
+      "aliases": [],
+      "scenePath": "res://scenes/game/map/visuals/origami/stone/OrigamiCellVisual.tscn",
+      "enabled": true,
+      "rotationYDegrees": 30,
+      "scale": 1,
+      "tokenOffsetX": 0,
+      "tokenOffsetY": 0,
+      "tokenOffsetZ": 0
+    }
+  ]
+}
+

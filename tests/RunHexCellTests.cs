@@ -261,10 +261,17 @@ public partial class RunHexCellTests : SceneTree
 
         var originalCollision = cell.InteractionShape;
         var originalHighlight = highlightMesh.Mesh;
+        cell.CustomVisualScale = 0.8f;
+        cell.CustomVisualRotationYDegrees = 30.0f;
+        cell.CustomVisualOffset = new Vector3(0.1f, 0.0f, -0.2f);
         cell.ConfigureGeometry(1.35f, 0.3f, 0.06f);
         AssertTrue(ReferenceEquals(customMeshInstance.Mesh, customMesh), "ConfigureGeometry 不得覆盖 CustomMesh");
         AssertFalse(ReferenceEquals(cell.InteractionShape, originalCollision), "自定义模式下仍应更新碰撞体");
         AssertFalse(ReferenceEquals(highlightMesh.Mesh, originalHighlight), "自定义模式下仍应更新 HighlightMesh");
+        AssertApprox(customMeshInstance.Scale.X, 1.08f, 0.001f, "自定义视觉缩放应随逻辑半径变化");
+        AssertApprox(customMeshInstance.RotationDegrees.Y, 30.0f, 0.001f, "自定义视觉应支持独立 Y 轴旋转");
+        AssertApprox(customMeshInstance.Position.X, 0.135f, 0.001f, "自定义视觉偏移应按逻辑半径缩放");
+        AssertApprox(customMeshInstance.Position.Z, -0.27f, 0.001f, "自定义视觉偏移不得改变逻辑根节点");
 
         var clickedId = 0L;
         cell.CellClicked += id => clickedId = id;
@@ -287,6 +294,8 @@ public partial class RunHexCellTests : SceneTree
         AssertEqual(clickedId, 301L, "自定义素材模式的点击应携带绑定数据");
 
         var firstScene = CreatePackedVisual("FirstCustomVisual");
+        var materialOverride = new StandardMaterial3D { AlbedoColor = Colors.Coral };
+        cell.CustomVisualMaterialOverride = materialOverride;
         cell.CustomVisualScene = firstScene;
         AssertTrue(cell.UsesCustomVisual, "设置 CustomVisualScene 后应保持自定义视觉模式");
         AssertFalse(baseMesh.Visible, "CustomVisualScene 模式应隐藏默认 BaseMesh");
@@ -294,6 +303,10 @@ public partial class RunHexCellTests : SceneTree
         AssertEqual(customVisualRoot.GetChildCount(), 1, "CustomVisualScene 应实例化到 CustomVisualRoot");
         var oldInstance = customVisualRoot.GetChild(0);
         AssertEqual(oldInstance.Name.ToString(), "FirstCustomVisual", "应实例化指定的 CustomVisualScene");
+        AssertTrue(
+            ReferenceEquals(oldInstance.GetNode<MeshInstance3D>("Visual").MaterialOverride, materialOverride),
+            "CustomVisualScene 应对实例网格应用可选材质覆盖"
+        );
 
         var secondScene = CreatePackedVisual("SecondCustomVisual");
         cell.CustomVisualScene = secondScene;
@@ -320,6 +333,9 @@ public partial class RunHexCellTests : SceneTree
     private PackedScene CreatePackedVisual(string rootName)
     {
         var source = new Node3D { Name = rootName };
+        var visual = new MeshInstance3D { Name = "Visual", Mesh = new BoxMesh() };
+        source.AddChild(visual);
+        visual.Owner = source;
         var packedScene = new PackedScene();
         var result = packedScene.Pack(source);
         source.Free();

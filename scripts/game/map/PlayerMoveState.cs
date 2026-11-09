@@ -7,3 +7,10 @@ public enum PlayerMoveState
     SelectingTarget,
     SubmittingMove
 }
+
+public enum PlayerMoveMode
+{
+    None,
+    Normal,
+    Railway
+}

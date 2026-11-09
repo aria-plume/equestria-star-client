@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/game/map/visual_runtime/MapVisualRuntime.cs" id="1_runtime"]
+[ext_resource type="Script" path="res://scripts/game/map/visual_runtime/PaperAtmosphere.cs" id="2_atmosphere"]
+
+[node name="MapVisualRuntime" type="Node"]
+script = ExtResource("1_runtime")
+
+[node name="PaperAtmosphere" type="CanvasLayer" parent="."]
+layer = -10
+script = ExtResource("2_atmosphere")

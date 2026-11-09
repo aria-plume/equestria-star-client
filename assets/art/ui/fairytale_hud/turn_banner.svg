@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="86" viewBox="0 0 480 86">
+  <defs>
+    <linearGradient id="cream" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff8de"/><stop offset="1" stop-color="#ffeccb"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff2a0"/><stop offset=".38" stop-color="#f9ce67"/><stop offset="1" stop-color="#dfa041"/>
+    </linearGradient>
+    <linearGradient id="lilac" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#e8c5f6"/><stop offset="1" stop-color="#b47bcf"/>
+    </linearGradient>
+  </defs>
+  <path d="M46 28 8 39 33 56 16 82l87-10-11-40zm388 0 38 11-25 17 17 26-87-10 11-40z" fill="url(#lilac)" stroke="url(#gold)" stroke-width="2" stroke-linejoin="round"/>
+  <path d="m43 35 44-2-6 42-31-8zm394 0-44-2 6 42 31-8z" fill="#a76cb5"/>
+  <path d="M35 23C37 0 443 0 445 23l-10 53C365 58 115 58 45 76Z" fill="#60354a" opacity=".16"/>
+  <path d="M35 19C37-2 443-2 445 19l-10 51C365 52 115 52 45 70Z" fill="url(#cream)" stroke="url(#gold)" stroke-width="2.5"/>
+  <path d="M83 24 Q84.5 30 91 32 Q84.5 34 83 40 Q81.5 34 75 32 Q81.5 30 83 24Z M104 36 Q105.5 40 110 42 Q105.5 44 104 48 Q102.5 44 98 42 Q102.5 40 104 36Z M376 36 Q377.5 40 382 42 Q377.5 44 376 48 Q374.5 44 370 42 Q374.5 40 376 36Z M397 24 Q398.5 30 405 32 Q398.5 34 397 40 Q395.5 34 389 32 Q395.5 30 397 24Z" fill="#bc85cf"/>
+</svg>

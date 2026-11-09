@@ -1,0 +1,372 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/game/ui/CardViewerOverlay.cs" id="1_overlay"]
+[ext_resource type="Theme" path="res://assets/theme/client_theme.tres" id="2_theme"]
+[ext_resource type="PackedScene" path="res://scenes/game/ui/ReadOnlyQuestCard.tscn" id="3_personal_card"]
+[ext_resource type="PackedScene" path="res://scenes/game/ui/InventoryItemCard.tscn" id="4_item_card"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_loading"]
+bg_color = Color(0.945, 0.961, 0.968, 0.98)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.55, 0.68, 0.72, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.015, 0.025, 0.03, 0.45)
+shadow_size = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_card"]
+bg_color = Color(0.96, 0.972, 0.976, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.78, 0.84, 0.86, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0.01, 0.02, 0.025, 0.5)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_error"]
+bg_color = Color(0.16, 0.075, 0.075, 0.98)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.78, 0.34, 0.34, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.01, 0.02, 0.025, 0.5)
+shadow_size = 16
+
+[node name="CardViewerOverlay" type="CanvasLayer"]
+layer = 40
+script = ExtResource("1_overlay")
+read_only_quest_card_scene = ExtResource("3_personal_card")
+inventory_item_card_scene = ExtResource("4_item_card")
+
+[node name="OverlayRoot" type="Control" parent="." groups=["blocks_map_input"]]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+theme = ExtResource("2_theme")
+
+[node name="Backdrop" type="ColorRect" parent="OverlayRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.01, 0.018, 0.022, 0.78)
+
+[node name="Center" type="CenterContainer" parent="OverlayRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = 42.0
+offset_right = -60.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Layout" type="VBoxContainer" parent="OverlayRoot/Center"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="OverlayRoot/Center/Layout"]
+layout_mode = 2
+mouse_filter = 2
+text = "公共任务板"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.95, 0.97, 0.98, 1)
+theme_override_font_sizes/font_size = 28
+
+[node name="HintLabel" type="Label" parent="OverlayRoot/Center/Layout"]
+layout_mode = 2
+mouse_filter = 2
+text = "只读查看 · 点击重试按钮以外的任意位置关闭"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.72, 0.8, 0.83, 1)
+theme_override_font_sizes/font_size = 15
+
+[node name="LoadingState" type="CenterContainer" parent="OverlayRoot/Center/Layout"]
+custom_minimum_size = Vector2(520, 180)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LoadingPanel" type="PanelContainer" parent="OverlayRoot/Center/Layout/LoadingState"]
+custom_minimum_size = Vector2(420, 112)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_loading")
+
+[node name="LoadingLabel" type="Label" parent="OverlayRoot/Center/Layout/LoadingState/LoadingPanel"]
+layout_mode = 2
+mouse_filter = 2
+text = "正在读取公共卡牌……"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_colors/font_color = Color(0.15, 0.27, 0.31, 1)
+theme_override_font_sizes/font_size = 19
+
+[node name="ContentState" type="VBoxContainer" parent="OverlayRoot/Center/Layout"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="EmptyLabel" type="Label" parent="OverlayRoot/Center/Layout/ContentState"]
+visible = false
+custom_minimum_size = Vector2(720, 220)
+layout_mode = 2
+mouse_filter = 2
+text = "当前暂无卡牌。"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_colors/font_color = Color(0.9, 0.94, 0.95, 1)
+theme_override_font_sizes/font_size = 20
+
+[node name="CardRow" type="HBoxContainer" parent="OverlayRoot/Center/Layout/ContentState"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+theme_override_constants/separation = 24
+
+[node name="PersonalQuestScroll" type="ScrollContainer" parent="OverlayRoot/Center/Layout/ContentState" groups=["blocks_map_input"]]
+visible = false
+custom_minimum_size = Vector2(1600, 380)
+layout_mode = 2
+mouse_filter = 0
+horizontal_scroll_mode = 1
+vertical_scroll_mode = 0
+scroll_deadzone = 8
+
+[node name="PersonalQuestRow" type="HBoxContainer" parent="OverlayRoot/Center/Layout/ContentState/PersonalQuestScroll"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 24
+
+[node name="CardSlot1" type="VBoxContainer" parent="OverlayRoot/Center/Layout/ContentState/CardRow"]
+custom_minimum_size = Vector2(520, 408)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="CardAspect" type="AspectRatioContainer" parent="OverlayRoot/Center/Layout/ContentState/CardRow/CardSlot1"]
+custom_minimum_size = Vector2(520, 350)
+layout_mode = 2
+mouse_filter = 2
+ratio = 1.49
+stretch_mode = 2
+
+[node name="CardTexture" type="TextureRect" parent="OverlayRoot/Center/Layout/ContentState/CardRow/CardSlot1/CardAspect"]
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ActionArea" type="PanelContainer" parent="OverlayRoot/Center/Layout/ContentState/CardRow/CardSlot1" groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="ActionButton" type="Button" parent="OverlayRoot/Center/Layout/ContentState/CardRow/CardSlot1/ActionArea"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+text = "接取"
+
+[node name="CardSlot2" type="VBoxContainer" parent="OverlayRoot/Center/Layout/ContentState/CardRow"]
+custom_minimum_size = Vector2(520, 408)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="CardAspect" type="AspectRatioContainer" parent="OverlayRoot/Center/Layout/ContentState/CardRow/CardSlot2"]
+custom_minimum_size = Vector2(520, 350)
+layout_mode = 2
+mouse_filter = 2
+ratio = 1.49
+stretch_mode = 2
+
+[node name="CardTexture" type="TextureRect" parent="OverlayRoot/Center/Layout/ContentState/CardRow/CardSlot2/CardAspect"]
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ActionArea" type="PanelContainer" parent="OverlayRoot/Center/Layout/ContentState/CardRow/CardSlot2" groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="ActionButton" type="Button" parent="OverlayRoot/Center/Layout/ContentState/CardRow/CardSlot2/ActionArea"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+text = "接取"
+
+[node name="CardSlot3" type="VBoxContainer" parent="OverlayRoot/Center/Layout/ContentState/CardRow"]
+custom_minimum_size = Vector2(520, 408)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="CardAspect" type="AspectRatioContainer" parent="OverlayRoot/Center/Layout/ContentState/CardRow/CardSlot3"]
+custom_minimum_size = Vector2(520, 350)
+layout_mode = 2
+mouse_filter = 2
+ratio = 1.49
+stretch_mode = 2
+
+[node name="CardTexture" type="TextureRect" parent="OverlayRoot/Center/Layout/ContentState/CardRow/CardSlot3/CardAspect"]
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ActionArea" type="PanelContainer" parent="OverlayRoot/Center/Layout/ContentState/CardRow/CardSlot3" groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="ActionButton" type="Button" parent="OverlayRoot/Center/Layout/ContentState/CardRow/CardSlot3/ActionArea"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+text = "接取"
+
+[node name="ErrorState" type="CenterContainer" parent="OverlayRoot/Center/Layout"]
+visible = false
+custom_minimum_size = Vector2(760, 220)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ErrorPanel" type="PanelContainer" parent="OverlayRoot/Center/Layout/ErrorState"]
+custom_minimum_size = Vector2(640, 150)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_error")
+
+[node name="ErrorMargin" type="MarginContainer" parent="OverlayRoot/Center/Layout/ErrorState/ErrorPanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="ErrorContent" type="VBoxContainer" parent="OverlayRoot/Center/Layout/ErrorState/ErrorPanel/ErrorMargin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="ErrorLabel" type="Label" parent="OverlayRoot/Center/Layout/ErrorState/ErrorPanel/ErrorMargin/ErrorContent"]
+layout_mode = 2
+mouse_filter = 2
+text = "卡牌数据加载失败，请重试。"
+horizontal_alignment = 1
+autowrap_mode = 3
+theme_override_colors/font_color = Color(1, 0.84, 0.84, 1)
+theme_override_font_sizes/font_size = 18
+
+[node name="RetryButton" type="Button" parent="OverlayRoot/Center/Layout/ErrorState/ErrorPanel/ErrorMargin/ErrorContent"]
+custom_minimum_size = Vector2(160, 46)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "重试"
+
+[node name="DecisionLayer" type="Control" parent="OverlayRoot" groups=["blocks_map_input"]]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+z_index = 100
+
+[node name="Shade" type="ColorRect" parent="OverlayRoot/DecisionLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.005, 0.01, 0.014, 0.78)
+
+[node name="Center" type="CenterContainer" parent="OverlayRoot/DecisionLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="OverlayRoot/DecisionLayer/Center" groups=["blocks_map_input"]]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+mouse_filter = 0
+theme_override_styles/panel = SubResource("StyleBox_loading")
+
+[node name="Margin" type="MarginContainer" parent="OverlayRoot/DecisionLayer/Center/Panel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
+
+[node name="Content" type="VBoxContainer" parent="OverlayRoot/DecisionLayer/Center/Panel/Margin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="Message" type="Label" parent="OverlayRoot/DecisionLayer/Center/Panel/Margin/Content"]
+layout_mode = 2
+mouse_filter = 2
+text = "确定执行该操作吗？"
+horizontal_alignment = 1
+autowrap_mode = 3
+theme_override_colors/font_color = Color(0.12, 0.23, 0.27, 1)
+theme_override_font_sizes/font_size = 19
+
+[node name="ReplacementOptions" type="VBoxContainer" parent="OverlayRoot/DecisionLayer/Center/Panel/Margin/Content"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Actions" type="HBoxContainer" parent="OverlayRoot/DecisionLayer/Center/Panel/Margin/Content"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="ConfirmButton" type="Button" parent="OverlayRoot/DecisionLayer/Center/Panel/Margin/Content/Actions"]
+custom_minimum_size = Vector2(160, 46)
+layout_mode = 2
+text = "确认"
+
+[node name="CancelButton" type="Button" parent="OverlayRoot/DecisionLayer/Center/Panel/Margin/Content/Actions"]
+custom_minimum_size = Vector2(160, 46)
+layout_mode = 2
+text = "取消"

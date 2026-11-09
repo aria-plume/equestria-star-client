@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "status": "image-traced-draft-not-station-port-verified",
+  "source": "Original paper board: references_25_landmarks/MLP_25_Landmarks_Modeling_Pack/03_地图与风格/原版棋盘_位置与区域参考.png",
+  "scope": "Offline concept preview only. Waypoints traced through the visible white routes on the paper board. Not server path data, surveyed station exits or a finished railway layout.",
+  "routes": [
+    ["C10","C4","C3","C2","C1"],
+    ["C10","C12","L4","L3","L6","L8"],
+    ["E8","E5","E1","C11","C10"],
+    ["E8","E5","E1","C11","D1"],
+    ["F4","E10","E9","E8"],
+    ["A15","A11","A12","E10","F4"],
+    ["A15","A14","A17","B4","B3","K10","K9"],
+    ["L8","L10","K10","K9"],
+    ["K9","J2","J4"],
+    ["J4","J6","B24","I1"],
+    ["I1","I2","I3","I4","H1","H2","H3","H4"],
+    ["H4","B33","G6","G5"],
+    ["F4","F8","G2","G5"]
+  ]
+}

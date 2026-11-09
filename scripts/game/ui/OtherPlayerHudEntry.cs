@@ -21,8 +21,8 @@ public partial class OtherPlayerHudEntry : PanelContainer
 
     public override void _Ready()
     {
-        _turnOrderLabel = GetNode<Label>("Margin/Row/TurnOrderLabel");
-        _nicknameLabel = GetNode<Label>("Margin/Row/NicknameLabel");
+        _turnOrderLabel = GetNode<Label>("Content/TurnOrderBadge/TurnOrderLabel");
+        _nicknameLabel = GetNode<Label>("Content/NicknameLabel");
         MouseEntered += OnMouseEntered;
         MouseExited += OnMouseExited;
 

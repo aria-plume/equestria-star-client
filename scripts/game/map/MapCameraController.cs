@@ -239,6 +239,14 @@ public partial class MapCameraController : Node3D
         ClampRigPosition();
     }
 
+    /// <summary>地图卸载时终止输入手势并禁止旧边界继续响应。</summary>
+    public void ClearMap()
+    {
+        CancelPointerGesture();
+        _hasMap = false;
+        _zoomAnchorScreen = null;
+    }
+
     public void ResetToInitialView()
     {
         if (!_hasMap)

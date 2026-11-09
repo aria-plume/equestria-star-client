@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using EquestriaStar.Api;
 using EquestriaStar.Game.Map;
@@ -21,12 +23,26 @@ public partial class RunGameMapTests : SceneTree
 
     private async Task RunTestsAsync()
     {
-        TestCoordinateConversion();
-        TestLayoutConfiguration();
-        TestValidationFailures();
-        TestMapInputBlockerTraversal();
-        await TestBuilderAndCameraAsync();
-        await TestErrorAndRetryAsync();
+        try
+        {
+            GD.Print("[GameMapTests] 基础纯逻辑检查");
+            TestCoordinateConversion();
+            TestLayoutConfiguration();
+            TestValidationFailures();
+            TestStaticVisualContract();
+            TestMapInputBlockerTraversal();
+            GD.Print("[GameMapTests] 构建器与摄像机检查");
+            await TestBuilderAndCameraAsync();
+            GD.Print("[GameMapTests] 折纸美术集成检查");
+            await TestOrigamiVisualIntegrationAsync();
+            GD.Print("[GameMapTests] 错误与重试检查");
+            await TestErrorAndRetryAsync();
+        }
+        catch (Exception exception)
+        {
+            _failures.Add($"测试执行异常：{exception}");
+        }
+
         Finish();
     }
 
@@ -78,6 +94,10 @@ public partial class RunGameMapTests : SceneTree
         var missingEdgeCell = CreateValidMap();
         missingEdgeCell.Edges![0].ToCellId = 9999999;
         AssertInvalidContains(missingEdgeCell, "不存在的格子", "边引用未知格子必须被拒绝");
+
+        var duplicateCode = CreateValidMap();
+        duplicateCode.Cells![1].CellCode = duplicateCode.Cells[0].CellCode;
+        AssertInvalidContains(duplicateCode, "重复", "重复 cellCode 必须被拒绝");
     }
 
     private void TestMapInputBlockerTraversal()
@@ -101,6 +121,60 @@ public partial class RunGameMapTests : SceneTree
         layout.QueueFree();
     }
 
+    private void TestStaticVisualContract()
+    {
+        var valid = OfficialMapStaticVisualLoader.Load(CreateValidMap());
+        AssertTrue(valid.Ok && valid.Instance != null && valid.Contract != null,
+            $"正式 PCK 与服务端地图夹具应满足静态契约：{valid.Error}");
+        if (valid.Contract != null)
+        {
+            AssertEqual(valid.Contract.Anchors.Count, 138, "静态契约必须包含 138 个唯一锚点");
+            AssertEqual(valid.Contract.StaticVisualCellCount, 138, "静态契约必须包含 138 个视觉格");
+            AssertEqual(valid.Contract.Anchors["A10"].Q, 1, "A10 锚点 q 必须为 1");
+            AssertEqual(valid.Contract.Anchors["A10"].R, 5, "A10 锚点 r 必须为 5");
+            AssertEqual(valid.Contract.Anchors["B24"].Q, -6, "B24 锚点 q 必须为 -6");
+            AssertEqual(valid.Contract.Anchors["B24"].R, 10, "B24 锚点 r 必须为 10");
+            AssertEqual(valid.Contract.Anchors["I1"].Q, -6, "I1 锚点 q 必须为 -6");
+            AssertEqual(valid.Contract.Anchors["I1"].R, 11, "I1 锚点 r 必须为 11");
+        }
+        valid.Instance?.Free();
+
+        var wrongMapId = CreateValidMap();
+        wrongMapId.MapId = 2;
+        var wrongMapIdResult = OfficialMapStaticVisualLoader.Load(wrongMapId);
+        AssertFalse(wrongMapIdResult.Ok, "mapId 不匹配时必须硬失败");
+
+        var wrongCodeSet = CreateValidMap();
+        var ordinary = wrongCodeSet.Cells!.First(cell => cell.CellCode == "A1");
+        ordinary.CellCode = "A99";
+        var wrongCodeResult = OfficialMapStaticVisualLoader.Load(wrongCodeSet);
+        AssertFalse(wrongCodeResult.Ok && wrongCodeResult.Instance != null, "cellCode 集合不一致时必须硬失败");
+
+        var missingCell = CreateValidMap();
+        missingCell.Cells!.RemoveAt(0);
+        AssertFalse(OfficialMapStaticVisualLoader.Load(missingCell).Ok, "服务端缺少格子时必须硬失败");
+
+        var extraCell = CreateValidMap();
+        extraCell.Cells!.Add(new MapCellDto
+        {
+            CellId = 999999,
+            CellCode = "A999",
+            BoardCode = "A",
+            CellName = "额外格子",
+            CellNameText = "额外格子",
+            Q = 999,
+            R = 999,
+            InteractionTags = []
+        });
+        AssertFalse(OfficialMapStaticVisualLoader.Load(extraCell).Ok, "服务端多出格子时必须硬失败");
+
+        var wrongQr = CreateValidMap();
+        wrongQr.Cells!.First(cell => cell.CellCode == "A10").Q = 2;
+        var wrongQrResult = OfficialMapStaticVisualLoader.Load(wrongQr);
+        AssertFalse(wrongQrResult.Ok, "服务端 QR 与锚点不一致时必须硬失败");
+        AssertEqual(OfficialMapStaticVisualLoader.MountCount, 1, "静态 PCK 在进程内只能挂载一次");
+    }
+
     private async Task TestBuilderAndCameraAsync()
     {
         var cellScene = GD.Load<PackedScene>("res://scenes/game/map/HexCell3D.tscn");
@@ -113,7 +187,7 @@ public partial class RunGameMapTests : SceneTree
         var mapRoot = new Node3D { Name = "TestMapRoot" };
         Root.AddChild(mapRoot);
         var builder = new GameMapBuilder();
-        var map = CreateValidMap();
+        var map = CreateGenericBuilderMap();
         var firstBuild = builder.Build(map, mapRoot, cellScene, 0.55f, 0.16f, 0.035f, true);
         AssertTrue(firstBuild.Ok, $"有效地图应成功构建：{firstBuild.Error}");
         AssertEqual(firstBuild.CellCount, 138, "构建器应生成全部 138 个格子");
@@ -135,20 +209,21 @@ public partial class RunGameMapTests : SceneTree
 
         var aCell = builder.CellsByCode["A10"];
         var bCell = builder.CellsByCode["B24"];
-        var aMaterial = aCell.GetNode<MeshInstance3D>("VisualRoot/BaseMesh").GetSurfaceOverrideMaterial(0);
-        var bMaterial = bCell.GetNode<MeshInstance3D>("VisualRoot/BaseMesh").GetSurfaceOverrideMaterial(0);
+        var aMaterial = aCell.CustomVisualMaterialOverride;
+        var bMaterial = bCell.CustomVisualMaterialOverride;
+        AssertTrue(aMaterial != null && bMaterial != null, "普通格应使用板块色通用地形材质");
         AssertFalse(ReferenceEquals(aMaterial, bMaterial), "A/B 格子应使用不同的板块材质");
         aCell.SetHovered(true);
         aCell.SetHovered(false);
         AssertEqual(aCell.VisualState, HexCellVisualState.Normal, "悬停结束后应恢复 Normal 状态");
         AssertTrue(
-            ReferenceEquals(aMaterial, aCell.GetNode<MeshInstance3D>("VisualRoot/BaseMesh").GetSurfaceOverrideMaterial(0)),
+            ReferenceEquals(aMaterial, aCell.CustomVisualMaterialOverride),
             "状态高亮结束后应恢复原板块材质"
         );
 
         var oldGeneratedRoot = mapRoot.GetChild(0);
         var oldCell = aCell;
-        var secondBuild = builder.Build(CreateValidMap(), mapRoot, cellScene, 0.55f, 0.16f, 0.035f, false);
+        var secondBuild = builder.Build(CreateGenericBuilderMap(), mapRoot, cellScene, 0.55f, 0.16f, 0.035f, false);
         AssertTrue(secondBuild.Ok, "重复加载有效地图应成功");
         AssertEqual(mapRoot.GetChildCount(), 1, "重复加载后 MapRoot 只能保留一个生成根节点");
         AssertFalse(ReferenceEquals(mapRoot.GetChild(0), oldGeneratedRoot), "重复加载应替换旧生成根节点");
@@ -200,15 +275,208 @@ public partial class RunGameMapTests : SceneTree
 
         AssertFalse(scene.ErrorVisible, "重试成功后应隐藏错误状态");
         AssertEqual(scene.GeneratedCellCount, 138, "重试成功后应生成完整地图");
+        AssertTrue(scene.IsUsingStaticVisual, "正式场景必须使用静态 PCK 视觉");
+        AssertEqual(scene.StaticVisualCellCount, 138, "静态视觉必须包含 138 个格子");
+        AssertEqual(scene.StaticVisualRoot.GetChildCount(), 1, "静态视觉根只能包含一个地图实例");
+        AssertEqual(scene.InteractionRoot.GetChildCount(), 1, "交互根只能包含一个生成根节点");
+        AssertEqual(scene.Edges.Count, 385, "正式场景必须保留服务端 385 条边");
+        AssertFalse(ContainsCollisionObject(scene.StaticMapInstance!), "静态地图视觉不得包含碰撞对象");
+        AssertFalse(ContainsInputBlocker(scene.StaticMapInstance!), "静态地图视觉不得阻塞地图输入");
+        AssertTrue(scene.VisualRuntime.Diagnostics != null, "静态地图必须接入 MapVisualRuntime");
+        AssertEqual(CountNodes<WorldEnvironment>(scene.StaticMapInstance!), 1, "正式场景只能存在一套 WorldEnvironment");
+        AssertEqual(CountNodes<DirectionalLight3D>(scene.StaticMapInstance!), 2, "正式场景只能存在 P9 主光和补光");
+        AssertTrue(scene.CellsById.Values.All(cell => !cell.GetNode<Node3D>("VisualRoot").Visible), "轻量交互格不得重复显示格子本体");
+        AssertTrue(scene.CellsById.Values.All(cell => cell.HasNode("HighlightMesh") && cell.HasNode("TokenRoot")), "交互格必须保留高亮与棋子挂点");
+        AssertTrue(scene.CellsByCode.All(pair => pair.Value.Transform.IsEqualApprox(scene.StaticContract!.Anchors[pair.Key].CellTransform)),
+            "所有逻辑格子必须直接使用静态锚点 Transform");
+        AssertTrue(
+            scene.CellsByCode.Values.All(cell =>
+                Mathf.IsZeroApprox(cell.TokenRoot.Position.X)
+                && Mathf.IsZeroApprox(cell.TokenRoot.Position.Z)),
+            "静态地图棋子挂点不得叠加建筑避让的水平偏移"
+        );
+        var townHallAnchor = scene.StaticContract!.Anchors["A10"];
+        var townHallTokenRoot = scene.CellsByCode["A10"].TokenRoot;
+        AssertApprox(townHallTokenRoot.Position.Y, townHallAnchor.TokenTransform.Origin.Y, 0.0001f,
+            "居中棋子挂点仍应保留烘焙高度");
         AssertEqual(transport.CallCount, 2, "重试只应重新发送一次地图请求");
         AssertEqual(transport.Paths[0], "/maps/main", "默认场景应请求正式主地图相对路径");
         AssertFalse(transport.AuthorizedValues[0], "正式主地图请求应允许未登录独立运行");
 
+        var mountCount = OfficialMapStaticVisualLoader.MountCount;
+        await ToSignal(this, SignalName.ProcessFrame);
+        await ToSignal(this, SignalName.ProcessFrame);
+        AssertEqual(OfficialMapStaticVisualLoader.MountCount, mountCount, "静态 PCK 不得在每帧重复挂载");
+
         await VerifyCameraInteractionAsync(scene);
+        AssertEqual(OfficialMapStaticVisualLoader.MountCount, mountCount, "地图重载必须复用已挂载 PCK");
+        AssertEqual(scene.StaticVisualRoot.GetChildCount(), 1, "地图重载后不得残留旧静态实例");
+        AssertEqual(scene.InteractionRoot.GetChildCount(), 1, "地图重载后不得残留旧交互实例");
+
+        scene.ClearLoadedMap();
+        await ToSignal(this, SignalName.ProcessFrame);
+        AssertEqual(scene.GeneratedCellCount, 0, "清理后不得保留逻辑格子");
+        AssertEqual(scene.StaticVisualRoot.GetChildCount(), 0, "清理后不得保留静态地图实例");
+        AssertEqual(scene.InteractionRoot.GetChildCount(), 0, "清理后不得保留交互根实例");
+        AssertTrue(scene.VisualRuntime.Diagnostics == null, "清理时 MapVisualRuntime 必须 Detach");
 
         scene.QueueFree();
         await ToSignal(this, SignalName.ProcessFrame);
         apiClient.ClearTransportForTests();
+    }
+
+    private async Task TestOrigamiVisualIntegrationAsync()
+    {
+        var cellScene = GD.Load<PackedScene>("res://scenes/game/map/HexCell3D.tscn");
+        AssertTrue(cellScene != null, "折纸美术测试必须能加载 HexCell3D");
+        if (cellScene == null)
+        {
+            return;
+        }
+
+        var catalog = new OrigamiVisualCatalog();
+        AssertTrue(catalog.TryResolve("市政厅", "不会使用的后备名称", out var townHallEntry), "应按 cellName 匹配市政厅");
+        AssertEqual(townHallEntry.AssetId, "town-hall", "cellName 的匹配优先级应高于 cellNameText");
+        AssertTrue(catalog.TryResolve("未知名称", "时装店", out var fashionEntry), "cellName 未匹配时应回退 cellNameText");
+        AssertEqual(fashionEntry.AssetId, "fashion-shop", "cellNameText 应匹配时装店素材");
+        AssertTrue(catalog.TryResolve("水晶集市", "水晶集市", out var crystalMarketEntry), "候选素材也应保留结构化映射");
+        AssertFalse(crystalMarketEntry.Enabled, "水晶集市候选素材本阶段不得启用");
+        AssertEqual(catalog.EntryCount, 44, "当前项目映射应覆盖全部 44 组折纸素材");
+        var expectedTerrainMappings = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["A"] = "grass-light",
+            ["B"] = "grass-dark",
+            ["C"] = "crystal-ground",
+            ["D"] = "snow",
+            ["E"] = "grass-light",
+            ["F"] = "stone",
+            ["G"] = "snow",
+            ["H"] = "stone",
+            ["I"] = "sand",
+            ["J"] = "sand",
+            ["K"] = "grass-light",
+            ["L"] = "grass-dark"
+        };
+        AssertEqual(catalog.BoardTerrainMappings.Count, 12, "A-L 全部板块都必须配置通用地形");
+        foreach (var pair in expectedTerrainMappings)
+        {
+            AssertTrue(
+                catalog.BoardTerrainMappings.TryGetValue(pair.Key, out var assetId) && assetId == pair.Value,
+                $"板块 {pair.Key} 应映射到 {pair.Value}"
+            );
+            AssertTrue(catalog.TryResolveGenericTerrain(pair.Key, out var terrainEntry), $"板块 {pair.Key} 的通用地形应可解析");
+            AssertEqual(terrainEntry.AssetId, pair.Value, $"板块 {pair.Key} 的通用地形 assetId");
+        }
+
+        var firstTownHallScene = catalog.LoadScene(townHallEntry);
+        var secondTownHallScene = catalog.LoadScene(townHallEntry);
+        AssertTrue(firstTownHallScene != null, "市政厅包装场景必须可加载");
+        AssertTrue(ReferenceEquals(firstTownHallScene, secondTownHallScene), "相同 assetId 必须复用 PackedScene 缓存");
+
+        var mapRoot = new Node3D { Name = "OrigamiMapRoot" };
+        Root.AddChild(mapRoot);
+        var builder = new GameMapBuilder();
+        var artMap = CreateArtMappedMap();
+        var result = builder.Build(artMap, mapRoot, cellScene, 0.55f, 0.16f, 0.035f, true);
+        AssertTrue(result.Ok, $"折纸美术地图应成功构建：{result.Error}");
+        await ToSignal(this, SignalName.ProcessFrame);
+
+        AssertEqual(result.CellCount, 138, "美术替换后仍应生成 138 个逻辑格子");
+        AssertEqual(result.EdgeCount, 385, "美术替换后仍应保留 385 条边");
+        AssertEqual(builder.DedicatedVisualCellCount, 64, "正式地标素材应精确应用到 64 个格子");
+        AssertEqual(builder.GenericTerrainCellCount, 74, "其余 74 个格子应使用所属板块的通用地形");
+        AssertEqual(builder.FallbackVisualCellCount, 0, "资源完整时不应出现程序化六边形兜底");
+        AssertEqual(builder.AppliedVisualCellCount, 138, "全部 138 个格子都应获得美术视觉");
+        AssertEqual(builder.CachedVisualSceneCount, 41, "运行时应缓存 35 种地标和 6 种通用地形场景");
+        AssertTrue(builder.CellsByCode.Values.All(cell => cell.UsesCustomVisual), "正常情况下所有格子都应使用自定义美术视觉");
+
+        foreach (var code in new[] { "A10", "A16", "A2", "B24" })
+        {
+            AssertTrue(builder.CellsByCode[code].UsesCustomVisual, $"代表性地标 {code} 应使用折纸素材");
+        }
+
+        var candidateTerrainByCode = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["C9"] = "crystal-ground",
+            ["E2"] = "grass-light",
+            ["F3"] = "stone"
+        };
+        foreach (var pair in candidateTerrainByCode)
+        {
+            var code = pair.Key;
+            var candidateCell = builder.CellsByCode[code];
+            AssertTrue(candidateCell.UsesCustomVisual, $"候选格子 {code} 应回退所属板块通用地形");
+            AssertTrue(
+                candidateCell.CustomVisualScene?.ResourcePath.Contains($"/{pair.Value}/", StringComparison.Ordinal) == true,
+                $"候选格子 {code} 应使用 {pair.Value}，不得启用候选地标"
+            );
+            AssertFalse(candidateCell.GetNode<MeshInstance3D>("VisualRoot/BaseMesh").Visible, $"候选格子 {code} 不应显示旧程序化六边形");
+        }
+
+        var ordinaryCell = builder.CellsByCode.Values.First(cell => cell.Data?.CellName == "普通格");
+        AssertTrue(ordinaryCell.UsesCustomVisual, "普通格应按 boardCode 使用通用地形");
+        AssertTrue(ordinaryCell.CustomVisualMaterialOverride != null, "普通格通用地形应应用板块色材质");
+        AssertFalse(ordinaryCell.GetNode<MeshInstance3D>("VisualRoot/BaseMesh").Visible, "普通格不应显示旧程序化六边形");
+
+        var genericCells = builder.CellsByCode.Values
+            .Where(cell => cell.CustomVisualMaterialOverride != null)
+            .ToList();
+        AssertEqual(genericCells.Count, 74, "应有 74 个格子使用板块色通用地形");
+        AssertEqual(genericCells.Select(cell => cell.Data?.BoardCode).Distinct().Count(), 12, "通用地形应覆盖 A-L 全部板块");
+        foreach (var cell in genericCells)
+        {
+            AssertTrue(
+                ReferenceEquals(cell.CustomVisualMaterialOverride, MapLayoutConfig.GetGenericTerrainMaterial(cell.Data!.BoardCode)),
+                $"格子 {cell.Data.CellCode} 应复用所属板块的缓存材质"
+            );
+            AssertTrue(
+                cell.CustomVisualMaterialOverride is StandardMaterial3D terrainMaterial
+                    && terrainMaterial.AlbedoTexture == null,
+                $"格子 {cell.Data.CellCode} 的通用地形不得误用纸张法线纹理作为 Albedo"
+            );
+        }
+
+        var townHall = builder.CellsByCode["A10"];
+        var townHallVisualRoot = townHall.GetNode<Node3D>("VisualRoot/CustomVisualRoot");
+        AssertEqual(townHallVisualRoot.GetChildCount(), 1, "包装场景只能实例化一次");
+        AssertApprox(townHallVisualRoot.Scale.X, 0.55f, 0.001f, "源半径 1 的美术应跟随逻辑半径缩放");
+        AssertApprox(townHallVisualRoot.RotationDegrees.Y, 30.0f, 0.001f, "折纸素材应统一绕 Y 轴旋转 30 度");
+        AssertFalse(ContainsCollisionObject(townHallVisualRoot.GetChild(0)), "纯美术包装不得增加碰撞对象");
+        AssertTrue(townHall.HasNode("InteractionArea/CollisionShape3D"), "替换视觉后应保留逻辑碰撞体");
+        AssertTrue(townHall.HasNode("HighlightMesh"), "替换视觉后应保留高亮层");
+        AssertTrue(townHall.HasNode("TokenRoot"), "替换视觉后应保留棋子挂点");
+        townHall.SetCurrent(true);
+        AssertEqual(townHall.VisualState, HexCellVisualState.Current, "折纸素材不得影响当前位置高亮");
+        townHall.SetMovable(true);
+        AssertEqual(townHall.VisualState, HexCellVisualState.Movable, "折纸素材不得影响可移动高亮");
+        townHall.SetMovable(false);
+        townHall.SetCurrent(false);
+        var clickedTownHallId = 0L;
+        townHall.CellClicked += cellId => clickedTownHallId = cellId;
+        AssertTrue(townHall.TryActivate(), "折纸素材格仍应允许点击");
+        AssertEqual(clickedTownHallId, townHall.Data?.CellId ?? 0L, "折纸素材格点击应返回原逻辑 cellId");
+
+        ordinaryCell.SetHovered(true);
+        AssertEqual(ordinaryCell.VisualState, HexCellVisualState.Hovered, "通用地形格应支持悬停高亮");
+        ordinaryCell.SetHovered(false);
+        ordinaryCell.SetMovable(true);
+        AssertEqual(ordinaryCell.VisualState, HexCellVisualState.Movable, "通用地形格应支持移动高亮");
+        ordinaryCell.SetMovable(false);
+        var clickedOrdinaryId = 0L;
+        ordinaryCell.CellClicked += cellId => clickedOrdinaryId = cellId;
+        AssertTrue(ordinaryCell.TryActivate(), "通用地形格仍应允许点击");
+        AssertEqual(clickedOrdinaryId, ordinaryCell.Data?.CellId ?? 0L, "通用地形格点击应返回原逻辑 cellId");
+        AssertFalse(
+            ContainsCollisionObject(ordinaryCell.GetNode<Node3D>("VisualRoot/CustomVisualRoot")),
+            "通用地形包装不得增加碰撞对象"
+        );
+
+        var forests = builder.CellsByCode.Values.Where(cell => cell.Data?.CellName == "无尽之森").ToList();
+        AssertEqual(forests.Count, 30, "测试地图应包含 30 个无尽之森实例");
+        AssertTrue(forests.All(cell => ReferenceEquals(cell.CustomVisualScene, forests[0].CustomVisualScene)), "重复森林格应共享同一 PackedScene");
+
+        mapRoot.QueueFree();
+        await ToSignal(this, SignalName.ProcessFrame);
     }
 
     private async Task VerifyCameraInteractionAsync(GameMapScene scene)
@@ -344,7 +612,7 @@ public partial class RunGameMapTests : SceneTree
         await ToSignal(this, SignalName.ProcessFrame);
         AssertFalse(cell.CompletePointerClick(), "从格子表面开始拖动后不得确认点击");
         AssertEqual(clickCount, 1, "拖动地图不得误发 CellClicked");
-        AssertEqual(emptyClickCount, 1, "拖动地图不得发送地图空白点击");
+        AssertEqual(emptyClickCount, 2, "拖动开始时应发送一次空白操作以退出移动模式");
 
         controller.BeginPointerGesture(new Vector2(50, 50), Vector3.Zero);
         controller.UpdatePointerGesture(new Vector2(70, 70), new Vector3(-1.0f, 0.0f, 1.0f));
@@ -369,7 +637,191 @@ public partial class RunGameMapTests : SceneTree
         AssertVectorApprox(controller.Position, initialPosition, 0.001f, "地图重新加载后应恢复初始中心位置");
     }
 
+    private static GameMapDto CreateArtMappedMap()
+    {
+        var map = CreateGenericBuilderMap();
+        var formalNames = new List<string>
+        {
+            "市政厅", "无尽之森", "骏鹰王国", "时装店", "暮光城堡", "方糖屋", "甜苹果园", "集市", "小蝶家", "小马谷火车站",
+            "友谊学院", "云宝家", "旧城堡", "泽可拉小屋", "韵律之树", "耗耗斯坦", "水晶帝国", "运动场", "水晶城堡",
+            "狮鹫岩", "马哈顿火车站", "马哈顿", "中心城火车站", "皇城", "商业街", "地狱", "巴尔的马", "巨龙之地",
+            "苹果鲁萨", "平等镇", "彩虹瀑布镇", "彩虹瀑布", "云中城", "天马维加斯", "天气工厂"
+        };
+        while (formalNames.Count < 64)
+        {
+            formalNames.Add("无尽之森");
+        }
+
+        foreach (var cell in map.Cells!)
+        {
+            cell.CellName = "普通格";
+            cell.CellNameText = "普通格";
+        }
+
+        var formalIndices = new List<int> { 0, 1, 5 };
+        formalIndices.AddRange(Enumerable.Range(6, 61));
+        for (var index = 0; index < formalNames.Count; index++)
+        {
+            var cell = map.Cells[formalIndices[index]];
+            cell.CellName = formalNames[index];
+            cell.CellNameText = formalNames[index];
+        }
+
+        SetCellIdentity(map.Cells, 0, "A10", "A", "市政厅");
+        SetCellIdentity(map.Cells, 1, "B24", "B", "无尽之森");
+        SetCellIdentity(map.Cells, 5, "I7", "I", "骏鹰王国");
+        SetCellIdentity(map.Cells, 6, "A16", "A", "时装店");
+        SetCellIdentity(map.Cells, 7, "A2", "A", "暮光城堡");
+        SetCellIdentity(map.Cells, 67, "C9", "C", "水晶集市");
+        SetCellIdentity(map.Cells, 68, "E2", "E", "高档场所");
+        SetCellIdentity(map.Cells, 69, "F3", "F", "宴会厅");
+        return map;
+    }
+
+    private static void SetCellIdentity(List<MapCellDto> cells, int index, string code, string board, string name)
+    {
+        cells[index].CellCode = code;
+        cells[index].BoardCode = board;
+        cells[index].CellName = name;
+        cells[index].CellNameText = name;
+    }
+
+    private static bool ContainsCollisionObject(Node node)
+    {
+        if (node is CollisionObject3D)
+        {
+            return true;
+        }
+
+        foreach (var child in node.GetChildren())
+        {
+            if (ContainsCollisionObject(child))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool ContainsInputBlocker(Node node)
+    {
+        if (node.IsInGroup(MapCameraController.MapInputBlockerGroup))
+        {
+            return true;
+        }
+
+        foreach (var child in node.GetChildren())
+        {
+            if (ContainsInputBlocker(child))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static int CountNodes<T>(Node node) where T : Node
+    {
+        var count = node is T ? 1 : 0;
+        foreach (var child in node.GetChildren()) count += CountNodes<T>(child);
+        return count;
+    }
+
+    private void VerifyEnvironmentOutsidePlayableCells(GameMapScene scene)
+    {
+        const float clearance = 0.27f;
+        var cells = scene.CellsById.Values.ToList();
+        var playableMinX = cells.Min(cell => cell.GlobalPosition.X - cell.Radius) - clearance;
+        var playableMaxX = cells.Max(cell => cell.GlobalPosition.X + cell.Radius) + clearance;
+        var playableMinZ = cells.Min(cell => cell.GlobalPosition.Z - cell.Radius) - clearance;
+        var playableMaxZ = cells.Max(cell => cell.GlobalPosition.Z + cell.Radius) + clearance;
+        var generatedEnvironment = scene.GetNode<Node3D>("MapEnvironmentRoot/GeneratedEnvironment");
+
+        foreach (var child in generatedEnvironment.GetChildren())
+        {
+            if (child is not Node3D module || module.Name == "WaterBackground")
+            {
+                continue;
+            }
+
+            AssertTrue(TryGetGlobalVisualBounds(module, out var visualBounds), $"环境模块 {module.Name} 应包含可见模型");
+            var overlapsPlayableArea = visualBounds.End.X > playableMinX
+                && visualBounds.Position.X < playableMaxX
+                && visualBounds.End.Z > playableMinZ
+                && visualBounds.Position.Z < playableMaxZ;
+            AssertFalse(overlapsPlayableArea, $"环境模块 {module.Name} 不得穿插可玩格子区域");
+        }
+    }
+
+    private static bool TryGetGlobalVisualBounds(Node node, out Aabb bounds)
+    {
+        bounds = default;
+        var hasBounds = false;
+        CollectGlobalVisualBounds(node, ref bounds, ref hasBounds);
+        return hasBounds;
+    }
+
+    private static void CollectGlobalVisualBounds(Node node, ref Aabb bounds, ref bool hasBounds)
+    {
+        if (node is MeshInstance3D meshInstance && meshInstance.Mesh != null)
+        {
+            var visualBounds = TransformBounds(meshInstance.GetAabb(), meshInstance.GlobalTransform);
+            bounds = hasBounds ? bounds.Merge(visualBounds) : visualBounds;
+            hasBounds = true;
+        }
+
+        foreach (var child in node.GetChildren())
+        {
+            CollectGlobalVisualBounds(child, ref bounds, ref hasBounds);
+        }
+    }
+
+    private static Aabb TransformBounds(Aabb bounds, Transform3D transform)
+    {
+        var minimum = new Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity);
+        var maximum = new Vector3(float.NegativeInfinity, float.NegativeInfinity, float.NegativeInfinity);
+        for (var x = 0; x <= 1; x++)
+        {
+            for (var y = 0; y <= 1; y++)
+            {
+                for (var z = 0; z <= 1; z++)
+                {
+                    var corner = bounds.Position + new Vector3(
+                        bounds.Size.X * x,
+                        bounds.Size.Y * y,
+                        bounds.Size.Z * z
+                    );
+                    var transformed = transform * corner;
+                    minimum = new Vector3(
+                        Math.Min(minimum.X, transformed.X),
+                        Math.Min(minimum.Y, transformed.Y),
+                        Math.Min(minimum.Z, transformed.Z)
+                    );
+                    maximum = new Vector3(
+                        Math.Max(maximum.X, transformed.X),
+                        Math.Max(maximum.Y, transformed.Y),
+                        Math.Max(maximum.Z, transformed.Z)
+                    );
+                }
+            }
+        }
+
+        return new Aabb(minimum, maximum - minimum);
+    }
+
     public static GameMapDto CreateValidMap()
+    {
+        var json = FileAccess.GetFileAsString("res://tests/fixtures/main-map-20261024.json");
+        var envelope = JsonSerializer.Deserialize<ApiEnvelope<GameMapDto>>(
+            json,
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+        );
+        return envelope?.Data ?? throw new InvalidOperationException("无法读取正式地图测试夹具。");
+    }
+
+    private static GameMapDto CreateGenericBuilderMap()
     {
         var cells = new List<MapCellDto>();
         AddCell(cells, "A10", "A", 1, 5);

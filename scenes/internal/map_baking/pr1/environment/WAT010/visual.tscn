@@ -1,0 +1,22 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/WAT010/part01.glb" id="part01"]
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/WAT010/part02.glb" id="part02"]
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/WAT010/part03.glb" id="part03"]
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/WAT010/part04.glb" id="part04"]
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/WAT010/part05.glb" id="part05"]
+[ext_resource type="PackedScene" path="res://assets/art/models/environment/WAT010/part06.glb" id="part06"]
+
+[node name="EnvironmentAsset" type="Node3D"]
+
+[node name="part01" parent="." instance=ExtResource("part01")]
+
+[node name="part02" parent="." instance=ExtResource("part02")]
+
+[node name="part03" parent="." instance=ExtResource("part03")]
+
+[node name="part04" parent="." instance=ExtResource("part04")]
+
+[node name="part05" parent="." instance=ExtResource("part05")]
+
+[node name="part06" parent="." instance=ExtResource("part06")]
